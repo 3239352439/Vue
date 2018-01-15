@@ -5,6 +5,7 @@ import Vuex from 'vuex'
 import '../../node_modules/mint-ui/lib/style.css'
 
 import c from '../components/classifyComponent/classify.vue'
+import register from '../components/registerComponent/register.vue'
 
 Vue.use(Vuex);
 Vue.use(MintUI);
@@ -21,6 +22,11 @@ var router = new VueRouter({
           path:'/aa',
           name: 'aa',
           component: c
+        },
+        {
+            path:"/register",
+            name:"register",
+            component: register
         }
     ]
 })

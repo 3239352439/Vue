@@ -4,7 +4,7 @@
         $servername = 'localhost';
         $username = 'root';
         $password = '';
-        $database = 'pet';
+        $database = 'supermarket';
         header('Access-Control-Allow-Origin:*');
         //连接数据库
         $conn = new mysqli($servername, $username, $password, $database);
@@ -65,7 +65,7 @@ function connect() {
     $servername = "localhost";//
     $username = "root";
     $password = "";
-    $dbname = 'pet';
+    $dbname = 'supermarket';
     //初始化连接，返回一个连接对象(包含所连接数据库的信息)
     $con = mysqli_connect($servername, $username, $password, $dbname);
     header('Access-Control-Allow-Origin:*');
