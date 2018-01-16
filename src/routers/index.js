@@ -7,7 +7,7 @@ import search from '../components/searchComponent/search'
 
 import c from '../components/classifyComponent/classify.vue'
 import register from '../components/registerComponent/register.vue'
-
+import '../sass/base.scss'
 Vue.use(Vuex);
 Vue.use(MintUI);
 Vue.use(VueRouter);

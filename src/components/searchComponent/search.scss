@@ -1,4 +1,15 @@
 #sm_search{
     height:100%;
     width: 100%;
+    display:flex;
+    .header{
+        flex-direction:column;
+        height: 0.546667rem;
+        .mint-search{
+            display:inline;
+        }
+    }
+    .main{
+        flex:1;
+    }
 }

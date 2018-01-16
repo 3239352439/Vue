@@ -1,20 +1,27 @@
 <template>
     <div id="sm_search">
-        <mt-header title="标题">
-            <router-link to="/" slot="left">
+        <div class="header">
+            <router-link to="/">
                 <mt-button icon="back">返回</mt-button>
             </router-link>
-            <mt-button icon="more" slot="right"></mt-button>
-        </mt-header>
+             <mt-search
+              v-model="value"
+              cancel-text="取消"
+              placeholder="搜索">
+            </mt-search>
+            <mt-button icon="more"></mt-button>
+        </div>
+        <div class="main"></div>
+
      </div>
 </template>
 
 <script>
-    import './search'
+    import './search.scss'
     export default{
         data(){
             return {
-
+                 value:""
             }
         },
         methods:{
