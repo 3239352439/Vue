@@ -18,6 +18,7 @@ var router = new VueRouter({
             path: '/search',
             name: 'search',
             component: search
+        },
         // {
         //     path: '/',
         //     name: 'home',
