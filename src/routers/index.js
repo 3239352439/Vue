@@ -4,7 +4,8 @@ import MintUI from 'mint-ui'
 import Vuex from 'vuex'
 import '../../node_modules/mint-ui/lib/style.css'
 
-import c from '../components/classifyComponent/classify.vue'
+import categoryComponent from '../components/classifyComponent/classify.vue'
+import productComponent from '../components/productComponent/productList.vue'
 
 Vue.use(Vuex);
 Vue.use(MintUI);
@@ -18,9 +19,14 @@ var router = new VueRouter({
         //     component: homeComponent
         // }
         {
-          path:'/aa',
-          name: 'aa',
-          component: c
+          path:'/category',
+          name: 'category',
+          component: categoryComponent
+        },
+        {
+          path: '/product',
+          name: 'product',
+          component: productComponent
         }
     ]
 })

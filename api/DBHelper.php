@@ -1,18 +1,18 @@
 <?php
     function connect_oop() {
         // 配置参数
-        $servername = 'localhost';
+        $servername = '10.3.136.76';
         $username = 'root';
-        $password = '';
-        $database = 'pet';
-        header('Access-Control-Allow-Origin:*');
+        $password = 'root';
+        $database = 'supermarket';
+        // header('Access-Control-Allow-Origin:*');
         //连接数据库
         $conn = new mysqli($servername, $username, $password, $database);
         // 检测连接
         if ($conn -> connect_error) {
             die('连接失败'.$conn -> connect_error);
         }
-        $conn -> set_charset('utf8'); 
+        $conn -> set_charset('utf8');
         return $conn;
     }
 
@@ -62,12 +62,12 @@ function multi_query_oop($sql) {
 
 //初始化连接对象方法
 function connect() {
-    $servername = "localhost";//
-    $username = "root";
-    $password = "";
-    $dbname = 'pet';
+    $servername = '10.3.136.76';
+    $username = 'root';
+    $password = 'root';
+    $database = 'supermarket';
     //初始化连接，返回一个连接对象(包含所连接数据库的信息)
-    $con = mysqli_connect($servername, $username, $password, $dbname);
+    $con = mysqli_connect($servername, $username, $password, $database);
     header('Access-Control-Allow-Origin:*');
     //获取连接对象的错误信息
     if (mysqli_connect_error($con)) {
@@ -95,7 +95,7 @@ function query($sql) {
             // print_r($obj->email);
         }
         //将对象转换成 json 格式的字符并打印出来
-        //JSON.stringify()            
+        //JSON.stringify()
         // if(!$isCheck){
         // echo json_encode($jsonData, JSON_UNESCAPED_UNICODE);
         // }
