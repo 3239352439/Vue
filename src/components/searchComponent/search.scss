@@ -2,14 +2,55 @@
     height:100%;
     width: 100%;
     display:flex;
+    flex-direction:column;
     .header{
-        flex-direction:column;
-        height: 0.546667rem;
-        .mint-search{
-            display:inline;
+         height:3.87rem;
+         display:flex;
+         background:#26a2ff;
+        .h_center{
+            flex:1;
+            height:3.87rem;
+            color:000 !important;
+            .mint-searchbar{
+                background:#26a2ff;
+                padding:0;
+                height:3.87rem;
+                 .mint-searchbar-cancel{
+                background:#26a2ff;
+                
+                }
+            }
+           
+        }
+        .mint-button--default{
+            background:#26a2ff;
+            line-height: 3.87rem;
         }
     }
-    .main{
+    .main{         
         flex:1;
+        margin-top:10px;
+        h3{
+            font-size:20px;
+            color:#58bc58;
+            i{
+                float:right;
+                margin-right:10px;
+            }
+        }
+        .show{
+            margin:10px 0;
+            font-size:16px;
+            display:flex;
+            li{
+
+                flex:1;
+                margin:0 5px;
+                display:inline;
+                padding:3px;
+                background:#ccc;
+                border-radius:10px;
+            }
+        }
     }
 }
