@@ -12,7 +12,6 @@
             <mt-button icon="more"></mt-button>
         </div>
         <div class="main"></div>
-
      </div>
 </template>
 
