@@ -1,11 +1,11 @@
 <?php
     include 'DBHelper.php';
-    $phoneNum = isset($_GET['phoneNum']) ? $_GET['phoneNum'] : "";
+    $phone = isset($_GET['phone']) ? $_GET['phone'] : "";
     $password = isset($_GET['password']) ? $_GET['password'] : "";
     // 加密
     $password = md5($password);
 
-    $sql = "select * from user where phoneNum = '$phoneNum' and password = '$password'";
+    $sql = "select * from user where phone = '$phone' and password = '$password'";
 
     $result = query_oop($sql);
     // $result = $conn->query($sql);
