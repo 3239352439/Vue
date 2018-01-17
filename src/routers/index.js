@@ -4,11 +4,13 @@ import MintUI from 'mint-ui'
 import Vuex from 'vuex'
 
 import '../../node_modules/mint-ui/lib/style.css'
+import '../sass/base.scss'
 import search from '../components/searchComponent/search'
 
 import c from '../components/classifyComponent/classify.vue'
 import register from '../components/registerComponent/register.vue'
 import login from '../components/loginComponent/login.vue'
+import rapid from '../components/rapidComponent/rapid.vue'
 import loginParent from '../components/loginParentComponent/loginParent.vue'
 
 Vue.use(Vuex);
@@ -40,6 +42,11 @@ var router = new VueRouter({
                     path: "/login",
                     name: "login",
                     component: login
+                },
+                {
+                    path: "/rapid",
+                    name: "rapid",
+                    component: rapid
                 }
             ]
         },

@@ -68,7 +68,7 @@
                 }
             },
             register(){
-                if(this.type3 = false){
+                if(this.type3 == false){
                     this.$store.state.loadspinner();
                     http.get({url:"register.php?phone=" + this.phone + "&password=" + this.password}).then((res)=>{
                         setTimeout(function(){
@@ -82,9 +82,6 @@
                         }.bind(this),1000)
                     })
                 }
-            },
-            goLogin(){
-                this.$router.push("/login");
             },
             goback(){
                 this.$router.go(-1);

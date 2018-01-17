@@ -7,6 +7,7 @@
             <mt-navbar v-model="selected">
                 <mt-tab-item id="loginP"><span @click="loginP">登录</span></mt-tab-item>
                 <mt-tab-item id="registerP"><span @click="registerP">注册</span></mt-tab-item>
+                <mt-tab-item id=""><span  @click="rapid">快速登录</span></mt-tab-item>
             </mt-navbar>
             <router-view></router-view>
         </div>
@@ -30,7 +31,10 @@
                 this.$router.push({name:"login"});
             },
             registerP(){
-                this.$router.push("/register");
+                this.$router.push({name:"register"});
+            },
+            rapid(){
+                this.$router.push({name:"rapid"});
             }
         }
     }
