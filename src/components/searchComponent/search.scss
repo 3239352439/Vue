@@ -1,55 +1,61 @@
+$mainColor:#26a2ff;
+$hsize:0.6rem;
 #sm_search{
     height:100%;
     width: 100%;
     display:flex;
     flex-direction:column;
     .header{
-         height:3.87rem;
+         height:$hsize;
          display:flex;
-         background:#26a2ff;
-        .h_center{
+         background:$mainColor;
+        .h_center{     
             flex:1;
-            height:3.87rem;
+            height:$hsize;
             color:000 !important;
             .mint-searchbar{
-                background:#26a2ff;
+                background:$mainColor;
                 padding:0;
-                height:3.87rem;
+                height:$hsize;
                  .mint-searchbar-cancel{
-                background:#26a2ff;
+                background:$mainColor;
                 
                 }
             }
            
         }
         .mint-button--default{
-            background:#26a2ff;
-            line-height: 3.87rem;
+            background:$mainColor;
+            line-height:$hsize;
+            color:#fff;
+            label{
+                font-size:0.186667rem;
+            }
         }
     }
     .main{         
         flex:1;
-        margin-top:10px;
+        margin-top:0.133333rem;
         h3{
-            font-size:20px;
+            font-size:0.266667rem;
             color:#58bc58;
             i{
                 float:right;
-                margin-right:10px;
+                margin-right:0.133333rem;
             }
         }
         .show{
-            margin:10px 0;
-            font-size:16px;
+            margin:0.133333rem 0;
+            font-size:0.213333rem;
             display:flex;
+            flex-wrap:wrap;
             li{
-
                 flex:1;
-                margin:0 5px;
-                display:inline;
-                padding:3px;
+                margin:0.066667rem 0.066667rem;
+                display:inline-block;
+                padding:0.04rem;
                 background:#ccc;
-                border-radius:10px;
+                border-radius:30%;
             }
         }
     }
