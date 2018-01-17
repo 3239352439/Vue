@@ -1,33 +1,25 @@
-*{
-  margin: 0;
-  padding: 0;
-}
-html,body{
-  height: 100%;
-}
-
 .category_cen{
 
-    .left{
-        width: 100px;
-        float: left;
-        height: 100%;
-        background: rgb(252, 252, 252);
-      li{
-        height: 40px;
-        border-bottom: 1px solid rgb(240, 237, 237);
-        line-height: 40px;
-        padding-left:20px;
-      }
-    }
-    .right{
-      float: left;
-      height: 100%;
-      li{
-        height: 50px;
-        line-height: 50px;
-        padding-left:20px;
-        list-style-type:none
-      }
-    }
+  // .left{
+  //   width: 100px;
+  //   float: left;
+  //   height: 100%;
+  //   background: rgb(252, 252, 252);
+  //   li{
+  //     height: 40px;
+  //     border-bottom: 1px solid rgb(240, 237, 237);
+  //     line-height: 40px;
+  //     padding-left:20px;
+  //   }
+  // }
+  // .right{
+  //   float: left;
+  //   height: 100%;
+  //   li{
+  //     height: 50px;
+  //     line-height: 50px;
+  //     padding-left:20px;
+  //     list-style-type:none
+  //   }
+  // }
 }

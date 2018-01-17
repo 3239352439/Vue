@@ -6,10 +6,10 @@
     $cateSamll = isset($_GET['cateSamll']) ? $_GET['cateSamll'] : "";
     $sql;
 
-    if( $cateSamll==''){
-      $sql = "select * from category";
-    } else {
+    if( $cateSamll !==''){
       $sql = "select * from category,classifysmall  where category.categoryId= '$cateSamll' and category.categoryId = classifysmall.classifyBigId";
+    }else {
+      $sql = "select * from category";
     }
 
     $result = query_oop($sql);

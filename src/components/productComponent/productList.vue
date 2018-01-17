@@ -1,62 +1,60 @@
 <template>
-    <div>
-      <mt-header title="搜索框">
-        <router-link to="/category" slot="left">
-          <mt-button icon="back">返回</mt-button>
-        </router-link>
-        <mt-button icon="more" slot="right"></mt-button>
-      </mt-header>
-      <productMenu :SmallId="name"></productMenu>
-      <h1>{{name}}</h1>
+  <div>
+    <mt-header title="搜索框">
+      <router-link to="/category" slot="left">
+        <mt-button icon="back">返回</mt-button>
+      </router-link>
+      <mt-button icon="more" slot="right"></mt-button>
+    </mt-header>
+    <productMenu :SmallId="name"></productMenu>
+    <div v-for="obj in dataset">
+      <div class="left_img">
+        <img v-bind:src="obj.ImgUrl" alt="加载中"/>
+      </div>
+      <div class="right_prd_mess">
+        {{obj.goodName}}
+      </div>
     </div>
+  </div>
 </template>
 
 <script>
 
 import http from '../../utils/reqAjax';
-import './productList.scss'
+import './productList.scss';
+import productMenu from './productMenu';
 
 export default {
-    data: function(){
-        return {
-          id:'1',
-          name: ''
-        }
-    },
-    mounted(){
-        console.log(this.$route.params.classifySmallId)
-        this.id = this.$route.params.classifySmallId;
-        this.name = this.$route.params.name;
-    },
-    methods:{
-
-    },
-    components: {
-        'productMenu': {
-            template: `<div><ul class="Menu"><li @click="type">{{SmallId}}</li><li>默认排序</li><li>商品筛选</li></li></ul></div>`,
-            data: function(){
-                return {
-                   url:"category.php"
-                }
-            },
-            props:['SmallId'],
-            methods: {
-                type(){
-                    // console.log(666);
-                    http.get({"url":this.url}).then( res => {
-                      this.category = res.data;
-                      this.toSmallcategory(1);
-                      console.log(res.data);
-                  });
-                },
-                toSmallcategory(idx){
-                  http.get({"url":this.url+"?cateSamll="+idx}).then( res => {
-                      // console.log(res.data);
-                      this.cateSamllList = res.data
-                  })
-                }
-            }
-        }
+  data: function(){
+    return {
+      categoryId:'1',
+      name: '',
+      url:"productList.php",
+      dataset:[]
     }
+  },
+  mounted(){
+    console.log(this.$route.params.classifySmallId)
+    this.categoryId = this.$route.params.classifySmallId;
+    this.name = this.$route.params.name;
+    if(this.categoryId == undefined){
+      http.get({"url":this.url}).then ( res => {
+        console.log(res.data);
+        this.dataset = res.data;
+      })
+    } else {
+      http.get({"url":this.url+'?categoryId='+this.categoryId}).then ( res => {
+        console.log(res.data);
+        this.dataset = res.data;
+      })
+    }
+
+  },
+  methods:{
+
+  },
+  components:{
+    productMenu
+  }
 }
 </script>
