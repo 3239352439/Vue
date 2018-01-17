@@ -10,7 +10,8 @@ import categoryComponent from '../components/classifyComponent/classify.vue'
 import productComponent from '../components/productComponent/productList.vue'
 import c from '../components/classifyComponent/classify.vue'
 import register from '../components/registerComponent/register.vue'
-import '../sass/base.scss'
+import login from '../components/loginComponent/login.vue'
+import loginParent from '../components/loginParentComponent/loginParent.vue'
 
 Vue.use(Vuex);
 Vue.use(MintUI);
@@ -32,12 +33,24 @@ var router = new VueRouter({
           path: '/product',
           name: 'product',
           component: productComponent
+        },{
+            path: '/loginParent',
+            name: 'loginParent',
+            component: loginParent,
+            children:[
+                {
+                    path: "/register",
+                    name: "register",
+                    component: register
+                },
+                {
+                    path: "/login",
+                    name: "login",
+                    component: login
+                }
+            ]
         },
-        {
-            path:"/register",
-            name:"register",
-            component: register
-        }
+
     ]
 })
 
