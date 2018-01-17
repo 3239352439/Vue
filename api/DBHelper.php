@@ -12,7 +12,7 @@
         if ($conn -> connect_error) {
             die('连接失败'.$conn -> connect_error);
         }
-        $conn -> set_charset('utf8'); 
+        $conn -> set_charset('utf8');
         return $conn;
     }
 
@@ -67,7 +67,7 @@ function connect() {
     $password = "root";
     $dbname = 'supermarket';
     //初始化连接，返回一个连接对象(包含所连接数据库的信息)
-    $con = mysqli_connect($servername, $username, $password, $dbname);
+    $con = mysqli_connect($servername, $username, $password, $database);
     header('Access-Control-Allow-Origin:*');
     //获取连接对象的错误信息
     if (mysqli_connect_error($con)) {
@@ -95,7 +95,7 @@ function query($sql) {
             // print_r($obj->email);
         }
         //将对象转换成 json 格式的字符并打印出来
-        //JSON.stringify()            
+        //JSON.stringify()
         // if(!$isCheck){
         // echo json_encode($jsonData, JSON_UNESCAPED_UNICODE);
         // }
