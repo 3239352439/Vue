@@ -8,12 +8,8 @@ import search from '../components/searchComponent/search'
 
 import c from '../components/classifyComponent/classify.vue'
 import register from '../components/registerComponent/register.vue'
-<<<<<<< HEAD
 import login from '../components/loginComponent/login.vue'
 import loginParent from '../components/loginParentComponent/loginParent.vue'
-=======
-import '../sass/base.scss'
->>>>>>> a9089c3ed7dbd9de3568bfc137a0c26c4a7f4884
 
 Vue.use(Vuex);
 Vue.use(MintUI);
