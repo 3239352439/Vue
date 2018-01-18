@@ -39,11 +39,6 @@ var router = new VueRouter({
           component: categoryComponent
         },
         {
-            path:"/register",
-            name:"register",
-            component: register
-        },
-        {
             path: '/getAddress',
             name: 'getAddress',
             component: getAddress

@@ -5,15 +5,15 @@
                 <mt-button slot="left" icon="back" @click="goback"></mt-button>
             </mt-header>
             <mt-navbar v-model="selected">
-                <mt-tab-item id="loginP"><span @click="loginP">登录</span></mt-tab-item>
-                <mt-tab-item id="registerP"><span @click="registerP">注册</span></mt-tab-item>
+                <mt-tab-item  id="loginP"><span @click="loginP" class="loginP">登录</span></mt-tab-item>
+                <mt-tab-item id="registerP"><span @click="registerP" class="registerP">注册</span></mt-tab-item>
             </mt-navbar>
             <router-view></router-view>
         </div>
     </div>
 </template>
 <script>
-    import { Navbar, TabItem,Field,Header,Button,Spinner } from 'mint-ui';
+    import { Navbar, TabItem,Field,Header,Button } from 'mint-ui';
     import "./loginParent.scss";
     export default {
         data(){
@@ -21,6 +21,9 @@
                 selected:"",
                 show:false
             }
+        },
+        mounted(){
+            $(".mint-tab-item").eq(0).addClass("is-selected");
         },
         methods:{
             goback(){
@@ -30,7 +33,8 @@
                 this.$router.push({name:"login"});
             },
             registerP(){
-                this.$router.push("/register");
+                this.$router.push({name:"register"});
+                $(".mint-tab-item").eq(0).removeClass("is-selected");
             }
         }
     }
