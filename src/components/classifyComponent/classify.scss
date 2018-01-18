@@ -38,7 +38,7 @@ $fontsize1:0.2rem;
     }
     .right{
       flex: 1;
-
+      overflow-x: hidden;
       .cateBigImg{
         padding: 15px;
         img{
@@ -89,6 +89,7 @@ $fontsize1:0.2rem;
   //     height: 50px;
   //     line-height: 50px;
   //     padding-left:20px;
+  //     list-style-type:none
   //   }
   // }
 }

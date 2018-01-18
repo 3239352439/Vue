@@ -29,7 +29,8 @@ import http from '../../utils/reqAjax'
 export default {
   data: function(){
     return {
-      category:'',
+      category:[],
+      categoryIdx:[],
       url: "category.php",
       cateSamll:'1',
       categoryList:'',
@@ -37,6 +38,7 @@ export default {
     }
   },
   mounted(){
+    http.get({"url":this.url}).then( res => {
 
       if(res.data){
         this.categoryList = res.data;
