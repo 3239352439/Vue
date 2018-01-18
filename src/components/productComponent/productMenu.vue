@@ -3,36 +3,38 @@
     <ul class="Menu">
       <li @click="type">{{SmallId || all}}</li><li @click="sort">默认排序</li><li @click="filter">商品筛选</li>
     </ul>
+
     <div class="menus" v-if="status1" >
-      <ul class="menus_left">
-        <li v-for="(obj) in category" @click="toSmallcategory(obj.categoryId)">{{obj.categoryName}}</li>
-      </ul>
+      <div class="menus_left">
+        <div v-for="(obj) in category" @click="toSmallcategory(obj)">{{obj}}</div>
+      </div>
       <ul class="menus_right">
         <li v-for="(obj) in cateSamllList" >{{obj.classifyName}}</li>
     </ul>
     </div>
     <div class="sort" v-if="status2">
-      <ul>
-        <li>默认排序</li>
-        <li>价格最低</li>
-        <li>价格最高</li>
-        <li>折扣最高</li>
-        <li>人气最高</li>
-      </ul>
+
+        <div class="sortItem"><span>默认排序</span></div>
+        <div class="sortItem"><span>价格最低</span></div>
+        <div class="sortItem"><span>价格最高</span></div>
+        <div class="sortItem"><span>折扣最高</span></div>
+        <div class="sortItem"><span>人气最高</span></div>
+
     </div>
     <div class="filter" v-if="status3">
-        <ul>
-          <li>不限</li>
-          <li>新品上市</li>
-          <li>限时抢购</li>
-          <li>疯狂折扣</li>
-          <li>新手专享</li>
-          <li>今日特价</li>
-          <li>实时热卖</li>
-          <li>山姆热卖</li>
-          <li>超级星期三</li>
-        </ul>
-        <button>确定</button>
+        <div class="top">
+          <div class="filterItem"><span>不限</span></div>
+          <div class="filterItem"><span>新品上市</span></div>
+          <div class="filterItem"><span>限时抢购</span></div>
+          <div class="filterItem"><span>疯狂折扣</span></div>
+          <div class="filterItem"><span>新手专享</span></div>
+          <div class="filterItem"><span>今日特价</span></div>
+          <div class="filterItem"><span>实时热卖</span></div>
+          <div class="filterItem"><span>山姆热卖</span></div>
+          <div class="filterItem"><span>超级星期三</span></div>
+        </div>
+        <div class="filterBtn"><span>清除筛选</span><button>确定</button></div>
+
     </div>
   </div>
 </template>
@@ -43,7 +45,7 @@ export default {
   data: function(){
     return {
       url:"category.php",
-      category: '',
+      category: [],
       status1: false,
       cateSamllList: '',
       status2: false,
@@ -52,14 +54,24 @@ export default {
     }
   },
   props:['SmallId'],
+  mounted(){
+
+  },
   methods: {
     type(){
-      // console.log(666);
       http.get({"url":this.url}).then( res => {
-        this.category = res.data;
-        this.toSmallcategory(1);
-        // console.log(res.data);
-        this.status1 = !this.status1;
+        if(res.data){
+          this.categoryList = res.data;
+          this.catesm('水果');
+          res.data.forEach(function(item){
+            if( this.category.indexOf(item.categoryName) == -1){
+              this.category.push(item.categoryName);
+            }
+          }.bind(this))
+          // console.log(this.category)
+        }
+
+      this.status1 = !this.status1;
         if(this.status2 == true){
           this.status2 = !this.status2;
         }
@@ -69,10 +81,18 @@ export default {
       });
     },
     toSmallcategory(idx){
-      http.get({"url":this.url+"?cateSamll="+idx}).then( res => {
-        // console.log(res.data);
-        this.cateSamllList = res.data
-      })
+      this.catesm(idx)
+    },
+    catesm(name){
+      this.cateSamllList = [];
+      if(this.categoryList){
+        this.categoryList.forEach( item => {
+          if(item.categoryName == name){
+            this.cateSamllList.push(item)
+          }
+        })
+        // console.log(this.cateSamllList)
+      }
     },
     sort(){
       this.status2 = !this.status2;

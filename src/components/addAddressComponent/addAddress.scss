@@ -5,14 +5,14 @@ $hsize:0.6rem;
     display:flex;
     flex-direction:column;
         .add_header{
-            line-height: $hsize; 
+            line-height: $hsize;
             background:$mainColor;
              height: $hsize;
             .mint-header-title{
-             font-size:0.24rem; 
+             font-size:0.24rem;
              }
              .mint-button{
-            line-height: $hsize;  
+            line-height: $hsize;
              }
          }
          .add_main{
@@ -28,15 +28,15 @@ $hsize:0.6rem;
                  }
             }
             .address{
-                 height:48px; 
+                 height:48px;
                  padding:0 10px;
-                p{       
-                 
-                line-height: 48px;       
+                p{
+
+                line-height: 48px;
                      label{
-                        font-size:16px; 
-                        width: 105px;                  
-                         }  
+                        font-size:16px;
+                        width: 105px;
+                         }
                      span{
                         padding:3px 8px;
                         border:1px solid #ddd;
@@ -44,7 +44,7 @@ $hsize:0.6rem;
                         border-radius:10px;
                      }
                 }
-                
+
             }
             .active{
                 background:#26a2ff;

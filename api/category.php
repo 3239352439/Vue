@@ -9,7 +9,7 @@
     if( $cateSamll !==''){
       $sql = "select * from category,classifysmall  where category.categoryId= '$cateSamll' and category.categoryId = classifysmall.classifyBigId";
     }else {
-      $sql = "select * from category";
+      $sql = "select * from category,classifysmall  where category.categoryId = classifysmall.classifyBigId";
     }
 
     $result = query_oop($sql);
