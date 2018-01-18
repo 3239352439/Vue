@@ -69,7 +69,7 @@ module.exports = {
       }
     ]
   },
-  resolve: {
+  resolve:{
     alias: {
       'vue$': 'vue/dist/vue.esm.js'
     },
@@ -83,6 +83,7 @@ module.exports = {
   performance: {
     hints: false
   },
+ 
   devtool: '#eval-source-map'
 }
 
@@ -102,7 +103,7 @@ if (process.env.NODE_ENV === 'production') {
       }
     }),
     new webpack.LoaderOptionsPlugin({
-      minimize: true
+     minimize: true
     })
   ])
 }
