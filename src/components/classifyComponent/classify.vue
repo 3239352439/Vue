@@ -39,7 +39,6 @@ export default {
   },
   mounted(){
     http.get({"url":this.url}).then( res => {
-
       if(res.data){
         this.categoryList = res.data;
         this.catesm('水果');

@@ -38,7 +38,7 @@ $fontsize1:0.2rem;
     }
     .right{
       flex: 1;
-
+      overflow-x: hidden;
       .cateBigImg{
         padding: 15px;
         img{
