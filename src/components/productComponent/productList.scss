@@ -118,6 +118,8 @@ $fontsize1:0.2rem;
     .goodItem{
       display: flex;
       padding:30px 20px;
+      border-bottom: 1px solid #eee;
+
       .left_img{
         width: 200px;
         img{
@@ -128,38 +130,44 @@ $fontsize1:0.2rem;
       .right_prd_mess{
         flex: 1;
         .goodName{
-          font-size: 35px;
+          font-size: 34px;
           font-family: '微软雅黑';
           height: 60px;
+          width: 300px;
           line-height: 60px;
+          white-space:nowrap;
+          text-overflow:ellipsis;
+          overflow:hidden;
         }
         .goodDescribe{
-          font-size: 20px;
+          font-size: 22px;
           height: 50px;
           line-height: 50px;
           color:#cca;
         }
-        .goodSize{
-          height: 50px;
-          padding:10px;
-          span{
-            background: #eee;
-            padding:10px;
-            border-radius: 20px;
-            // margin:20px 0;
-          }
-        }
         h4{
           position: relative;
         }
+        .goodSize{
+          height: 30px;
+          margin:10px 0 20px 0;
+          span{
+            background: #eee;
+            padding:10px;
+            font-size: 20px;
+            border-radius: 20px;
+          }
+        }
+
         .goodPre{
-          font-size: 30px;
+          font-size: 40px;
           color:orange;
         }
         .goodOrgpre{
           // font-size: 16px;
           text-decoration: line-through;
           margin-left: 30px;
+          font-size: 28px;
         }
         .buy{
           position: absolute;
@@ -167,8 +175,9 @@ $fontsize1:0.2rem;
           width: 150px;
           border:none;
           background: rgb(255, 149, 10);
-          height: 40px;
-          bottom: 30px;
+          height: 50px;
+          bottom: 20px;
+          // line-height: 50px;
           font-size: 24px;
           border-radius: 8px;
           color:#fff;

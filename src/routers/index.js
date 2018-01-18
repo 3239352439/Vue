@@ -3,7 +3,7 @@ import VueRouter from 'vue-router'
 import MintUI from 'mint-ui'
 import Vuex from 'vuex'
 
-import '../../node_modules/mint-ui/lib/style.css'
+// import '../../node_modules/mint-ui/lib/style.css'
 import search from '../components/searchComponent/search'
 
 import categoryComponent from '../components/classifyComponent/classify.vue'
@@ -15,6 +15,7 @@ import getAddress from '../components/getAddressComponent/getAddress.vue'
 import autoAddress from '../components/autoAddressComponent/autoAddress.vue'
 import addAddress from '../components/addAddressComponent/addAddress.vue'
 import '../sass/base.scss'
+import '../sass/styleRem.css'
 import rem from '../getRem/getRem.js'
 rem.rem();
 
