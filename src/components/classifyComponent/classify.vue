@@ -29,13 +29,11 @@ import http from '../../utils/reqAjax'
 export default {
   data: function(){
     return {
-<<<<<<< HEAD
       category:'',
       url: "category.php",
       cateSamll:'1',
       categoryList:'',
       cateSamllList:[]
->>>>>>> f8e00201ef0ce0bf975a111c219dbb7e6f54e2a4
     }
   },
   mounted(){

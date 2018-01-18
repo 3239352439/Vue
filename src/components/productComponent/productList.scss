@@ -1,44 +1,3 @@
-<<<<<<< HEAD
-.Menu_cen{
-  height: 100%;
-  .Menu{
-    height: 30px;
-    li{
-      width: 100px;
-      border: 1px solid #ccc;
-      float: left;
-    }
-  }
-  .menus{
-    height: 100%;
-    .menus_left{
-      width: 100px;
-      float: left;
-      li{
-        height: 40px;
-        background: #eee;
-        line-height: 40px;
-      }
-    }
-    .menus_right{
-      width: 200px;
-      float: left;
-      li{
-        height: 30px;
-        background: #eee;
-        line-height: 30px;
-      }
-    }
-    .left_img{
-      width: 150px;
-      height: 150px;
-      img{
-        width: 100%;
-        height: 100%;
-      }
-    }
-  }
-=======
 $hsize:0.6rem;
 $fontsize:0.25rem;
 $fontsize1:0.2rem;
@@ -264,5 +223,4 @@ $fontsize1:0.2rem;
   //     }
   //   }
   // }
->>>>>>> f8e00201ef0ce0bf975a111c219dbb7e6f54e2a4
 }
