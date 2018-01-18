@@ -1,4 +1,4 @@
-/* 
+/*
 * @Author: Marte
 * @Date:   2017-12-07 17:33:59
 * @Last Modified by:   Marte
@@ -48,7 +48,7 @@ export default {
                        reject(error);
                     }
                 );
-   
+
         })
     }
 }

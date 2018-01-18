@@ -1,0 +1,79 @@
+$mainColor:#26a2ff;
+$hsize:45px;
+html,body{
+    height: 100%;
+}
+#sm_get{
+    height: 100%;
+    display:flex;
+    flex-direction:column;
+    .get_header{
+        line-height: $hsize; 
+        background:$mainColor;
+         height: $hsize;
+        .mint-header-title{
+         font-size:18px;   
+         }
+        .mint-button{
+            line-height: $hsize;  
+             }
+    }
+    .searchAddr{
+        height: 55px;
+        background:#d9d9d9;
+        .mint-search{
+        height: 45px;
+        margin:5px 0;
+        }
+    }
+    .get_main{
+        flex:1;
+        position:relative;
+        background:#d9d9d9;
+        .address{
+            background:#fff;
+            height: 50px;
+            p{  
+                color:#58bc58;
+                text-align:left;
+                font-size:18px;
+                line-height: 50px;
+                i{
+                    line-height: 50px;
+                }
+                i:nth-child(2){
+                    float:right;
+                    margin-right:10px;
+                }
+                i:nth-child(1){
+                    float:left;
+                    margin-left:10px;
+                }
+                
+            }
+        }
+    .get_footer{
+            position:absolute;
+            bottom:0px;
+            left:0;
+            right:0;
+            height: 50px;
+            line-height: 50px;
+            text-align:center;
+            color:#fff;
+            font-size:18px;
+            width: 100%;
+            background:$mainColor;
+        }
+        .myAddress{
+            h4{
+                padding:10px;
+
+            }
+            ul{
+                background:#fff;
+            }
+    }
+    }
+
+}

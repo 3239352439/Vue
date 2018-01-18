@@ -1,0 +1,60 @@
+$mainColor:#26a2ff;
+$hsize:0.6rem;
+#sm_add{
+    height: 100%;
+    display:flex;
+    flex-direction:column;
+        .add_header{
+            line-height: $hsize; 
+            background:$mainColor;
+             height: $hsize;
+            .mint-header-title{
+             font-size:0.24rem; 
+             }
+             .mint-button{
+            line-height: $hsize;  
+             }
+         }
+         .add_main{
+            flex:1;
+            .gender{
+                 span{
+                    text-decoration:none;
+                    font-size:0.186667rem;
+                    padding:0.04rem 0.106667rem;
+                    border:0.013333rem solid #ddd;
+                    margin-left:0.2rem;
+                    border-radius:0.106667rem;
+                 }
+            }
+            .address{
+                 height:48px; 
+                 padding:0 10px;
+                p{       
+                 
+                line-height: 48px;       
+                     label{
+                        font-size:16px; 
+                        width: 105px;                  
+                         }  
+                     span{
+                        padding:3px 8px;
+                        border:1px solid #ddd;
+                        margin-right:15px;
+                        border-radius:10px;
+                     }
+                }
+                
+            }
+            .active{
+                background:#26a2ff;
+                color:#fff;
+            }
+            .mint-button--large{
+                width: 90%;
+                border-radius:20px;
+                margin:auto;
+                margin-top:30px;
+            }
+         }
+}

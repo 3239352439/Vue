@@ -12,6 +12,7 @@
   "dependencies": {
     "axios": "^0.17.1",
     "babel-preset-latest": "^6.24.1",
+    "jsonwebtoken": "^8.1.0",
     "lib-flexible": "^0.3.2",
     "mint-ui": "^2.2.13",
     "px2rem-loader": "^0.1.7",

@@ -5,24 +5,22 @@
             <mt-button icon="back">返回</mt-button>
           </router-link>
          <mt-search class="h_center"
-             v-model="value"
-              placeholder="搜索">
-         
+              placeholder="搜索"
+              >        
         </mt-search>
         <mt-button icon="search" slot="right" @click="skip"></mt-button>
         </div>
-        <div class="main">
+        <div class="main" @click.stop="getValue">
             <div class="hostory" v-if="result.length>0">
                 <h3>历史搜索<i class="glyphicon glyphicon-trash" @click="removesAll"></i></h3>
                 <ul class="show" >
-                  <li @click.stop="getValue" v-for="item in result">{{item}}</li>
+                  <li v-for="item in result">{{item}}</li>
                 </ul>
             </div>
             <div class="hot">
                 <h3>热门搜索</h3>
-                <ul class="show" @click.stop="getValue">
-                  <li>草莓</li>
-                  <li>烤肉</li>
+                <ul class="show" >
+                  <li v-for="item in hot">{{item}}</li>
                 </ul>
             </div>
 
@@ -37,36 +35,26 @@
     export default{
         data(){
             return {
-                 value:"",
-                 result:[]
+                 result:[],
+                 hot:['草莓','车厘子','烘焙','洗发水','肉','水果','烧烤','薯片','三文鱼','鱼','虾']
             }
         },
         methods:{
-            unique(arr){//去重
-          　　var res =[];
-          　　var json = {};
-          　　for(var i=0;i<arr.length;i++){
-          　　　　if(!json[arr[i]]){
-          　　　　　　res.push(arr[i]);
-          　　　　　　json[arr[i]] = 1;
-          　　　　}
-          　　}
-          　　return res;
-            },
             skip(){
-                if(this.value){
-                  this.result.push($.trim(this.value));
-                  this.result=(this.unique(this.result));
+                if($('.mint-searchbar-core').val()){
+                  this.result.push($.trim($('.mint-searchbar-core').val()));
+                  // 去重
+                  this.result=[... new Set(this.result)];
                   // 直接跳转列表页面
                   // this.$router.push({name: ''});
                 }
             },
             getValue(e){
-              var tag=e.target.tagName.toLowerCase();
-              if(tag=="li"){
-                this.value=e.target.innerText; 
-                // 直接跳转列表页面
-                // this.$router.push({name: ''});        
+              var tag=e.target.tagName.toLowerCase();            
+              if(tag=="li"){   
+                $('.mint-searchbar-core').val(e.target.innerText)
+              //   // 直接跳转列表页面
+              //   // this.$router.push({name: ''});        
                 
               }
             },
