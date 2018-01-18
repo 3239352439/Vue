@@ -30,7 +30,7 @@
 </template>
 
 <script>
-    import { MessageBox } from 'mint-ui';
+    import { MessageBox,Header } from 'mint-ui';
     import './search.scss'
     export default{
         data(){

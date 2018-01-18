@@ -1,5 +1,5 @@
 $mainColor:#26a2ff;
-$hsize:45px;
+$hsize:0.6rem;
 html,body{
     height: 100%;
 }
@@ -12,7 +12,7 @@ html,body{
          line-height: $hsize;
          background:$mainColor;
         .mint-header-title{
-         font-size:18px;   
+         font-size:0.24rem;   
          }
          .mint-button{
             line-height: $hsize;  
@@ -22,7 +22,7 @@ html,body{
         flex:1;
         position:relative;
         #r-result{
-            padding-top:10px;
+            padding-top:0.13rem;
             position:absolute;
             display:flex;
             top:0;
@@ -30,36 +30,36 @@ html,body{
             right:0;
             z-index:2;
             #cityName{
-                border-radius:10px 0 0 10px ;
-                height: 30px;
+                border-radius:0.13rem 0 0 0.13rem ;
+                height: 0.4rem;
                 text-align:center;
                 display:block;
                 width:80%;
-                margin:0px 0% 10px 5%;    
+                margin:0rem 0% 0.13rem 5%;    
             }
             .btn{
                 text-align:center;
-                height: 30px;
-                border-radius:0 10px 10px 0;
+                height: 0.4rem;
+                border-radius:0 0.13rem 0.13rem 0;
             }
         }
         #allmap{
         height:100%;width:100%;}
     }
     .local{
-        width: 40px;
-        height: 40px;
+        width: 0.53rem;
+        height: 0.53rem;
         background:#fff;
         position:absolute;
-        right:10px;
+        right:0.13rem;
         top:50%;
         z-index:2;
         transform:translateY(-50%);
         text-align:center;
         border-radius:50%;
         i{
-            font-size:20px;
-            line-height: 40px;
+            font-size:0.27rem;
+            line-height: 0.53rem;
             color:blue;
         }
     }

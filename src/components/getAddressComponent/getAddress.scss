@@ -1,5 +1,5 @@
 $mainColor:#26a2ff;
-$hsize:45px;
+$hsize:0.6rem;
 html,body{
     height: 100%;
 }
@@ -8,22 +8,22 @@ html,body{
     display:flex;
     flex-direction:column;
     .get_header{
-        line-height: $hsize; 
+        line-height: $hsize;
         background:$mainColor;
          height: $hsize;
         .mint-header-title{
-         font-size:18px;   
+         font-size:0.24rem;
          }
         .mint-button{
-            line-height: $hsize;  
+            line-height: $hsize;
              }
     }
     .searchAddr{
-        height: 55px;
+        height: 0.73rem;
         background:#d9d9d9;
         .mint-search{
-        height: 45px;
-        margin:5px 0;
+        height: 0.6rem;
+        margin:0.07rem 0;
         }
     }
     .get_main{
@@ -32,42 +32,42 @@ html,body{
         background:#d9d9d9;
         .address{
             background:#fff;
-            height: 50px;
-            p{  
+            height: 0.67rem;
+            p{
                 color:#58bc58;
                 text-align:left;
-                font-size:18px;
-                line-height: 50px;
+                font-size:0.24rem;
+                line-height: 0.67rem;
                 i{
-                    line-height: 50px;
+                    line-height: 0.67rem;
                 }
                 i:nth-child(2){
                     float:right;
-                    margin-right:10px;
+                    margin-right:0.13rem;
                 }
                 i:nth-child(1){
                     float:left;
-                    margin-left:10px;
+                    margin-left:0.13rem;
                 }
-                
+
             }
         }
     .get_footer{
             position:absolute;
-            bottom:0px;
+            bottom:0rem;
             left:0;
             right:0;
-            height: 50px;
-            line-height: 50px;
+            height: 0.67rem;
+            line-height: 0.67rem;
             text-align:center;
             color:#fff;
-            font-size:18px;
+            font-size:0.24rem;
             width: 100%;
             background:$mainColor;
         }
         .myAddress{
             h4{
-                padding:10px;
+                padding:0.13rem;
 
             }
             ul{
