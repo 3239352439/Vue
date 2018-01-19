@@ -16,10 +16,15 @@ input{
 header,footer,section,main,nav{
     display:block;}
 body{
-  /*  font-size:12px;*/
+    // font-size:12px;
+    // font-size: 0.37rem;
     font-family:"微软雅黑";
     color:#3e3e3e;}
 a{
+    text-decoration:none;
+    // color:#0dc441;
+}
+a:hover{
     text-decoration:none;
     // color:#0dc441;
 }

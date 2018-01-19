@@ -8,14 +8,14 @@ html,body{
     display:flex;
     flex-direction:column;
     .get_header{
-        line-height: $hsize; 
+        line-height: $hsize;
         background:$mainColor;
          height: $hsize;
         .mint-header-title{
-         font-size:0.24rem;   
+         font-size:0.24rem;
          }
         .mint-button{
-            line-height: $hsize;  
+            line-height: $hsize;
              }
     }
     .searchAddr{
@@ -33,7 +33,7 @@ html,body{
         .address{
             background:#fff;
             height: 0.67rem;
-            p{  
+            p{
                 color:#58bc58;
                 text-align:left;
                 font-size:0.24rem;
@@ -49,7 +49,7 @@ html,body{
                     float:left;
                     margin-left:0.13rem;
                 }
-                
+
             }
         }
     .get_footer{

@@ -23,14 +23,15 @@
         // 将数据写入数据库并返回信息
         // 将数据写进数据库
         $sql = "insert into user(phone,password) values ('$phone','$password')";
-
+        $phone = md5($phone);
+        
         $result = excute_oop($sql);
         // var_dump($result);
         // 获取查询结果
         // $row = $result->fetch_all(MYSQLI_ASSOC);
         if($result){
             // 插入成功
-            echo "true";
+            echo $phone;
         }else{
             echo "fail";
         }

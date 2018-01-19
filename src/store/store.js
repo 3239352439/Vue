@@ -4,10 +4,10 @@ import { Indicator,MessageBox } from 'mint-ui';
 
 Vue.use(Vuex);
 
-
 const store = new Vuex.Store({
     state:{
         site:"",//地址
+        phoneNum:"",
         loadspinner:function(){
             Indicator.open({
                 text: '加载中...',
@@ -45,8 +45,12 @@ const store = new Vuex.Store({
           geocoder.getLocation(e.point,function(rs){
                state.site=rs.address;
             });
+        
+         },
+        createPhone(state,val){
+            state.phoneNum = val;
         }
-    }
+      }
 })
 
-export default store;
+export default store
