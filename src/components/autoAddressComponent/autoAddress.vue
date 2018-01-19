@@ -30,15 +30,17 @@
         }
     },
     mounted(){
+      var self=this;
       var map = new BMap.Map("allmap");
       var point = new BMap.Point(113.27416, 23.133523);
       map.centerAndZoom(point,11);
-      map.enableScrollWheelZoom();   
+     map.enableScrollWheelZoom();   
       //启用滚轮放大缩小，默认禁用
       map.enableContinuousZoom();   
        //启用地图惯性拖拽，默认禁用
        currentAddress();
        // 当前地址
+       // this.$store.commit('getSite');
       function currentAddress(){   
          var geolocation = new BMap.Geolocation();
            geolocation.getCurrentPosition(function(r){
@@ -47,7 +49,7 @@
             map.addOverlay(mk);
             map.panTo(r.point);
             geocoder.getLocation(r.point,function(rs){
-              MessageBox.alert('你当前所在位置:'+rs.address).then(action => {});
+              MessageBox.alert('你当前所在位置:'+rs.address).then(action => {});            
               });
           }
           else {
@@ -55,7 +57,9 @@
           }        
         },{enableHighAccuracy: true})
       }
-      $('.local').click(currentAddress);
+      $('.local').click(()=>{
+        currentAddress();
+      });
        //获取搜索位置
       $('.btn').click(theLocation);
       function theLocation(){
@@ -66,10 +70,9 @@
       }
       var geocoder= new BMap.Geocoder();
       //给地图添加点击事件 获取点击时的地址
-        map.addEventListener("click",function(e){ 
-            geocoder.getLocation(e.point,function(rs){
-                console.log(rs.address)
-            });
+        map.addEventListener("click",(e)=>{
+            this.$store.commit('selectSite',e,self);
+            self.$router.push({name:"addAddress"})
 
         });
         }

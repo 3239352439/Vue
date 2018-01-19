@@ -68,10 +68,12 @@ html,body{
         .myAddress{
             h4{
                 padding:0.13rem;
+                font-size:0.24rem;
 
             }
-            ul{
+            .addressList{
                 background:#fff;
+                overflow:auto;
             }
     }
     }

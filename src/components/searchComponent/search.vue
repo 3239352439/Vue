@@ -60,8 +60,7 @@
             },
             removesAll(){
                 MessageBox.confirm('确定删除全部历史搜索记录?').then(action => {
-                  this.result=[];
-                  
+                  this.result=[];   
               });
                 
             }
