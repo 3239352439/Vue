@@ -63,12 +63,11 @@ function multi_query_oop($sql) {
 
 //初始化连接对象方法
 function connect() {
-
-    $servername = "10.3.136.6";
+    $servername = "10.3.136.6";//
     $username = "root";
     $password = "root";
     $dbname = 'supermarket';
-    //初始化连接，返回一个连接对象(包含所连接数据库的信息)
+    // 初始化连接，返回一个连接对象(包含所连接数据库的信息)
     $con = mysqli_connect($servername, $username, $password, $database);
     header('Access-Control-Allow-Origin:*');
     //获取连接对象的错误信息
@@ -103,7 +102,7 @@ function query($sql) {
         // echo json_encode($jsonData, JSON_UNESCAPED_UNICODE);
         // }
         // 释放结果集
-        
+
         mysqli_free_result($result);
     }
     //关闭连接

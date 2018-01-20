@@ -8,15 +8,7 @@ const store = new Vuex.Store({
     state:{
         site:"",//地址
         phoneNum:"",
-        loadspinner:function(){
-            Indicator.open({
-                text: '加载中...',
-                spinnerType: 'fading-circle'
-            });
-        },
-        closeSpinner:function(){
-            Indicator.close();
-        }
+        categoryId:""
     },
     mutations:{
       //获取当前位置
@@ -34,9 +26,9 @@ const store = new Vuex.Store({
                state.site=rs.address;
                });
            }
-           else {              
+           else {
             alert('failed'+this.getStatus());
-           }        
+           }
          },{enableHighAccuracy: true})
         },
         // 点击地图后获取位置
@@ -45,10 +37,13 @@ const store = new Vuex.Store({
           geocoder.getLocation(e.point,function(rs){
                state.site=rs.address;
             });
-        
+
          },
         createPhone(state,val){
             state.phoneNum = val;
+        },
+        getCategoryId(state, val){
+          state.categoryId = val;
         }
       }
 })
