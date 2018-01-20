@@ -36,7 +36,7 @@
                 http.get({url:"login.php?phone=" + this.phone + "&password=" + this.password}).then((res)=>{
                     setTimeout(function(){
                         spinner.closeSpinner();
-                        if(res.data){
+                        if(res.data == true){
                             this.$store.commit('createPhone',this.phone);
                             this.type = false;
                             var now = new Date();

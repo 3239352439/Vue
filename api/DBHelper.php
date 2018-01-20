@@ -1,6 +1,7 @@
 <?php
     function connect_oop() {
         // 配置参数
+
         $servername = '10.3.136.6';
         $username = 'root';
         $password = 'root';
@@ -83,6 +84,7 @@ function query($sql) {
     //初始化连接
     $conn = connect();
     //执行 sql 脚本，也叫数据库脚本，返回一个结果集（对象）
+    $conn->set_charset('utf8');
     $result = mysqli_query($conn, $sql);
     //定义了一个数组
     $jsonData = array();
@@ -100,6 +102,7 @@ function query($sql) {
         // echo json_encode($jsonData, JSON_UNESCAPED_UNICODE);
         // }
         // 释放结果集
+
         mysqli_free_result($result);
     }
     //关闭连接
