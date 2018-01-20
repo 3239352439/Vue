@@ -5,6 +5,11 @@
 
     $data= isset($_POST['data']) ? $_POST['data'] : "";
     $checkData=isset($_GET['checkData'])?$_GET['checkData']:'';
+    $updata=isset($_POST['updata'])?$_POST['updata']:'';
+     $receiveId=isset($_POST['receiveId'])?$_POST['receiveId']:'';
+    $id=isset($_GET['id'])?$_GET['id']:'';
+    $delId=isset($_POST['delId'])?$_POST['delId']:'';
+
     if($data){
         $arr=changeArr($data);
         $key=implode(',',$arr[0]);   
@@ -30,6 +35,40 @@
         $result=multi_query_oop($sql);
         echo json_encode($result, JSON_UNESCAPED_UNICODE);
     }
+    if($id){
+        $sql="select * from address where receiveId=$id";
+         $result =query_oop($sql);
+         echo json_encode($result, JSON_UNESCAPED_UNICODE);
+
+    }
+    if($updata){
+        $newData=json_decode($updata);
+        $arr=array();
+        // 转为$key='$value'的形式
+        foreach($newData as $key =>$val){
+            $arr[]=$key."='".$val."'";        
+       }
+       $data=implode(',',$arr); 
+       $sql="update address set $data where receiveId=$receiveId";
+        $result =excute_oop($sql);
+        if($result){
+            // 插入成功
+            echo "true";
+        }else{
+            echo "false";
+        }
+    }
+    if($delId){
+        $sql="delete from address where receiveId=$delId";
+         $result =excute_oop($sql);
+        if($result){
+            // 插入成功
+            echo "true";
+        }else{
+            echo "false";
+        }
+    }
+    
     // key、value分别存放为两个数组
     function changeArr($data){
         $address=json_decode($data);//转对象
@@ -44,5 +83,4 @@
 
     }
 
-    
 ?>

@@ -21,7 +21,7 @@ rem.rem();
 
 import login from '../components/loginComponent/login.vue'
 import loginParent from '../components/loginParentComponent/loginParent.vue'
-
+import home from '../components/home/home.vue'
 Vue.use(Vuex);
 Vue.use(MintUI);
 Vue.use(VueRouter);
@@ -49,7 +49,7 @@ var router = new VueRouter({
             component:autoAddress
         },
         {
-            path:'/addAddress',
+            path:'/addAddress/:id',
             name:'addAddress',
             component:addAddress
         },{
@@ -73,6 +73,11 @@ var router = new VueRouter({
                 }
             ]
         },
+        {
+            path:'/',
+            name:"home",
+            component:home
+        }
 
     ]
 })
