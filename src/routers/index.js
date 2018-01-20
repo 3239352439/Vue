@@ -20,8 +20,9 @@ import rem from '../getRem/getRem.js'
 rem.rem();
 
 import login from '../components/loginComponent/login.vue'
-import loginParent from '../components/loginParentComponent/loginParent.vue'
-
+import loginParent from '../components/loginParentComponent/loginParent.vue';
+import detailPageComponent from '../components/detailPageComponent/detailPage.vue';
+import carComponent from '../components/carComponent/car.vue'
 Vue.use(Vuex);
 Vue.use(MintUI);
 Vue.use(VueRouter);
@@ -72,7 +73,15 @@ var router = new VueRouter({
                     component: login
                 }
             ]
-        },
+        },{
+          path: '/detailpage',
+          name: 'detailpage',
+          component: detailPageComponent
+        },{
+          path: '/car',
+          name: 'car',
+          component: carComponent
+        }
 
     ]
 })

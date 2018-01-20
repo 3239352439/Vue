@@ -1,7 +1,7 @@
 <template>
   <div class="Menu_cen">
     <ul class="Menu">
-      <li @click="type">{{SmallId || all}}</li><li @click="sort">默认排序</li><li @click="filter">商品筛选</li>
+      <li @click="type">{{SmallId || all}}</li><li @click="sort">{{SortName}}</li><li @click="filter">商品筛选</li>
     </ul>
 
     <div class="menus" v-if="status1" >
@@ -9,16 +9,14 @@
         <div v-for="(obj) in category" @click="toSmallcategory(obj)">{{obj}}</div>
       </div>
       <ul class="menus_right">
-        <li v-for="(obj) in cateSamllList" >{{obj.classifyName}}</li>
+        <li v-for="(obj) in cateSamllList" @click="getproductId(obj.classifySmallId,$event)">{{obj.classifyName}}</li>
     </ul>
     </div>
     <div class="sort" v-if="status2">
-
-        <div class="sortItem"><span>默认排序</span></div>
-        <div class="sortItem"><span>价格最低</span></div>
-        <div class="sortItem"><span>价格最高</span></div>
-        <div class="sortItem"><span>折扣最高</span></div>
-        <div class="sortItem"><span>人气最高</span></div>
+        <div class="sortItem" @click="getsort('DefaultSort',$event)"><span>默认排序</span></div>
+        <div class="sortItem" @click="getsort('LowPriceSort',$event)"><span>价格最低</span></div>
+        <div class="sortItem" @click="getsort('HighPriceSort',$event)"><span>价格最高</span></div>
+        <div class="sortItem" @click="getsort('DiscountSort',$event)"><span>折扣最高</span></div>
 
     </div>
     <div class="filter" v-if="status3">
@@ -50,7 +48,8 @@ export default {
       cateSamllList: '',
       status2: false,
       status3: false,
-      all: '全部'
+      all: '全部',
+      SortName: '默认排序'
     }
   },
   props:['SmallId'],
@@ -70,7 +69,6 @@ export default {
           }.bind(this))
           // console.log(this.category)
         }
-
       this.status1 = !this.status1;
         if(this.status2 == true){
           this.status2 = !this.status2;
@@ -81,7 +79,8 @@ export default {
       });
     },
     toSmallcategory(idx){
-      this.catesm(idx)
+      this.catesm(idx);
+      // console.log(1,idx)
     },
     catesm(name){
       this.cateSamllList = [];
@@ -111,6 +110,44 @@ export default {
       if(this.status2 == true){
         this.status2 = !this.status2;
       }
+    },
+    // 获取点击后的categoryId改变父组件的categoryId
+    getproductId(idx,event){
+      // console.log(event.target.innerText);
+      this.all = event.target.innerText;
+      // 将获取到的categoryId存入store里
+      this.$store.commit('getCategoryId', idx);
+      // 将从store里获取到的categoryId存入父组件的categoryId
+      this.$parent.categoryId = this.$store.state.categoryId;
+      // console.log('id',this.$parent.categoryId);
+      // console.log(this.status1)
+      if(this.status1== true){
+        this.status1 = !this.status1;
+      }
+    },
+    getsort(obj,event){
+      // console.log(this.$parent.dataset)
+      obj = JSON.stringify(obj)
+      this.ajax(obj)
+      if(this.status2== true){
+        this.status2 = !this.status2;
+      }
+      this.SortName = event.target.innerText;
+      // console.log(obj);
+    },
+    ajax(name){
+      var categoryId = this.$parent.categoryId;
+      if(this.$parent.categoryId == undefined){
+        categoryId = '0'
+      }
+      http.get({"url":'productListSort.php'+'?categoryId='+categoryId + '&Sort='+ name}).then ( res => {
+        // this.dataset = res.data;
+        this.$parent.dataset = res.data;
+        // console.log(res.data)
+      })
+      // http.post({"url":'productListSort.php',parmas:{categoryId: this.$parent.categoryId,Sort:name}}).then ( res => {
+      //   console.log(res.data)
+      // })
     }
   }
 }

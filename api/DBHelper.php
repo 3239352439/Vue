@@ -1,7 +1,7 @@
 <?php
     function connect_oop() {
         // 配置参数
-        $servername = '10.3.136.76';
+        $servername = '10.3.136.6';
         $username = 'root';
         $password = 'root';
         $database = 'supermarket';
@@ -62,11 +62,11 @@ function multi_query_oop($sql) {
 
 //初始化连接对象方法
 function connect() {
-    $servername = "10.3.136.76";//
+    $servername = "10.3.136.6";//
     $username = "root";
     $password = "root";
     $dbname = 'supermarket';
-    //初始化连接，返回一个连接对象(包含所连接数据库的信息)
+    // 初始化连接，返回一个连接对象(包含所连接数据库的信息)
     $con = mysqli_connect($servername, $username, $password, $database);
     header('Access-Control-Allow-Origin:*');
     //获取连接对象的错误信息

@@ -8,10 +8,14 @@ Vue.use(Vuex);
 const store = new Vuex.Store({
     state:{
         phoneNum:"",
+        categoryId:""
     },
     mutations:{
         createPhone(state,val){
             state.phoneNum = val;
+        },
+        getCategoryId(state, val){
+          state.categoryId = val;
         }
     }
 })
