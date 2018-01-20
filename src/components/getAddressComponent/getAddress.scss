@@ -122,11 +122,14 @@ html,body{
                         width: 15%;
                         position:relative;
                         i{
+                            width:0.293333rem;
                             font-size:0.293333rem;
                             color:#d9d9d9;
                             position:absolute;
                             left:50%;
                             top:50%;
+                            // margin:0.13rem;
+                            display:block;
                             transform:translate(-50%,-50%);
                         }
                     }
