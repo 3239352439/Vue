@@ -4,7 +4,7 @@
     include "DBHelper.php";
 
     $categoryId = isset($_GET['categoryId']) ? $_GET['categoryId'] : "0";
-    $Sort = isset($_GET['Sort']) ? $_GET['Sort'] : "DefaultSort";
+    $Sort = isset($_GET['Sort']) ? $_GET['Sort'] : "";
 
     $Sort = json_decode($Sort);
     $sql;
@@ -21,7 +21,6 @@
         }
       } else if( $Sort == 'LowPriceSort'){
         if( $categoryId == '0' ){
-
           $sql = "select * from classifysmall,product,productimg where classifysmall.classifySmallId = product.classifySmallId and product.goodId = productimg.goodId ORDER BY product.Price asc";
         } else {
           $sql = "select * from classifysmall,product,productimg where classifysmall.classifySmallId = '$categoryId' and classifysmall.classifySmallId = product.classifySmallId and product.goodId = productimg.goodId ORDER BY product.Price asc";
@@ -44,6 +43,10 @@
           and product.goodId = productimg.goodId
           ORDER BY product.originalPrice-product.Price DESC";
         }
+      } else if( $Sort == 'random') {
+        $sql = "SELECT * FROM product,productimg
+        WHERE product.goodId = productimg.goodId
+         ORDER BY RAND() LIMIT 0,6;";
       }
     }
 

@@ -10,87 +10,17 @@
     </div>
     <div class="prdItem">
       <ul>
-        <li>
+        <li v-for="(obj,idx) in carprd" >
           <div class="prdImg">
             <input type="checkbox" name="" class="check">
-            <img src="../../assets/img/loading.jpg" alt="">
+            <img v-bind:src="obj.ImgUrl" alt="">
           </div>
           <div class="prdinfor">
-            <h3>sss</h3>
-            <h4>32933</h4>
+            <h3>{{obj.goodName}}</h3>
+            <h4>{{obj.describe}}</h4>
             <div class="prdprice">
-              <span class="price">价格</span>
-              <p><span class="compute">-</span><span class="num">1</span><span class="compute">+</span></p>
-            </div>
-          </div>
-        </li>
-         <li>
-          <div class="prdImg">
-            <input type="checkbox" name="" class="check">
-            <img src="../../assets/img/loading.jpg" alt="">
-          </div>
-          <div class="prdinfor">
-            <h3>sss</h3>
-            <h4>32933</h4>
-            <div class="prdprice">
-              <span class="price">价格</span>
-              <p><span class="compute">-</span><span class="num">1</span><span class="compute">+</span></p>
-            </div>
-          </div>
-        </li>
-          <li>
-          <div class="prdImg">
-            <input type="checkbox" name="" class="check">
-            <img src="../../assets/img/loading.jpg" alt="">
-          </div>
-          <div class="prdinfor">
-            <h3>sss</h3>
-            <h4>32933</h4>
-            <div class="prdprice">
-              <span class="price">价格</span>
-              <p><span class="compute">-</span><span class="num">1</span><span class="compute">+</span></p>
-            </div>
-          </div>
-        </li>
-          <li>
-          <div class="prdImg">
-            <input type="checkbox" name="" class="check">
-            <img src="../../assets/img/loading.jpg" alt="">
-          </div>
-          <div class="prdinfor">
-            <h3>sss</h3>
-            <h4>32933</h4>
-            <div class="prdprice">
-              <span class="price">价格</span>
-              <p><span class="compute">-</span><span class="num">1</span><span class="compute">+</span></p>
-            </div>
-          </div>
-        </li>
-          <li>
-          <div class="prdImg">
-            <input type="checkbox" name="" class="check">
-            <img src="../../assets/img/loading.jpg" alt="">
-          </div>
-          <div class="prdinfor">
-            <h3>sss</h3>
-            <h4>32933</h4>
-            <div class="prdprice">
-              <span class="price">价格</span>
-              <p><span class="compute">-</span><span class="num">1</span><span class="compute">+</span></p>
-            </div>
-          </div>
-        </li>
-          <li>
-          <div class="prdImg">
-            <input type="checkbox" name="" class="check">
-            <img src="../../assets/img/loading.jpg" alt="">
-          </div>
-          <div class="prdinfor">
-            <h3>sss</h3>
-            <h4>32933</h4>
-            <div class="prdprice">
-              <span class="price">价格</span>
-              <p><span class="compute">-</span><span class="num">1</span><span class="compute">+</span></p>
+              <span class="price">{{obj.Price}}</span>
+              <p v-bind:id="idx"><span class="compute">-</span><span class="num">{{sum ||obj.count}}</span><span class="compute" @click="compute_add($event)">+</span></p>
             </div>
           </div>
         </li>
@@ -98,27 +28,10 @@
       <div class="MayLike">
         <h1>猜你喜欢</h1>
         <ul>
-          <li>
-            <img src="../../assets/img/loading.jpg" alt="">
-            <h4><span>￥23.5</span><span class="glyphicon glyphicon-list-alt"></span></h4>
+          <li v-for="obj in randomData">
+            <img v-bind:src="obj.ImgUrl" alt="">
+            <h4><span>￥{{obj.Price}}</span><span class="glyphicon glyphicon-list-alt"></span></h4>
           </li>
-          <li>
-            <img src="../../assets/img/loading.jpg" alt="">
-            <h4><span>￥23.5</span><span class="glyphicon glyphicon-list-alt"></span></h4>
-          </li>
-          <li>
-            <img src="../../assets/img/loading.jpg" alt="">
-            <h4><span>￥23.5</span><span class="glyphicon glyphicon-list-alt"></span></h4>
-          </li>
-          <li>
-            <img src="../../assets/img/loading.jpg" alt="">
-            <h4><span>￥23.5</span><span class="glyphicon glyphicon-list-alt"></span></h4>
-          </li>
-          <li>
-            <img src="../../assets/img/loading.jpg" alt="">
-            <h4><span>￥23.5</span><span class="glyphicon glyphicon-list-alt"></span></h4>
-          </li>
-
         </ul>
       </div>
     </div>
@@ -136,28 +49,50 @@
 <script>
 import {Checklist} from 'mint-ui';
 import publicMenu from '../publicMenuComponent/publicMenu'
-import './car.scss'
+import './car.scss';
+import http from '../../utils/reqAjax';
+
 export default {
   data: function(){
     return {
-      value:[],
-      // options:[{
-      //   label: '选项A',
-      //   value: 'A',
-      //   },
-      //   {
-      //   label: '选项B',
-      //   value: 'B',
-      //   },
-      //   {
-      //   label: '选项C',
-      //   value: 'C'
-      //   },
-      //   {
-      //   label: '选项D',
-      //   value: 'D'
-      //   }]
+      randomData:[],
+      userid:1,
+      carprd:[],
+      sum:'',
+      aa:''
     }
+  },
+  mounted: function(){
+    http.get({"url":'productListSort.php'+'?Sort="random"& state= 1'}).then ( res => {
+       this.randomData = res.data;
+        // console.log(res.data)
+      })
+    http.post({"url":'car.php',parmas:{Getprd: this.userid}}).then ( res => {
+      // console.log(res.data)
+      this.carprd = res.data;
+    })
+  },
+  methods :{
+    compute_add(event){
+      var target = event.target;
+      console.log(target)
+      if(target.innerText == '+'){
+        console.log(event)
+
+      }
+      // console.log('event',event.target.parentNode.children[1].innerText);
+      // this.aa = event.target;
+      // var id = target.parentNode.getAttribute('id');
+
+      // var a = document.getElementById(id).
+      // console.log(a)
+      // this.sum = (event.target.parentNode.children[1].innerText*1)+1
+
+      // console.log('sum',this.sum)
+    }
+  },
+  computed: {
+
   },
   components: {
     publicMenu

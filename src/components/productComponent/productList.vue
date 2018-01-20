@@ -23,7 +23,7 @@
       </div>
     </div>
     <div class="addCar">
-      <div class="carIcom"><i class="glyphicon glyphicon-th"></i><span class="carNum">{{carNum}}</span></div><div class="prdNum">已选<span>{{prdNum}}</span></div><div class="prdprice"><span>￥{{reverseprdPrice}}</span></div><div class="account"><button>去结算</button></div>
+      <div class="carIcom" @click="toCar"><i class="glyphicon glyphicon-th"></i><span class="carNum">{{carNum}}</span></div><div class="prdNum">已选<span>{{prdNum}}</span></div><div class="prdprice"><span>￥{{reverseprdPrice}}</span></div><div class="account"><button>去结算</button></div>
     </div>
   </div>
 </template>
@@ -102,6 +102,9 @@ export default {
       if(_event.target.tagName !== 'BUTTON'){
         this.$router.push({ name: 'detailpage',params: obj});
       }
+    },
+    toCar(){
+      this.$router.push({ name: 'car'});
     }
   },
   watch: {
