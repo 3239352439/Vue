@@ -8,7 +8,10 @@ const store = new Vuex.Store({
     state:{
         site:"",//地址
         phoneNum:"",
-        categoryId:""
+        categoryId:"",
+        selectTotle:"",
+        priceTotle:"",
+        checkedCarId: ""
     },
     mutations:{
       //获取当前位置
@@ -35,8 +38,8 @@ const store = new Vuex.Store({
         selectSite(state,e,self){
           var geocoder= new BMap.Geocoder();
           geocoder.getLocation(e.point,function(rs){
-               state.site=rs.address;
-            });
+              state.site=rs.address;
+          });
 
          },
         createPhone(state,val){
@@ -44,6 +47,15 @@ const store = new Vuex.Store({
         },
         getCategoryId(state, val){
           state.categoryId = val;
+        },
+        getSelectTotle(state,val){
+          state.selectTotle = val;
+        },
+        getOriceTotle(state,val){
+          state.priceTotle = val;
+        },
+        getCheckedCarId(state,val){
+          state.checkedCarId = val;
         }
       }
 })

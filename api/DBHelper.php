@@ -2,7 +2,7 @@
     function connect_oop() {
         // 配置参数
 
-        $servername = '10.3.136.6';
+        $servername = '10.3.136.49';
         $username = 'root';
         $password = 'root';
         $database = 'supermarket';
@@ -63,7 +63,7 @@ function multi_query_oop($sql) {
 
 //初始化连接对象方法
 function connect() {
-    $servername = "10.3.136.6";//
+    $servername = "10.3.136.49";//
     $username = "root";
     $password = "root";
     $dbname = 'supermarket';

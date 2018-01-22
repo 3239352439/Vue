@@ -23,7 +23,7 @@
       </div>
     </div>
     <div class="addCar">
-      <div class="carIcom" @click="toCar"><i class="glyphicon glyphicon-th"></i><span class="carNum">{{carNum}}</span></div><div class="prdNum">已选<span>{{prdNum}}</span></div><div class="prdprice"><span>￥{{reverseprdPrice}}</span></div><div class="account"><button>去结算</button></div>
+      <div class="carIcom" @click="toCar"><i class="glyphicon glyphicon-th"></i><span class="carNum">{{carNum}}</span></div><div class="prdNum">已选<span>{{prdNum}}</span></div><div class="prdprice"><span>￥{{prdPrice}}</span></div><div class="account"><button>去结算</button></div>
     </div>
   </div>
 </template>
@@ -43,11 +43,15 @@ export default {
       name:'',
       carNum:0,
       prdNum:0,
-      prdPrice:'0.00',
+      prdPrice:0,
       userid:1
     }
   },
   mounted(){
+    console.log(this.$store.state.checkedCarId);
+    this.prdNum = this.$store.state.selectTotle;
+    this.prdPrice =  this.$store.state.priceTotle;
+
     // console.log(this.$route.params.name)
     this.categoryId = this.$route.params.id;
     this.name = this.$route.params.name;
@@ -59,21 +63,21 @@ export default {
     http.post({"url":'Car.php',parmas:{userid: this.userid}}).then ( res => {
       // console.log(res.data[0].Price)
       this.carNum = res.data[0].totle;
-      this.prdPrice = res.data[0].Price;
+      // this.prdPrice = res.data[0].Price;
     })
   },
   computed: {
-    reverseprdPrice:{
+    // reverseprdPrice:{
       // console.log('a',this.prdPrice.toFixed(2))
       // return this.prdPrice;
-      get: function(){
-        return this.prdPrice;
-      },
-      set: function(newValue){
-        this.prdPrice = newValue;
+    //   get: function(){
+    //     return this.prdPrice;
+    //   },
+    //   set: function(newValue){
+    //     this.prdPrice = newValue;
         // console.log(this.prdPrice)
-      }
-    }
+    //   }
+    // }
   },
   methods:{
     // 二次封装ajax请求
