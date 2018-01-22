@@ -6,14 +6,14 @@
     $password = md5($password);
 
     $sql = "select * from user where phone = '$phone' and password = '$password'";
-
+    $phone = md5($phone);
     $result = query_oop($sql);
     // $result = $conn->query($sql);
     //使用查询结果集
     // $row = $result->fetch_all(MYSQLI_ASSOC);
     // 输出结果
     if($result){
-        echo 'true';
+        echo $phone;
     }else{
         echo 'false';
     }

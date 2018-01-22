@@ -2,56 +2,69 @@
     <div id="sm_home">
         <header id="header">
             <div class="h_l">
-               <p> <i class="glyphicon glyphicon-map-marker"></i>旧金山旧金山<i class=""></i></p>
+               <p @click.stop="kipGet"> <i class="glyphicon glyphicon-map-marker"></i>{{$store.state.site}}<i class=""></i></p>
             </div>
             <div class="h_r">
                 <i class="mintui mintui-search"></i>
-                <input type="text" placeholder="1元起送，30分钟达">
+                <input class="kipSearch" type="text" placeholder="1元起送，30分钟达">
             </div>    
         </header>
         <div id="banner">
             <mt-swipe :auto="4000">
-                <mt-swipe-item v-for="(n,idx) in 6"><img :src="img[idx]" alt=""></mt-swipe-item>       
+                <mt-swipe-item v-for="(n,idx) in 6" :key="n"><img :src="img[idx]" alt=""></mt-swipe-item>       
             </mt-swipe>
         </div>
         <div id="type">
-            <dl v-for="item in typeData">    
-                 <a href="">
+            <dl v-for="(item) in typeData" :key="item.categoryId">    
                     <dt><img :src="item.categoryImg2" alt="" />
                     </dt>
-                    <dd>{{item.categoryName}}</dd>
-                 </a>
-                    
+                    <dd>{{item.categoryName}}</dd>            
             </dl>
-            <dl v-if="typeData.length>=0">    
-                 <a href="">
+            <dl v-if="typeData.length>=1">    
                     <dt><img :src="allTypeimg" alt="" />
                     </dt>
-                    <dd>全部品类</dd>
-                 </a>       
+                    <dd>全部品类</dd>      
             </dl>
         </div>
             
         <div id="list">
-            <ul class="nav">
-                <li v-for="item in typeData">{{item.categoryName}}</li>
-            </ul>
+            <div class="l_nav">
+                <ul>
+                    <li v-for="(item,idx) in typeData" :key="idx"><span @click.stop="showList">{{item.categoryName}}</span></li>
+                </ul>
+            </div>
+            
             <div class="list">
                   <mt-tab-container v-model="active" :swipeable="true">
-                    <mt-tab-container-item id="1" v-for="n in 3">
-                        <mt-cell>
-                            
-                        </mt-cell>
+                    <mt-tab-container-item id="水果">
+                        <ul class="datalist">
+                           <li v-for="obj in datalist" :key="obj.goodName" :gid="obj.goodId">
+                            <div>
+                                <img v-lazy="obj.ImgUrl"/>
+                            </div>                           
+                            <div>
+                                <h2>{{obj.goodName}}</h2>
+                                <p class="details">{{obj.describe}}</p>
+                                <p class="size"><span>{{obj.size}}</span></p>
+                                <div class="purchase"><p><span v-filter>{{obj.Price}}</span><span v-filter>{{obj.originalPrice}}</span></p>
+                                   <button>立即购买</button> 
+                                </div>
+
+                            </div>
+                            </li> 
+                        </ul>
+                        
                     </mt-tab-container-item>
                    
-            </mt-tab-container>
+                </mt-tab-container>
             </div>
           
         </div>
+    <div id="allmap"></div>  
     </div>
 </template>
 <script>
-    import { Swipe, SwipeItem, TabContainer, TabContainerItem,MessageBox } from 'mint-ui';
+    import { Swipe, SwipeItem, TabContainer, TabContainerItem,MessageBox,Lazyload } from 'mint-ui';
     import http from '../../utils/reqAjax.js'
     import spinner from "../spinnerComponent/spinner"
     import './home.scss'
@@ -60,19 +73,64 @@
             return {
                 url:'home.php',
                 typeData:[],
-                active:'1',
+                active:'水果',
+                datalist:[],
                 allTypeimg:"./src/assets/img/iconv3/f10.jpg",
                 img:["./src/assets/img/banner/1.png","./src/assets/img/banner/2.png","./src/assets/img/banner/3.png","./src/assets/img/banner/4.png","./src/assets/img/banner/5.png","./src/assets/img/banner/6.png",],
                 typeImg:"./src/assets/img/iconv3/f1.jpg"
             }
         },
-        mounted(){
+        methods:{
+            kipGet(){
+                this.$router.push({name:"getAddress"});
+            },
+            showList(e){
+                
+            }
+        },
+        directives:{
+            filter:{
+                inserted(ele){
+                    var text="￥"+ele.innerText;
+                    $(ele).html(text);
+                }
+                
+             }
+        },
+        mounted(){  
             spinner.loadspinner();
             http.get({url:this.url}).then(res=>{
-                spinner.closeSpinner();
+                // spinner.closeSpinner();
                this.typeData=res.data;
-            })
+            });
             this.$store.commit('getSite');
+            var input=$('.kipSearch');
+            input.focus(()=>{
+                this.$router.push({name:"search"});
+            });
+             spinner.loadspinner();
+            http.get({url:this.url+"?type="+this.active}).then(res=>{
+                spinner.loadspinner();
+                this.datalist=res.data;
+            });
+            // 吸顶导航
+            nav();
+            function nav(){
+                    var height=0;
+                    var headerH=$("#header").height();
+                    var bannerH = $("#banner").height();
+                    height=headerH+bannerH;
+                    $(window).scroll(function() {
+                        var w = $("body").scrollTop() || $(document).scrollTop(); //获取滚动值
+                            if(w > height) {
+                    $(".l_nav").addClass("titleTap");
+                            } else if(w <= 0){
+                    $(".l_nav").removeClass("titleTap")
+                            }else{
+                    $(".l_nav").removeClass("titleTap")
+                            }
+                });
+            }
         }
     }
 

@@ -24,7 +24,7 @@
     display: -ms-flexbox;
     display: flex;
     font-size: 0.19rem;
-    height: 0.53rem;
+    height: .6rem /* 45/75 */;
     line-height: 1;
     padding: 0 0.13rem;
     position: relative;

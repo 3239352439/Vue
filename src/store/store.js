@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import { Indicator,MessageBox } from 'mint-ui';
-
+import spinner from "../components/spinnerComponent/spinner.js"
 Vue.use(Vuex);
 
 const store = new Vuex.Store({
@@ -15,7 +15,8 @@ const store = new Vuex.Store({
     },
     mutations:{
       //获取当前位置
-        getSite(state){
+        getSite(state,self){
+            // spinner.loadspinner();
             var map = new BMap.Map("allmap");
             var geocoder= new BMap.Geocoder();
             var geolocation = new BMap.Geolocation();
@@ -25,7 +26,8 @@ const store = new Vuex.Store({
              map.addOverlay(mk);
              map.panTo(r.point);
              geocoder.getLocation(r.point,function(rs){
-              MessageBox.alert('你当前所在位置:'+rs.address).then(action => {});
+               spinner.closeSpinner(); 
+              //  MessageBox.alert('你当前所在位置:'+rs.address).then(action => {}); 
                state.site=rs.address;
                });
            }

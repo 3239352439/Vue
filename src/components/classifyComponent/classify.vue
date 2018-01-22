@@ -5,14 +5,14 @@
     </mt-header>
     <div class="menu">
       <ul class="left">
-        <li v-for="(obj) in category" @click="toSmallcategory(obj)" >{{obj}}</li>
+        <li v-for="(obj,idx) in category" @click="toSmallcategory(obj)">{{obj}}</li>
       </ul>
       <div class="right">
         <div class="cateBigImg">
           <img v-if="cateSamllList[1]" v-bind:src="cateSamllList[0].categoryImg" alt="加载中"/>
         </div>
         <div class="menus">
-          <div class="menusItem" v-for="(obj) in cateSamllList"  v-bind:data-SmallId="obj.classifySmallId"  @click="toProduct({id:obj.classifySmallId,name:obj.classifyName},$event)">
+          <div class="menusItem" v-for="(obj,idx) in cateSamllList"  v-bind:data-SmallId="obj.classifySmallId"  @click="toProduct({id:obj.classifySmallId,name:obj.classifyName},$event)">
             <img v-bind:src="obj.classifyImg" alt="加载中"/>
             <span>{{obj.classifyName}}</span>
           </div>

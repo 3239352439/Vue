@@ -20,6 +20,10 @@ import rem from '../getRem/getRem.js'
 rem.rem();
 
 import login from '../components/loginComponent/login.vue'
+import my from '../components/myComponent/my.vue'
+import setting from '../components/settingComponent/setting.vue'
+import order from '../components/orderComponent/order.vue'
+
 import loginParent from '../components/loginParentComponent/loginParent.vue';
 import detailPageComponent from '../components/detailPageComponent/detailPage.vue';
 import carComponent from '../components/carComponent/car.vue'
@@ -51,7 +55,7 @@ var router = new VueRouter({
             component:autoAddress
         },
         {
-            path:'/addAddress/:id',
+            path:'/addAddress',
             name:'addAddress',
             component:addAddress
         },{
@@ -74,6 +78,18 @@ var router = new VueRouter({
                     component: login
                 }
             ]
+        },{
+            path:"/my",
+            name:"my",
+            component:my
+        },{
+            path:"/setting",
+            name:"setting",
+            component:setting
+        }, {
+            path: "/order",
+            name: "order",
+            component: order
         },{
           path: '/detailpage',
           name: 'detailpage',
