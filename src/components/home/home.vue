@@ -30,7 +30,7 @@
         <div id="list">
             <div class="l_nav">
                 <ul>
-                    <li v-for="(item,idx) in typeData"><span @click.stop="showList">{{item.categoryName}}</span></li>
+                    <li v-for="(item,idx) in typeData" :key="idx"><span @click.stop="showList">{{item.categoryName}}</span></li>
                 </ul>
             </div>
             
@@ -38,7 +38,7 @@
                   <mt-tab-container v-model="active" :swipeable="true">
                     <mt-tab-container-item id="水果">
                         <ul class="datalist">
-                           <li v-for="(obj,idx) in datalist">
+                           <li v-for="obj in datalist" :key="obj.goodName" :gid="obj.goodId">
                             <div>
                                 <img v-lazy="obj.ImgUrl"/>
                             </div>                           
@@ -108,9 +108,29 @@
             input.focus(()=>{
                 this.$router.push({name:"search"});
             });
+             spinner.loadspinner();
             http.get({url:this.url+"?type="+this.active}).then(res=>{
+                spinner.loadspinner();
                 this.datalist=res.data;
-            })
+            });
+            // 吸顶导航
+            nav();
+            function nav(){
+                    var height=0;
+                    var headerH=$("#header").height();
+                    var bannerH = $("#banner").height();
+                    height=headerH+bannerH;
+                    $(window).scroll(function() {
+                        var w = $("body").scrollTop() || $(document).scrollTop(); //获取滚动值
+                            if(w > height) {
+                    $(".l_nav").addClass("titleTap");
+                            } else if(w <= 0){
+                    $(".l_nav").removeClass("titleTap")
+                            }else{
+                    $(".l_nav").removeClass("titleTap")
+                            }
+                });
+            }
         }
     }
 

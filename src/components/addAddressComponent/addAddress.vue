@@ -188,12 +188,15 @@
                      spinner.closeSpinner();
                      this.data={linkMan:res.data[0].linkMan,gender:res.data[0].gender,phone:res.data[0].phone,village:'',doorplate:res.data[0].doorplate,type:res.data[0].type};
                     $('.site').find('input').val(res.data[0].village);
-
                
                 }
                 })
                 
             }
+             var input=$('.site').find('input');
+            input.focus(()=>{
+                this.$router.push({name:"autoAddress",params:{id:this.$route.params.id}});
+            })
         }
     }
 

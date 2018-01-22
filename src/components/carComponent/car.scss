@@ -34,9 +34,9 @@
         }
         .prdinfor{
           flex: 1.5;
-          padding:0 40px;
+          padding-right:40px;
           h3{
-            font-size: 50px;
+            font-size: 36px;
             height: 80px;
             line-height: 80px;
           }
@@ -89,7 +89,7 @@
           width: 33%;
           height: 300px;
 
-          img{
+          >img{
             display: block;
             width: 200px;
             height: 200px;
@@ -115,7 +115,8 @@
       background: rgb(95, 95, 95);
       .check{
         flex:1;
-        padding:20px;
+        padding-left:20px;
+        padding-top:20px;
         input{
           width: 30px;
           height: 30px;

@@ -51,7 +51,7 @@ var router = new VueRouter({
             component:autoAddress
         },
         {
-            path:'/addAddress/:id',
+            path:'/addAddress',
             name:'addAddress',
             component:addAddress
         },{

@@ -5,12 +5,20 @@
 
     $userId = isset($_POST['userid']) ? $_POST['userid'] : "1";
     $goodId = isset($_POST['goodId']) ? $_POST['goodId'] : "";
+    $Getprd = isset($_POST['Getprd']) ? $_POST['Getprd'] : "";
+
     $sql;
+    if($Getprd !== ""){
+      $sql = "SELECT * from product,car,productimg WHERE car.userId = 1 and car.goodId = product.goodId and product.goodId = productimg.goodId";
+      $result = query_oop($sql);
+      echo json_encode($result, JSON_UNESCAPED_UNICODE);
+    } else {
+
     if($goodId == ''){
       // echo '空的哦';
       $sql = "select sum(count) as totle, SUM(product.Price*count) AS Price from car,product where userId ='$userId' and car.goodId = product.goodId";
-        $result = query_oop($sql);
-        echo json_encode($result, JSON_UNESCAPED_UNICODE);
+      $result = query_oop($sql);
+      echo json_encode($result, JSON_UNESCAPED_UNICODE);
 
     } else {
     // if( $userId !== "" && $goodId !== ''){
@@ -50,5 +58,7 @@
 
     }
     // }
+  }
+
 
 ?>

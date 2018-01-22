@@ -27,7 +27,7 @@
 
     data(){
         return {
-
+          id:this.$route.params.id
         }
     },
     mounted(){
@@ -79,7 +79,13 @@
       //给地图添加点击事件 获取点击时的地址
         map.addEventListener("click",(e)=>{
             this.$store.commit('selectSite',e,self);
-            self.$router.push({name:"addAddress"})
+            if(this.id){
+               self.$router.push({name:"addAddress",parmas:{id:this.id}});
+            }
+            else{
+              self.$router.push({name:"addAddress"})
+            }
+            
 
         });
         }

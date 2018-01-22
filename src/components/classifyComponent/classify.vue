@@ -19,13 +19,14 @@
         </div>
       </div>
     </div>
+    <publicMenu></publicMenu>
   </div>
 </template>
 
 <script>
 import './classify.scss';
 import http from '../../utils/reqAjax'
-
+import publicMenu from '../publicMenuComponent/publicMenu'
 export default {
   data: function(){
     return {
@@ -69,6 +70,9 @@ export default {
       // console.log(obj)
       this.$router.push({ name: 'product',params: obj});
     }
+  },
+  components: {
+    publicMenu
   }
 }
 </script>
