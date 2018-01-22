@@ -44,8 +44,9 @@
     </div>
 </template>
 <script>
-import { Spinner,Search} from 'mint-ui';
+    import { Spinner,Search} from 'mint-ui';
     import http from '../../utils/reqAjax.js'
+    import spinner from "../spinnerComponent/spinner"
     import './getAddress.scss'
     export default{
         data(){
@@ -72,15 +73,26 @@ import { Spinner,Search} from 'mint-ui';
                 var tag=e.target.tagName.toLowerCase();
                 if(tag=="i"){
                   var id=$(e.target).attr('id'); 
-                  this.$router.push({path:"/addAddress/"+id}); 
+                  if(!isNaN(id)){
+                      this.$router.push({path:"/addAddress/"+id});  
+                  }     
                 }
                 
             }
         },
         mounted(){
+            spinner.loadspinner();
             http.get({url:this.url}).then(res=>{
-                this.data=res.data;
+                if(res.data){
+                spinner.closeSpinner();
+                  this.data=res.data;
+                  
+                }
                 
+            });
+            var input=$('.mint-searchbar-core');
+            input.focus(()=>{
+                this.$router.push({name:"autoAddress"});
             })
         }
     }
