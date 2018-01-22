@@ -1,0 +1,9 @@
+.detail_cen{
+  height: 100%;
+  $hsize:0.6rem;
+  display: flex;
+  flex-direction:column;
+  .top{
+    height:  $hsize;
+  }
+}

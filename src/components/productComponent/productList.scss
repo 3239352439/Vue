@@ -185,42 +185,51 @@ $fontsize1:0.2rem;
       }
     }
   }
-  // .Menu{
-  //   height: 30px;
-  //   overflow-x: hidden;
-  //   li{
-  //     width: 100px;
-  //     border: 1px solid #ccc;
-  //     float: left;
-  //   }
-  // }
-  // .menus{
-  //   height: 100%;
-  //   .menus_left{
-  //     width: 100px;
-  //     float: left;
-  //     li{
-  //       height: 40px;
-  //       background: #eee;
-  //       line-height: 40px;
-  //     }
-  //   }
-  //   .menus_right{
-  //     width: 200px;
-  //     float: left;
-  //     li{
-  //       height: 30px;
-  //       background: #eee;
-  //       line-height: 30px;
-  //     }
-  //   }
-  //   .left_img{
-  //     width: 150px;
-  //     height: 150px;
-  //     img{
-  //       width: 100%;
-  //       height: 100%;
-  //     }
-  //   }
-  // }
+  .addCar{
+    height: 100px;
+    background: #2d3030;
+    display: flex;
+    color:#fff;
+    >.carIcom{
+      flex:1.5;
+      text-align: center;
+      padding-top:30px;
+      // line-height: 100px;
+      position: relative;
+      .carNum{
+        position: absolute;
+        width: 40px;
+        height: 40px;
+        background: red;
+        border-radius: 50%;
+        right: 20px;
+        top:20px;
+        font-size: 24px;
+      }
+    }
+    .prdNum{
+      flex: 3;
+      padding-left: 30px;
+      line-height: 100px;
+      span{
+        margin-left: 20px;
+      }
+    }
+    .prdprice{
+      flex: 2;
+      line-height: 100px;
+    }
+    .account{
+      flex: 2.5;
+      position: relative;
+      button{
+        position: absolute;
+        right: 0;
+        width: 190px;
+        height: 100px;
+        color:#fff;
+        background: rgb(209, 209, 203)
+      }
+    }
+  }
 }

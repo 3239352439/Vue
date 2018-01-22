@@ -1,9 +1,10 @@
 <?php
     function connect_oop() {
         // 配置参数
-        $servername = 'localhost';
+
+        $servername = '10.3.136.49';
         $username = 'root';
-        $password = '';
+        $password = 'root';
         $database = 'supermarket';
         header('Access-Control-Allow-Origin:*');
         //连接数据库
@@ -62,11 +63,11 @@ function multi_query_oop($sql) {
 
 //初始化连接对象方法
 function connect() {
-    $servername = "localhost";//
+    $servername = "10.3.136.49";//
     $username = "root";
-    $password = "";
+    $password = "root";
     $dbname = 'supermarket';
-    //初始化连接，返回一个连接对象(包含所连接数据库的信息)
+    // 初始化连接，返回一个连接对象(包含所连接数据库的信息)
     $con = mysqli_connect($servername, $username, $password, $database);
     header('Access-Control-Allow-Origin:*');
     //获取连接对象的错误信息
@@ -83,6 +84,7 @@ function query($sql) {
     //初始化连接
     $conn = connect();
     //执行 sql 脚本，也叫数据库脚本，返回一个结果集（对象）
+    $conn->set_charset('utf8');
     $result = mysqli_query($conn, $sql);
     //定义了一个数组
     $jsonData = array();
@@ -100,6 +102,7 @@ function query($sql) {
         // echo json_encode($jsonData, JSON_UNESCAPED_UNICODE);
         // }
         // 释放结果集
+
         mysqli_free_result($result);
     }
     //关闭连接
