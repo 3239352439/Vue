@@ -23,7 +23,7 @@
       </div>
     </div>
     <div class="addCar">
-      <div class="carIcom" @click="toCar"><i class="glyphicon glyphicon-th"></i><span class="carNum">{{carNum}}</span></div><div class="prdNum">已选<span>{{prdNum}}</span></div><div class="prdprice"><span>￥{{prdPrice}}</span></div><div class="account"><button>去结算</button></div>
+      <div class="carIcom" @click="toCar"><i class="glyphicon glyphicon-shopping-cart"></i><span class="carNum">{{carNum}}</span></div><div class="prdNum">已选<span>{{prdNum}}</span></div><div class="prdprice"><span>￥{{prdPrice}}</span></div><div class="account"><button>去结算</button></div>
     </div>
   </div>
 </template>
@@ -68,14 +68,14 @@ export default {
   },
   computed: {
     // reverseprdPrice:{
-      // console.log('a',this.prdPrice.toFixed(2))
-      // return this.prdPrice;
+    // console.log('a',this.prdPrice.toFixed(2))
+    // return this.prdPrice;
     //   get: function(){
     //     return this.prdPrice;
     //   },
     //   set: function(newValue){
     //     this.prdPrice = newValue;
-        // console.log(this.prdPrice)
+    // console.log(this.prdPrice)
     //   }
     // }
   },
