@@ -22,7 +22,7 @@
             <div class="myAddress">
                 <h4><i class="glyphicon glyphicon-map-marker"> </i>我的配送地址</h4>
                 <ul class="addressList" v-if="data.length>=0">
-                    <li v-for="(item,idx) in data" :key="idx">
+                    <li v-for="item in data">
                         <div class="site_l">
                             <div class="l_top">
                                 <span v-if="item.type=='公司'" class="company">{{item.type}}</span>

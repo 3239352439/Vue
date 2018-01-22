@@ -6,10 +6,7 @@
 */
 import axios from 'axios';
 import qs from 'qs';
-var baseUrl = 'http://10.3.136.24:888/';
-
-// var baseUrl = 'http://10.3.136.25:888/';
-
+var baseUrl = 'http://10.3.136.55:888/';
 // var baseUrl = 'http://10.3.136.125:888/';
 // var baseUrl = 'http://10.3.136.126:888/';
 

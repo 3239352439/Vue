@@ -16,7 +16,7 @@ $hsize:0.6rem;
             width: 30%;
             display: flex;
             P{
-              width:1.33rem;
+                width:1.33rem;
                 overflow: hidden;
                 text-overflow:ellipsis;
                 white-space: nowrap;
@@ -60,19 +60,16 @@ $hsize:0.6rem;
             flex-wrap:wrap;
             justify-content:flex-around;
             float:left;
-            width: 20%;   
-            a{
-                padding-top:0.13rem;
+            width: 20%;
+            display:flex;
+             flex-direction:column; 
+             padding-top:0.13rem;  
+            dt{
                 display:block;
-                width: 100%;
-                display:flex;
-                flex-direction:column;
                 text-align:center;
                 color:#000;
-                font-size:0.19rem;
-                // margin-bottom:0.13rem;
-                dt{   
-                    align-self:center;      
+                font-size:0.19rem; 
+                align-self:center;      
                     img{
                         background-position:center;
                         display:block;
@@ -81,33 +78,120 @@ $hsize:0.6rem;
                     }
                 }
                 dd{
+                    text-align:center;
                     font-size:0.19rem;
                 }
             }
            
-        }
+        // }
 
     }
      #list{
        flex:1;  
        display:flex;
        flex-direction:column;
-        .nav{
-            background:#F0EFF4;
-            height: 0.53rem;    
-            line-height:0.53rem;
-            display:flex;
-            overflow-Y:auto;
-            li{
-                width: 2.67rem;
-                text-align:center;
-                flex-wrap:nowrap;
-                color:#939297;
-            }
+        .l_nav{
+            background: #ccc;
+            height:0.53rem;       
+            ul{ 
+                overflow-x:auto;
+                height:0.6rem;
+                margin: 0.0rem;
+                white-space: nowrap;
+                li{
+                height:0.51rem; 
+                overflow: hidden;
+                display: inline-block;
+                
+                    span{
+                    text-align:center;
+                    color:#000;
+                    display: block;
+                    height: 0.48rem;
+                    display:block;             
+                    font-weight:bold;
+                    font-size:0.186667rem;
+                    line-height:0.53rem;
+                    width:1.0rem;
+                    }
+                
+                }
+            } 
         }
         .list{
             flex:1;
-             overflow:auto;
+            //  overflow:auto;
+             .datalist{
+                 li{
+                    padding:0.13rem 0.07rem;
+                   display: flex;
+                   border-bottom:1px solid #ccc;
+                    div:nth-child(1){
+                        width: 30%;
+                        margin-right:0.13rem;
+                        position:relative;
+                        img{
+                            position:absolute;
+                            top:50%;
+                            left:50%;
+                            transform: translate(-50%,-50%);
+                            // margin:auto;
+                        }
+                    }
+                    div:nth-child(2){
+                        width: 70%;
+                        h2{
+                            width: 80%;
+                            overflow: hidden;
+                            text-overflow:ellipsis;
+                            white-space: nowrap;
+                            line-height:0.37rem;
+                            font-size:0.24rem;
+                            font-weight:bold;
+                        }
+                        .details{
+                            font-size:0.19rem;
+                           
+                        }
+                        .size{
+                            line-height:0.35rem;
+                            span{
+                                font-size:0.16rem;
+                                padding:0.04rem 0.07rem;
+                                border-radius:0.13rem;
+                                background:#ddd;
+                            }
+                        }
+                        
+                        .purchase{
+                            display:flex;
+                            padding:0.07rem 0 0.13rem;
+                            position:relative;
+                            p{                        
+                               span:nth-child(1){
+                                 color:orange;
+                                font-weight:bold; 
+                                font-size:0.27rem;  
+                               }
+                               span:nth-child(2){
+                                   columns: #9c9c9c;
+                                   font-size:0.19rem;
+                                   text-decoration: line-through;
+                               }
+                            }
+                            button{
+                                position:absolute;
+                               right:0.13rem;
+                               padding:0.07rem 0.13rem;
+                               background:orange;
+                               border-radius:0.13rem; 
+                               color:#fff;
+                            }
+                        }
+                    }  
+                 }
+                 
+             }
         }
        
     }
