@@ -20,7 +20,6 @@ import rem from '../getRem/getRem.js'
 rem.rem();
 
 import login from '../components/loginComponent/login.vue'
-import loginParent from '../components/loginParentComponent/loginParent.vue'
 import my from '../components/myComponent/my.vue'
 import setting from '../components/settingComponent/setting.vue'
 import order from '../components/orderComponent/order.vue'
