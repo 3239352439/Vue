@@ -78,7 +78,7 @@
       
       //给地图添加点击事件 获取点击时的地址
         map.addEventListener("click",(e)=>{
-            this.$store.commit('selectSite',e,self);
+            this.$store.commit('selectSite',e,self);console.log(self.$store.state.site)
             if(this.id){
                self.$router.push({name:"addAddress",parmas:{id:this.id}});
             }
