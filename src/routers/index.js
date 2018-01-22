@@ -21,6 +21,9 @@ rem.rem();
 
 import login from '../components/loginComponent/login.vue'
 import loginParent from '../components/loginParentComponent/loginParent.vue'
+import my from '../components/myComponent/my.vue'
+import setting from '../components/settingComponent/setting.vue'
+import order from '../components/orderComponent/order.vue'
 
 Vue.use(Vuex);
 Vue.use(MintUI);
@@ -72,7 +75,19 @@ var router = new VueRouter({
                     component: login
                 }
             ]
-        },
+        },{
+            path:"/my",
+            name:"my",
+            component:my
+        },{
+            path:"/setting",
+            name:"setting",
+            component:setting
+        }, {
+            path: "/order",
+            name: "order",
+            component: order
+        }
 
     ]
 })
