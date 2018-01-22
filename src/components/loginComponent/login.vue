@@ -32,22 +32,30 @@
                 this.$router.go(-1);
             },
             Login(){
-                spinner.loadspinner();
-                http.get({url:"login.php?phone=" + this.phone + "&password=" + this.password}).then((res)=>{
-                    setTimeout(function(){
-                        spinner.closeSpinner();
-                        if(res.data == true){
-                            this.$store.commit('createPhone',this.phone);
-                            this.type = false;
-                            var now = new Date();
-                            now.setDate(now.getDate()+90);
-                            cookie.set("token",res.data,now,"/");
-                            this.$router.push("/");
-                        }else{
-                            this.type = true;
+                if(this.phone != "" && this.password != ""){
+                    spinner.loadspinner();
+                    http.get({url:"login.php?phone=" + this.phone + "&password=" + this.password}).then((res)=>{
+                        setTimeout(function(){
+                            spinner.closeSpinner();
+                            if(res.data !== false){
+                                this.$store.commit('createPhone',this.phone);
+                                this.type = false;
+                                var now = new Date();
+                                now.setDate(now.getDate()+90);
+                                cookie.set("token",res.data,now,"/");
+                                this.$router.push("/my");
+                            }else{
+                                this.type = true;
+                            }
+                        }.bind(this),1000)
+                    }).catch(err=>{
+                        if(err){
+                            spinner.closeSpinner();
                         }
-                    }.bind(this),1000)
-                })
+                    })
+                }else{
+                    this.type = true;
+                }
             }
         }
     }
