@@ -1,48 +1,141 @@
 <template>
     <div class="detail_cen">
-        <div class="top">
-          <mt-header title="商品详情">
-            <router-link to="/product" slot="left">
-              <mt-button icon="back">返回</mt-button>
-            </router-link>
-            <mt-button icon="more" slot="right"></mt-button>
-          </mt-header>
-          <!-- <productMenu v-bind:SmallId="name"></productMenu> -->
-        </div>
-        <div class="bottom">
-          <div class="prdInfor">
-            <div class="prdImg">
-              <img v-bind:src="dataItem.ImgUrl" alt="加载中"/>
-            </div>
-            <ul>
-              <li>size：{{dataItem.size}}</li>
-              <li>地区: {{dataItem.productionAddress}}</li>
-              <li>温度：{{dataItem.T}}</li>
-            </ul>
-          </div>
-          <div class="more">
-            <h1>更多选择</h1>
-            <div></div>
-          </div>
-          <div class="deteils">
-            <h1>商品详情</h1>
-          </div>
-        </div>
-    <div class="addCar">
-      <div class="carIcom"><i class="glyphicon glyphicon-th"></i><span class="carNum"></span></div><div class="prdNum">收藏<span></span></div><div class="prdprice"><span>￥</span></div><div class="account"><button>去结算</button></div>
+      <div class="top">
+        <mt-header title="商品详情">
+          <router-link to="/product" slot="left">
+            <mt-button icon="back">返回</mt-button>
+          </router-link>
+          <mt-button icon="more" slot="right"></mt-button>
+        </mt-header>
+        <!-- <productMenu v-bind:SmallId="name"></productMenu> -->
       </div>
-    </div>
+      <div class="bottom">
+        <div class="prdInfor">
+          <div class="prdImg">
+            <img v-bind:src="dataItem.ImgUrl" alt="加载中"/>
+            <h2>{{dataItem.goodName}}</h2>
+            <h3>{{dataItem.describe}}</h3>
+            <h4>￥<span>{{dataItem.Price}}</span>/￥{{dataItem.originalPrice}}</h4>
+          </div>
+          <ul>
+            <li><i class="glyphicon glyphicon-gift"></i><span>{{dataItem.size}}</span></li>
+            <li><i class="glyphicon glyphicon-map-marker"></i><span>{{dataItem.productionAddress}}</span></li>
+            <li><i class="glyphicon glyphicon-tint"></i> <span>{{dataItem.T}}</span></li>
+          </ul>
+        </div>
+        <div class="more">
+          <h1><span>更多选择</span> </h1>
+          <ul>
+            <li v-for="(obj, idx) in randomData"  @click.stop="toDetailPage(obj,$event)">
+                <img v-bind:src="obj.ImgUrl" alt="">
+                <h2>{{obj.goodName}}</h2>
+                <h4><span>￥{{obj.Price}}</span><span class="glyphicon glyphicon-list-alt"  v-bind:id="idx"></span></h4>
+            </li>
+          <!-- <li>
+            <img src="../../assets/img/loading.jpg" alt="">
+            <h2>阿加</h2>
+            <h4><span>￥22</span><span class="glyphicon glyphicon-list-alt"></span></h4>
+          </li>
+           <li>
+            <img src="../../assets/img/loading.jpg" alt="">
+            <h2>阿加</h2>
+            <h4><span>￥22</span><span class="glyphicon glyphicon-list-alt"></span></h4>
+          </li>
+           <li>
+            <img src="../../assets/img/loading.jpg" alt="">
+            <h2>阿加</h2>
+            <h4><span>￥22</span><span class="glyphicon glyphicon-list-alt"></span></h4>
+          </li>
+           <li>
+            <img src="../../assets/img/loading.jpg" alt="">
+            <h2>阿加</h2>
+            <h4><span>￥22</span><span class="glyphicon glyphicon-list-alt"></span></h4>
+          </li> -->
+        </ul>
+        </div>
+        <div class="deteils">
+          <h1><span>商品详情</span></h1>
+          <ul>
+            <li><img src="../../assets/common/product_details_footer6.jpg" alt=""></li>
+          </ul>
+        </div>
+      </div>
+      <div class="addCar">
+        <div class="carIcom" @click="toCar">
+          <i class="glyphicon glyphicon-shopping-cart"></i>
+          <span>购物车</span>
+          <span class="carNum">{{this.$store.state.selectTotle}}</span>
+        </div>
+        <div class="prdNum" @click="addCollect"><i class="glyphicon " :class="className"></i><span>收藏</span></div>
+        <div class="account"><button @click="addCar(dataItem.goodId)">加入购物车</button></div>
+        </div>
+      </div>
 </template>
 <script>
+import './detailPage.scss';
+import http from '../../utils/reqAjax';
+import {MessageBox} from 'mint-ui';
 export default {
   data: function(){
     return {
-      dataItem:''
+      dataItem:'',
+      randomData:[],
+      userid: 1,
+      className:'glyphicon-star-empty'
     }
   },
   mounted(){
     this.dataItem = this.$route.params;
     console.log(this.$route.params)
+    http.get({"url":'productListSort.php'+'?Sort="random"& state= 1'}).then ( res => {
+      this.randomData = res.data;
+      // console.log(res.data)
+    })
+
+    http.post({"url":'collect.php',parmas:{userid: this.userid,goodId:this.dataItem.goodId,state:'select'}}).then ( res => {
+        console.log(res.data);
+        if(res.data.length > 0){
+           this.className = 'glyphicon-star'
+        }
+    })
+  },
+  methods: {
+    toDetailPage(obj,_event){
+      console.log(666)
+      if(!_event.target.id){
+        this.$router.push({ name: 'detailpage',params: obj});
+      }
+    },
+    addCar(obj){
+      MessageBox.alert('成功加入购物车').then(action => {
+         console.log(obj);
+        http.post({"url":'Car.php',parmas:{userid: this.userid,goodId:obj}}).then ( res => {
+          console.log(res.data);
+        })
+      });
+
+    },
+    toCar(){
+      this.$router.push({ name: 'car'});
+    },
+    addCollect(){
+      if(this.className == 'glyphicon-star'){
+        console.log(666)
+      } else if(this.className == 'glyphicon-star-empty'){
+        http.post({"url":'collect.php',parmas:{userid: this.userid,goodId:this.dataItem.goodId,state:'insert'}}).then ( res => {
+          console.log(res.data);
+          if(res.data == 'ok'){
+            MessageBox.alert('收藏成功').then(action => {
+              console.log(action);
+              this.className = 'glyphicon-star'
+            });
+          }
+          // this.carNum = res.data[0].totle;
+          // this.prdPrice = res.data[0].Price;
+        })
+      }
+
+    }
   }
 }
 </script>

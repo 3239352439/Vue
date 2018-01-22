@@ -100,15 +100,17 @@ export default {
           target.parentNode.childNodes[1].innerHTML = (target.parentNode.childNodes[1].innerText*1)-1;
         } else {
           // console.log('确定要删除?')
-          MessageBox.prompt({
+          MessageBox({
             title: '提示',
             message: '是否从购物车中删除?',
             showCancelButton: true
           }).then(confirm => {
-              // console.log(666)
+            console.log(confirm)
+            if(confirm == 'confirm'){
               this.carprd.splice(idx, 1)
               // console.log(this.carprd.splice(idx, 1))
-              // this.carprd = this.carprd.splice(idx, 1);
+            }
+
           });
         }
       }
@@ -162,7 +164,9 @@ export default {
         message: '确定清空购物车?',
         showCancelButton: true
       }).then(confirm => {
-        this.carprd = [];
+        if(confirm == 'confirm'){
+          this.carprd = [];
+        }
       });
     }
   },
