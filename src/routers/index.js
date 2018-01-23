@@ -29,6 +29,7 @@ import detailPageComponent from '../components/detailPageComponent/detailPage.vu
 import carComponent from '../components/carComponent/car.vue'
 import home from '../components/home/home.vue'
 import address from '../components/address/address'
+import accountComponent from '../components/accountComponent/account.vue'
 Vue.use(Vuex);
 Vue.use(MintUI);
 Vue.use(VueRouter);
@@ -109,6 +110,11 @@ var router = new VueRouter({
             path: '/address',
             name: "address",
             component: address
+        },
+        {
+          path: '/account',
+          name: "account",
+          component: accountComponent
         }
 
     ]
