@@ -14,14 +14,14 @@
           <div class="prdImg">
             <!-- <input type="checkbox" checked  v-bind:id="obj.carId"  class="check" v-bind:value="obj.carId" v-model="checkedCarId" @click="checked($event)"> -->
             <input type="checkbox" class="check" :checked="obj.checkedstatus == 'true'"  @click="checked(obj.goodId,$event)">
-            <img v-bind:src="obj.ImgUrl" alt="" @click.stop="ToDetailPage(obj.goodId,$event)">
+            <img v-bind:src="obj.ImgUrl" alt="" @click="ToDetailPage(obj.goodId,$event)">
           </div>
           <div class="prdinfor">
             <h3 @click.stop="ToDetailPage(obj.goodId,$event)">{{obj.goodName}}</h3>
             <h4>{{obj.describe}}</h4>
             <div class="prdprice">
               <span class="price">￥{{obj.Price}}</span>
-              <p><span class="compute" @click="compute(obj.goodId,idx,$event)">-</span><span class="num">{{obj.count}}</span><span class="compute" @click="compute(obj.goodId,idx,$event)">+</span></p>
+              <p><span class="compute" @click.stop="compute(obj.goodId,idx,$event)">-</span><span class="num">{{obj.count}}</span><span class="compute" @click.stop="compute(obj.goodId,idx,$event)">+</span></p>
             </div>
           </div>
         </li>

@@ -20,8 +20,10 @@
           </router-link>
         </li>
         <li>
+           <router-link to="/my">
           <i class="glyphicon glyphicon-user"></i>
           <span>我的</span>
+          </router-link>
         </li>
       </ul>
     </div>
