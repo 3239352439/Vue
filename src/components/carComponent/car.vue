@@ -14,10 +14,10 @@
           <div class="prdImg">
             <!-- <input type="checkbox" checked  v-bind:id="obj.carId"  class="check" v-bind:value="obj.carId" v-model="checkedCarId" @click="checked($event)"> -->
             <input type="checkbox" class="check" :checked="obj.checkedstatus == 'true'"  @click="checked(obj.goodId,$event)">
-            <img v-bind:src="obj.ImgUrl" alt="" @click.stop="ToDetailPage(obj,$event)">
+            <img v-bind:src="obj.ImgUrl" alt="" @click.stop="ToDetailPage(obj.goodId,$event)">
           </div>
           <div class="prdinfor">
-            <h3 @click.stop="ToDetailPage(obj,$event)">{{obj.goodName}}</h3>
+            <h3 @click.stop="ToDetailPage(obj.goodId,$event)">{{obj.goodName}}</h3>
             <h4>{{obj.describe}}</h4>
             <div class="prdprice">
               <span class="price">￥{{obj.Price}}</span>
@@ -77,7 +77,7 @@ export default {
     ajax(){
       // 请求用户购物车的商品
       http.post({"url":this.url,parmas:{userId: this.userid,state: 'selectproduct'}}).then ( res => {
-        // console.log(res.data)
+        console.log(res.data)
         this.carprd = res.data;
         var selectTotle=0;
         var priceTotle = 0;
@@ -140,12 +140,12 @@ export default {
     },
     toDetailPage(obj,_event){
       if(!_event.target.id){
-        this.$router.push({ name: 'detailpage',params: obj});
+        this.$router.push({ name: 'detailpage',params: {id:obj}});
       }
     },
     ToDetailPage(obj,_event){
       // console.log(_event.target.tagName)
-      this.$router.push({ name: 'detailpage',params: obj});
+      this.$router.push({ name: 'detailpage',params: {id: obj}});
       // if(_event.target.tagName !== 'P' || _event.target.tagName !== 'INPUT'){
         // console.log(666)
       // }
@@ -183,7 +183,7 @@ export default {
       });
     },
     addCar(id){
-      console.log(666);
+      // console.log(666);
       http.post({"url":this.url,parmas:{userId: this.userid,goodId:id,state: 'addProduct'}}).then ( res => {
         // console.log(this.carprd.splice(aa, 1));
        if( res.data == 'seccese'){

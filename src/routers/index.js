@@ -23,12 +23,16 @@ import login from '../components/loginComponent/login.vue'
 import my from '../components/myComponent/my.vue'
 import setting from '../components/settingComponent/setting.vue'
 import order from '../components/orderComponent/order.vue'
+import pay from '../components/payComponent/pay.vue'
+import orderdetail from '../components/orderdetailComponent/orderdetail.vue'
+import myselect from '../components/myselectComponent/myselect.vue'
 
 import loginParent from '../components/loginParentComponent/loginParent.vue';
 import detailPageComponent from '../components/detailPageComponent/detailPage.vue';
 import carComponent from '../components/carComponent/car.vue'
 import home from '../components/home/home.vue'
 import address from '../components/address/address'
+import accountComponent from '../components/accountComponent/account.vue'
 Vue.use(Vuex);
 Vue.use(MintUI);
 Vue.use(VueRouter);
@@ -104,11 +108,28 @@ var router = new VueRouter({
             path:'/',
             name:"home",
             component:home
+        },{
+            path:'/pay',
+            name:'pay',
+            component:pay
+        },{
+            path:"/orderdetail",
+            name:"orderdetail",
+            component: orderdetail
+        },{
+            path:"/myselect",
+            name:"myselect",
+            component: myselect
         },
         {
             path: '/address',
             name: "address",
             component: address
+        },
+        {
+          path: '/account',
+          name: "account",
+          component: accountComponent
         }
 
     ]

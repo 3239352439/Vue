@@ -13,6 +13,10 @@ const store = new Vuex.Store({
         priceTotle:"",
         checkedCarId: "",
         historySearch:[],
+        orderNum:"",
+        orderId:"",
+        userId:"",
+        checkedCarId:"",
         priceTotle: 0
     },
     mutations:{
@@ -50,6 +54,9 @@ const store = new Vuex.Store({
         createPhone(state,val){
             state.phoneNum = val;
         },
+        setUserId(state, val){
+          state.userId = val;
+        },
         getCategoryId(state, val){
           state.categoryId = val;
         },
@@ -69,6 +76,12 @@ const store = new Vuex.Store({
         },
         historyClear(state){
           state.historySearch=[];
+        },
+        setOrderNum(state, val){
+          state.orderNum = val;
+        },
+        setOrderId(state, val){
+          state.orderId = val;
         }
       }
 })

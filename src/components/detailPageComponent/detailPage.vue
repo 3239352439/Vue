@@ -2,9 +2,9 @@
     <div class="detail_cen">
       <div class="top">
         <mt-header title="商品详情">
-          <router-link to="/product" slot="left">
-            <mt-button icon="back">返回</mt-button>
-          </router-link>
+          <!-- <router-link to="/product" > -->
+            <mt-button icon="back" @click="back" slot="left">返回</mt-button>
+          <!-- </router-link> -->
           <mt-button icon="more" slot="right"></mt-button>
         </mt-header>
         <!-- <productMenu v-bind:SmallId="name"></productMenu> -->
@@ -26,7 +26,7 @@
         <div class="more">
           <h1><span>更多选择</span> </h1>
           <ul>
-            <li v-for="(obj, idx) in randomData"  @click.stop="toDetailPage(obj,$event)">
+            <li v-for="(obj, idx) in randomData"  @click.stop="toDetailPage(obj.goodId,$event)">
                 <img v-bind:src="obj.ImgUrl" alt="">
                 <h2>{{obj.goodName}}</h2>
                 <h4><span>￥{{obj.Price}}</span><span class="glyphicon glyphicon-list-alt"  v-bind:id="idx"></span></h4>
@@ -36,9 +36,6 @@
         <div class="deteils">
           <h1><span>商品详情</span></h1>
           <ul>
-            <li><img src="../../assets/common/product_details_footer6.jpg" alt=""></li>
-            <li><img src="../../assets/common/product_details_footer6.jpg" alt=""></li>
-            <li><img src="../../assets/common/product_details_footer6.jpg" alt=""></li>
             <li><img src="../../assets/common/product_details_footer6.jpg" alt=""></li>
           </ul>
         </div>
@@ -68,31 +65,41 @@ export default {
     }
   },
   mounted(){
-    this.dataItem = this.$route.params;
-    console.log(this.$route.params)
+    // this.dataItem = this.$route.params;
+    console.log(this.$route.params.id)
     http.get({"url":'productListSort.php'+'?Sort="random"& state= 1'}).then ( res => {
       this.randomData = res.data;
       // console.log(res.data)
     })
-
+    this.ajaxProduct()
     http.post({"url":'collect.php',parmas:{userid: this.userid,goodId:this.dataItem.goodId,state:'select'}}).then ( res => {
-        console.log(res.data);
-        if(res.data.length > 0){
-           this.className = 'glyphicon-star'
+        // console.log(res.data);
+        if(res.data.length > 1){
+          this.className = 'glyphicon-star'
         }
     })
   },
   methods: {
-    toDetailPage(obj,_event){
-      console.log(666)
+    back(){
+      this.$router.go(-1)
+    },
+    toDetailPage(id,_event){
       if(!_event.target.id){
-        this.$router.push({ name: 'detailpage',params: obj});
+        this.$router.push({ name: 'detailpage',params: id});
+      } else {
+        this.addCar(id)
       }
+    },
+    ajaxProduct(){
+        http.post({"url":'getProduct.php',parmas:{goodId: this.$route.params.id,state:'select'}}).then ( res => {
+          // console.log(res.data[0]);
+          this.dataItem = res.data[0];
+      });
     },
     addCar(obj){
       MessageBox.alert('成功加入购物车').then(action => {
-         console.log(obj);
-        http.post({"url":'Car.php',parmas:{userid: this.userid,goodId:obj}}).then ( res => {
+        //  console.log(obj);
+        http.post({"url":'car1.php',parmas:{userId: this.userid,goodId: obj,state: 'addProduct'}}).then ( res => {
           console.log(res.data);
         })
       });

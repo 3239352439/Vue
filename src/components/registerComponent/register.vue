@@ -88,10 +88,12 @@
                 if(this.type3 == false && this.codenum == this.code && this.password !== ""){
                     spinner.loadspinner();
                     http.get({url:"register.php?phone=" + this.phone + "&password=" + this.password}).then((res)=>{
+                        console.log(res)
                         setTimeout(function(){
                             spinner.closeSpinner();
                             if(res.data != 'fail'){
                                 this.$store.commit('createPhone',this.phone);
+                                this.$store.commit("setUserId",res.data[0].userId);
                                 var now = new Date();
                                 now.setDate(now.getDate()+90);
                                 cookie.set("token",res.data,now,"/");
