@@ -31,31 +31,14 @@
                 <h2>{{obj.goodName}}</h2>
                 <h4><span>￥{{obj.Price}}</span><span class="glyphicon glyphicon-list-alt"  v-bind:id="idx"></span></h4>
             </li>
-          <!-- <li>
-            <img src="../../assets/img/loading.jpg" alt="">
-            <h2>阿加</h2>
-            <h4><span>￥22</span><span class="glyphicon glyphicon-list-alt"></span></h4>
-          </li>
-           <li>
-            <img src="../../assets/img/loading.jpg" alt="">
-            <h2>阿加</h2>
-            <h4><span>￥22</span><span class="glyphicon glyphicon-list-alt"></span></h4>
-          </li>
-           <li>
-            <img src="../../assets/img/loading.jpg" alt="">
-            <h2>阿加</h2>
-            <h4><span>￥22</span><span class="glyphicon glyphicon-list-alt"></span></h4>
-          </li>
-           <li>
-            <img src="../../assets/img/loading.jpg" alt="">
-            <h2>阿加</h2>
-            <h4><span>￥22</span><span class="glyphicon glyphicon-list-alt"></span></h4>
-          </li> -->
         </ul>
         </div>
         <div class="deteils">
           <h1><span>商品详情</span></h1>
           <ul>
+            <li><img src="../../assets/common/product_details_footer6.jpg" alt=""></li>
+            <li><img src="../../assets/common/product_details_footer6.jpg" alt=""></li>
+            <li><img src="../../assets/common/product_details_footer6.jpg" alt=""></li>
             <li><img src="../../assets/common/product_details_footer6.jpg" alt=""></li>
           </ul>
         </div>
@@ -120,13 +103,23 @@ export default {
     },
     addCollect(){
       if(this.className == 'glyphicon-star'){
-        console.log(666)
+        // console.log(666)
+        http.post({'url': 'collect.php',parmas:{userid: this.userid,goodId: this.dataItem.goodId,state: 'delete'}}).then ( res => {
+          console.log(res.data)
+          if(res.data == 'delete'){
+            MessageBox.alert('已取消收藏').then(action => {
+              // console.log(action);
+              this.className = 'glyphicon-star-empty'
+            });
+          }
+        })
+
       } else if(this.className == 'glyphicon-star-empty'){
         http.post({"url":'collect.php',parmas:{userid: this.userid,goodId:this.dataItem.goodId,state:'insert'}}).then ( res => {
-          console.log(res.data);
+          // console.log(res.data);
           if(res.data == 'ok'){
             MessageBox.alert('收藏成功').then(action => {
-              console.log(action);
+              // console.log(action);
               this.className = 'glyphicon-star'
             });
           }

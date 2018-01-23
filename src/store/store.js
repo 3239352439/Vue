@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import { Indicator,MessageBox } from 'mint-ui';
-import spinner from "../components/spinnerComponent/spinner.js"
+import spinner from "../components/spinnerComponent/spinner.js";
 Vue.use(Vuex);
 
 const store = new Vuex.Store({
@@ -10,8 +10,8 @@ const store = new Vuex.Store({
         phoneNum:"",
         categoryId:"",
         selectTotle:"",
-        priceTotle:"",
-        checkedCarId: ""
+        checkedCarId: "",
+        priceTotle: 0
     },
     mutations:{
       //获取当前位置
@@ -26,8 +26,8 @@ const store = new Vuex.Store({
              map.addOverlay(mk);
              map.panTo(r.point);
              geocoder.getLocation(r.point,function(rs){
-               spinner.closeSpinner(); 
-              //  MessageBox.alert('你当前所在位置:'+rs.address).then(action => {}); 
+               spinner.closeSpinner();
+              //  MessageBox.alert('你当前所在位置:'+rs.address).then(action => {});
                state.site=rs.address;
                });
            }
@@ -53,11 +53,8 @@ const store = new Vuex.Store({
         getSelectTotle(state,val){
           state.selectTotle = val;
         },
-        getOriceTotle(state,val){
+        getPriceTotle(state,val){
           state.priceTotle = val;
-        },
-        getCheckedCarId(state,val){
-          state.checkedCarId = val;
         }
       }
 })
