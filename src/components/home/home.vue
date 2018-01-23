@@ -29,14 +29,14 @@
             
         <div id="list">
             <div class="l_nav">
-                <ul>
-                    <li v-for="(item,idx) in typeData" :key="idx"><span @click.stop="showList">{{item.categoryName}}</span></li>
+                <ul class="tabs">
+                    <li v-for="(item,idx) in typeData" :key="idx" class="tabs"><span @click.stop="showList" >{{item.categoryName}}</span></li>
                 </ul>
             </div>
             
             <div class="list">
                   <mt-tab-container v-model="active" :swipeable="true">
-                    <mt-tab-container-item id="水果">
+                   <mt-tab-container-item v-for="item in typeData" :id="item.categoryName" :key="item.categoryName">
                         <ul class="datalist">
                            <li v-for="obj in datalist" :key="obj.goodName" :gid="obj.goodId">
                             <div>
@@ -55,7 +55,6 @@
                         </ul>
                         
                     </mt-tab-container-item>
-                   
                 </mt-tab-container>
             </div>
           
@@ -85,7 +84,14 @@
                 this.$router.push({name:"getAddress"});
             },
             showList(e){
-                
+                $(e.target).addClass('active').parent().siblings('li').find('span').removeClass('active');
+                var tab=e.target.innerText;
+                spinner.loadspinner();
+                 http.get({url:this.url+"?type="+tab}).then(res=>{
+                spinner.closeSpinner(); 
+                this.datalist=res.data;
+            });
+                this.active=tab;
             }
         },
         directives:{
@@ -97,7 +103,17 @@
                 
              }
         },
+        computed:{
+            get(){
+
+            },
+            set(){
+
+            }
+        },
         mounted(){  
+            var li=$('.tabs').children("li").get(0);console.log(li)
+            li.children().addClass('active');
             spinner.loadspinner();
             http.get({url:this.url}).then(res=>{
                 // spinner.closeSpinner();
@@ -110,7 +126,7 @@
             });
              spinner.loadspinner();
             http.get({url:this.url+"?type="+this.active}).then(res=>{
-                spinner.loadspinner();
+               spinner.closeSpinner(); 
                 this.datalist=res.data;
             });
             // 吸顶导航

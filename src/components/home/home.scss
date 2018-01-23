@@ -101,7 +101,7 @@ $hsize:0.67rem;
        display:flex;
        flex-direction:column;
         .l_nav{
-            z-index:2;
+            
             background: #EFEFF4;
             height:0.53rem;              
             ul{ 
@@ -109,6 +109,7 @@ $hsize:0.67rem;
                 height:0.6rem;
                 margin: 0.0rem;
                 white-space: nowrap;
+                width: 100%;
                 li{
                 height:0.51rem; 
                 overflow: hidden;
@@ -127,6 +128,7 @@ $hsize:0.67rem;
                     }
                 
                 }
+               
             } 
         }
         .list{
@@ -214,5 +216,10 @@ $hsize:0.67rem;
         position:fixed;
         left:0;
         top:$hsize;
+        z-index:2;
+      }
+      .active{
+          color:$mainColor!important;
+          border-bottom:1px solid #1754fa;
       }
 }
