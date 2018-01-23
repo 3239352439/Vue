@@ -2,9 +2,10 @@
     <div class="menu_cen">
       <ul>
         <li>
-
+          <router-link to="/">
           <i class="glyphicon glyphicon-home"></i>
           <span>首页</span>
+          </router-link>
         </li>
         <li>
           <router-link to="/category">

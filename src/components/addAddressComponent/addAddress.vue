@@ -2,20 +2,19 @@
     <div id="sm_add">
         <div class="add_header">
             <mt-header title="添加收货人">
-              <router-link to="/" slot="left">
+              <router-link to="/getAddress" slot="left">
                 <mt-button icon="back">返回</mt-button>
               </router-link>
         </mt-header> 
         </div> 
         <div class="add_main">
             <mt-field label="收货人" placeholder="点击输入姓名" v-model="data.linkMan">
-                <p class="gender sel" @click="getGender"><span v-for="item in allGender" v-if="data.gender==item" class="active" >{{item}}</span><span v-else>{{item}}</span></p>
+                <p class="gender sel" @click="getGender"><span v-for="item in allGender" v-if="data.gender==item" class="active" :key="item">{{item}}</span><span v-else>{{item}}</span></p>
             </mt-field>
                 <mt-field label="手机号码" placeholder="输入手机号码" type="tel" v-model="data.phone"></mt-field>
                 <mt-field label="小区" class="site" placeholder="请输入小区地址" type="text" v-model="$store.state.site" ></mt-field>
                 <mt-field label="单元门牌" placeholder="请输入门牌号" type="text" v-model="data.doorplate"></mt-field>
-                <div class="address sel" @click="getType"><p><label>地址分类</label><span v-for="item in allType" v-if="data.type==item" class="active">{{item}}</span><span v-else>{{item}}</span></p></div>
-                        
+                <div class="address sel" @click="getType"><p><label>地址分类</label><span v-for="item in allType" v-if="data.type==item" class="active" :key="item">{{item}}</span><span v-else>{{item}}</span></p></div>             
             
             <mt-button type="primary" size="large" @click.stop="save">保存</mt-button>
             <mt-button type="primary" size="large" @click.stop="del"  v-if="editID">删除地址</mt-button>  
@@ -44,7 +43,6 @@
                 url:"addAddress.php",
                 tip:'',
                 editID:this.$route.params.id
-                
             }
         },
         methods:{
@@ -106,7 +104,7 @@
                     if(!this.editID){//保存新地址           
                      http.get({url:this.url+'?checkData='+$data}).then(result=>{
                         var row=result.data.data2[0].row;
-                        if(row=="0"){
+                         if(row=="0"){
                             http.post({url:this.url,parmas:{data:$data}}).then(res=>{
                                 if(res.data){
                                     spinner.closeSpinner(); 
@@ -118,6 +116,7 @@
                                         this.$router.push({name:'getAddress'});     
                                     },1000); 
                                 }
+
                             })
                         }
                         else{
@@ -138,8 +137,10 @@
                         this.tip="信息更新成功";
                         this.success=true; 
                          window.setTimeout(()=>{
-                            this.success=false;     
+                            this.success=false;  
+                            this.$router.push({name:'getAddress'});   
                         },1000); 
+                       
                     }else{
                         spinner.closeSpinner();
                         this.tip="更改信息失败";
@@ -180,22 +181,27 @@
               
             }
         },
-        mounted(){
+        mounted(){console.log(this.editID)
             if(this.editID){
                  spinner.loadspinner();
-                http.get({url:this.url+"?id="+this.editID}).then(res=>{
+                 var id=this.editID;
+                http.get({url:this.url+"?id="+id}).then(res=>{
                 if(res.data){
                      spinner.closeSpinner();
                      this.data={linkMan:res.data[0].linkMan,gender:res.data[0].gender,phone:res.data[0].phone,village:'',doorplate:res.data[0].doorplate,type:res.data[0].type};
                     $('.site').find('input').val(res.data[0].village);
-               
                 }
                 })
                 
             }
              var input=$('.site').find('input');
             input.focus(()=>{
-                this.$router.push({name:"autoAddress",params:{id:this.$route.params.id}});
+                if(this.$route.params.id){
+                    this.$router.push({name:"autoAddress",params:{id:this.$route.params.id}});
+                }else{
+                    this.$router.push({name:"autoAddress"});
+                }
+                
             })
         }
     }

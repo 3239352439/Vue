@@ -18,7 +18,7 @@
             <div class="address" @click.stop="kipAuto">
                 <p><i class="glyphicon glyphicon-screenshot"></i>定位到当前位置<i class="glyphicon glyphicon-chevron-right"></i></p>
             </div>
-            <div class="get_footer" @click="kipAdd">添加收货地址</div>
+            
             <div class="myAddress">
                 <h4><i class="glyphicon glyphicon-map-marker"> </i>我的配送地址</h4>
                 <ul class="addressList" v-if="data.length>=0">
@@ -40,7 +40,7 @@
             </div>
            
         </div>
-
+        <div class="get_footer" @click="kipAdd">添加收货地址</div>
     </div>
 </template>
 <script>

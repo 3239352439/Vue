@@ -101,7 +101,6 @@ $hsize:0.67rem;
        display:flex;
        flex-direction:column;
         .l_nav{
-            
             background: #EFEFF4;
             height:0.53rem;              
             ul{ 
@@ -128,13 +127,22 @@ $hsize:0.67rem;
                     }
                 
                 }
+                li:nth-child(1){
+                    span{
+                     color:$mainColor;
+                     border-bottom:3px solid #1754fa;
+                     }
+                } 
                
             } 
         }
         .list{
+            margin-bottom:0.4rem;
             flex:1;
-            //  overflow:auto;
              .datalist{
+                 height: 100%;
+                 overflow:auto;
+                 margin-bottom:0.4rem;
                  li{
                      color:#808080;
                     padding:0.13rem 0.07rem;
@@ -184,7 +192,7 @@ $hsize:0.67rem;
                             display:flex;
                             padding:0.07rem 0 0.13rem;
                             position:relative;
-                            p{                        
+                            p:nth-child(1){                        
                                span:nth-child(1){
                                  color:#FF9000;
                                 font-weight:bold; 
@@ -204,6 +212,27 @@ $hsize:0.67rem;
                                border-radius:0.13rem; 
                                color:#fff;
                             }
+                             .qty{
+                                position:absolute;
+                               right:0.13rem;
+                                flex: 1;
+                                display: flex;
+                                .compute{
+                                    flex: 1;
+                                    display: block;
+                                    width: 0.48rem;
+                                    height: 0.27rem;
+                                    border: 1px solid #f57d0d;
+                                    border-radius: 50%;
+                                    text-align: center;
+                                    line-height: 0.27rem;
+                                }
+                                .num{
+                                    flex: 2;
+                                    text-align: center;
+                                }
+                              }
+                          
                         }
                     }  
                  }
@@ -211,6 +240,9 @@ $hsize:0.67rem;
              }
         }
        
+    }
+    .menu_cen{
+    position: fixed;
     }
     .titleTap{
         position:fixed;

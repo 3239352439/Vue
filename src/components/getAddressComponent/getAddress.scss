@@ -11,6 +11,9 @@ html,body{
         line-height: $hsize;
         background:$mainColor;
          height: $hsize;
+         div{
+            height: $hsize;  
+         }
         .mint-header-title{
          font-size:0.24rem;
          }
@@ -26,7 +29,21 @@ html,body{
         margin:0.07rem 0;
         }
     }
+     .get_footer{
+            position:fixed;
+            bottom:0rem;
+            left:0;
+            right:0;
+            height: 0.67rem;
+            line-height: 0.67rem;
+            text-align:center;
+            color:#fff;
+            font-size:0.24rem;
+            width: 100%;
+            background:$mainColor;
+        }
     .get_main{
+        margin-bottom:0.67rem;
         flex:1;
         position:relative;
         display:flex;
@@ -54,19 +71,7 @@ html,body{
 
             }
         }
-    .get_footer{
-            position:absolute;
-            bottom:0rem;
-            left:0;
-            right:0;
-            height: 0.67rem;
-            line-height: 0.67rem;
-            text-align:center;
-            color:#fff;
-            font-size:0.24rem;
-            width: 100%;
-            background:$mainColor;
-        }
+   
         .myAddress{
             flex:1;
             display:flex;

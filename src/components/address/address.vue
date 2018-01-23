@@ -40,7 +40,6 @@
     export default{
         data(){
             return {
-                
                 url:'getAddress.php',
                 data:[]                
             }
