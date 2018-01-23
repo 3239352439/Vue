@@ -48,10 +48,8 @@ export default {
     }
   },
   mounted(){
-    console.log(this.$store.state.checkedCarId);
     this.prdNum = this.$store.state.selectTotle;
     this.prdPrice =  this.$store.state.priceTotle;
-
     // console.log(this.$route.params.name)
     this.categoryId = this.$route.params.id;
     this.name = this.$route.params.name;

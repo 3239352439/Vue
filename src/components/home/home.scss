@@ -137,9 +137,12 @@ $hsize:0.67rem;
             } 
         }
         .list{
+            margin-bottom:0.4rem;
             flex:1;
-            //  overflow:auto;
              .datalist{
+                 height: 100%;
+                 overflow:auto;
+                 margin-bottom:0.4rem;
                  li{
                      color:#808080;
                     padding:0.13rem 0.07rem;
@@ -237,6 +240,9 @@ $hsize:0.67rem;
              }
         }
        
+    }
+    .menu_cen{
+    position: fixed;
     }
     .titleTap{
         position:fixed;

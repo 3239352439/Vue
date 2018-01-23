@@ -5,7 +5,7 @@
 
     $userId = isset($_POST['userid']) ? $_POST['userid'] : "1";
     $goodId = isset($_POST['goodId']) ? $_POST['goodId'] : "1";
-    $state = isset($_POST['state']) ? $_POST['state'] : "";
+    $state = isset($_POST['state']) ? $_POST['state'] : "delete";
     $sql;
     // echo $userId
     if( $state == 'insert'){
@@ -21,5 +21,13 @@
       $result = query_oop($sql);
 
       echo json_encode($result, JSON_UNESCAPED_UNICODE);
+    } else if( $state == 'delete'){
+      $sql = "delete from collect where userId = '$userId' and goodId ='$goodId'";
+      $result = excute_oop($sql);
+      if($result){
+        echo  "delete";
+      }else{
+        echo "fail";
+      }
     }
 ?>
