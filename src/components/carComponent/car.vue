@@ -67,6 +67,7 @@ export default {
     }
   },
   mounted: function(){
+    this.userid = this.$store.state.userId;
     // 随机生成商品
     http.get({"url":'productListSort.php'+'?Sort="random"& state= 1'}).then ( res => {
        this.randomData = res.data;

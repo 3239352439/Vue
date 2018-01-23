@@ -48,6 +48,7 @@ export default {
     }
   },
   mounted(){
+    this.userid = this.$store.state.userId;
     this.prdNum = this.$store.state.selectTotle;
     this.prdPrice =  this.$store.state.priceTotle;
     // console.log(this.$route.params.name)
