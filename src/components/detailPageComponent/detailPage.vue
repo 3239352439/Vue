@@ -68,13 +68,17 @@ export default {
     }
   },
   mounted(){
-    this.dataItem = this.$route.params;
-    console.log(this.$route.params)
+    // this.dataItem = this.$route.params;
+    console.log(this.$route.params.id)
     http.get({"url":'productListSort.php'+'?Sort="random"& state= 1'}).then ( res => {
       this.randomData = res.data;
       // console.log(res.data)
     })
 
+    http.post({"url":'getProduct.php',parmas:{goodId: this.$route.params.id,state:'select'}}).then ( res => {
+        console.log(res.data[0]);
+        // this.dataItem = res.data;
+    });
     http.post({"url":'collect.php',parmas:{userid: this.userid,goodId:this.dataItem.goodId,state:'select'}}).then ( res => {
         console.log(res.data);
         if(res.data.length > 0){

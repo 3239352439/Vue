@@ -68,13 +68,36 @@
       echo json_encode($result, JSON_UNESCAPED_UNICODE);
 
     } else if( $state == 'addProduct'){
-      $sql = "insert into car(userId,goodId) values ('$userId','$goodId')";
-      $result = excute_oop($sql);
-      if($result){
-        echo 'seccese';
+
+      $sql ="";
+      $sql = "select * from car where userId='$userId' and goodId ='$goodId'";
+      $result = query_oop($sql);
+      // echo count($result);
+
+      // var_dump($result);
+
+      if(count($result)>0){
+        $sql = "UPDATE car set count = count+1  where userId='$userId' and goodId = '$goodId'";
+        $result = excute_oop($sql);
+        if($result){
+          echo 'seccese';
+        }else{
+          echo "fail";
+        }
       }else{
-        echo "fail";
+        $sql = "insert into car(userId,goodId) values ('$userId','$goodId')";
+        $result = excute_oop($sql);
+        if($result){
+          echo 'seccese';
+        }else{
+          echo "fail";
+        }
       }
+
+    } else if( $state == 'selectprdCount'){
+      $sql = "select sum(count) as totle, SUM(product.Price*count) AS Price from car,product where userId ='$userId' and car.goodId = product.goodId";
+      $result = query_oop($sql);
+      echo json_encode($result, JSON_UNESCAPED_UNICODE);
     }
 
 ?>

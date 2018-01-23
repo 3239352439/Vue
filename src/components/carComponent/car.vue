@@ -183,7 +183,7 @@ export default {
       });
     },
     addCar(id){
-      console.log(666);
+      // console.log(666);
       http.post({"url":this.url,parmas:{userId: this.userid,goodId:id,state: 'addProduct'}}).then ( res => {
         // console.log(this.carprd.splice(aa, 1));
        if( res.data == 'seccese'){
