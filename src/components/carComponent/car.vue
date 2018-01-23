@@ -32,7 +32,7 @@
         <ul>
           <li v-for="(obj,idx) in randomData" @click.stop="toDetailPage(obj,$event)">
             <img v-bind:src="obj.ImgUrl" alt="">
-            <h4><span>￥{{obj.Price}}</span><span class="glyphicon glyphicon-list-alt" v-bind:id="idx"></span></h4>
+            <h4><span>￥{{obj.Price}}</span><span class="glyphicon glyphicon-list-alt"  @click.stop="addCar(obj.goodId)"></span></h4>
           </li>
         </ul>
       </div>
@@ -75,7 +75,7 @@ export default {
   },
   methods :{
     ajax(){
-          // 请求用户购物车的商品
+      // 请求用户购物车的商品
       http.post({"url":this.url,parmas:{userId: this.userid,state: 'selectproduct'}}).then ( res => {
         // console.log(res.data)
         this.carprd = res.data;
@@ -130,6 +130,7 @@ export default {
               http.post({"url":this.url,parmas:{userId: this.userid,goodId:idx,state: 'delProduct'}}).then ( res => {
                 // console.log(this.carprd.splice(aa, 1));
                 this.carprd.splice(subItem, 1);
+                this.ajax();
               })
             }
           });
@@ -144,21 +145,21 @@ export default {
     },
     ToDetailPage(obj,_event){
       // console.log(_event.target.tagName)
-        this.$router.push({ name: 'detailpage',params: obj});
+      this.$router.push({ name: 'detailpage',params: obj});
       // if(_event.target.tagName !== 'P' || _event.target.tagName !== 'INPUT'){
         // console.log(666)
       // }
     },
     checked(idx,eve){
       if(eve.target.checked == true){
-        console.log('true')
+        // console.log('true')
         http.post({"url": this.url,parmas:{userId: this.userid,goodId:idx,state: 'changestate',changestate: 'true'}}).then ( res => {
           // console.log(res.data);
           this.ajax()
           //  this.carprd = res.data;
         })
       } else {
-        console.log('false');
+        // console.log('false');
         http.post({"url": this.url,parmas:{userId: this.userid,goodId:idx,state: 'changestate',changestate: 'false'}}).then ( res => {
           // console.log(res.data);
           this.ajax();
@@ -166,6 +167,7 @@ export default {
       }
 
     },
+    // 清空购物车
     empty(){
       MessageBox({
         title: '提示',
@@ -179,6 +181,15 @@ export default {
         })
         }
       });
+    },
+    addCar(id){
+      console.log(666);
+      http.post({"url":this.url,parmas:{userId: this.userid,goodId:id,state: 'addProduct'}}).then ( res => {
+        // console.log(this.carprd.splice(aa, 1));
+       if( res.data == 'seccese'){
+          this.ajax();
+        }
+      })
     }
   },
   computed: {
