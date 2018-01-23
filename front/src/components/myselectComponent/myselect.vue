@@ -51,7 +51,7 @@
         },
         methods:{
             addCar(obj){
-                http.post({"url":'Car.php',parmas:{userid: this.$store.state.userId,goodId:obj}}).then ( res => {
+                http.post({"url":'car1.php',parmas:{userid: this.$store.state.userId,goodId:obj}}).then ( res => {
                     // console.log(res.data[0].Price)
                     this.carNum = res.data[0].totle;
                     this.prdPrice = res.data[0].Price;

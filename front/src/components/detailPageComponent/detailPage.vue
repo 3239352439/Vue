@@ -65,6 +65,7 @@ export default {
     }
   },
   mounted(){
+    this.userid = this.$store.state.userId;
     // this.dataItem = this.$route.params;
     console.log(this.$route.params.id)
     http.get({"url":'productListSort.php'+'?Sort="random"& state= 1'}).then ( res => {
