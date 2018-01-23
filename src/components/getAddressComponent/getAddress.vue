@@ -3,7 +3,7 @@
         <div class="get_header">
             <mt-header title="选择配送地址">
               <router-link to="/" slot="left">
-                <mt-button icon="back" @click.stop.prevent="reBack">返回</mt-button>
+                <mt-button icon="back">返回</mt-button>
               </router-link>
         </mt-header> 
         </div> 
@@ -22,7 +22,7 @@
             <div class="myAddress">
                 <h4><i class="glyphicon glyphicon-map-marker"> </i>我的配送地址</h4>
                 <ul class="addressList" v-if="data.length>=0">
-                    <li v-for="(item,idx) in data" :key="idx">
+                    <li v-for="item in data" :key="item.receiveId">
                         <div class="site_l">
                             <div class="l_top">
                                 <span v-if="item.type=='公司'" class="company">{{item.type}}</span>
@@ -72,9 +72,9 @@
             edit(e){
                 var tag=e.target.tagName.toLowerCase();
                 if(tag=="i"){
-                  var id=$(e.target).attr('id'); 
-                  if(!isNaN(id)){
-                      this.$router.push({path:"/addAddress/"+id});  
+                  var $id=$(e.target).attr('id');
+                  if(!isNaN($id)){
+                      this.$router.push({name:"addAddress",params:{id:$id}});  
                   }     
                 }
                 

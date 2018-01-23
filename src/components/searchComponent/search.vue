@@ -14,13 +14,13 @@
             <div class="hostory" v-if="result.length>0">
                 <h3>历史搜索<i class="glyphicon glyphicon-trash" @click="removesAll"></i></h3>
                 <ul class="show" >
-                  <li v-for="item in result">{{item}}</li>
+                  <li v-for="(item,idx) in result">{{item}}</li>
                 </ul>
             </div>
             <div class="hot">
                 <h3>热门搜索</h3>
                 <ul class="show" >
-                  <li v-for="item in hot">{{item}}</li>
+                  <li v-for="item in hot" >{{item}}</li>
                 </ul>
             </div>
 

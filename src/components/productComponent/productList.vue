@@ -10,7 +10,7 @@
       <productMenu v-bind:SmallId="name"></productMenu>
     </div>
     <div class="product_menu">
-      <div v-for="obj in dataset" class="goodItem" @click.stop="toDetailPage(obj,$event)">
+      <div v-for="obj in dataset" class="goodItem" @click.stop="toDetailPage(obj.goodId,$event)">
         <div class="left_img">
           <img v-bind:src="obj.ImgUrl" alt="加载中"/>
         </div>
@@ -23,7 +23,7 @@
       </div>
     </div>
     <div class="addCar">
-      <div class="carIcom" @click="toCar"><i class="glyphicon glyphicon-th"></i><span class="carNum">{{carNum}}</span></div><div class="prdNum">已选<span>{{prdNum}}</span></div><div class="prdprice"><span>￥{{prdPrice}}</span></div><div class="account"><button>去结算</button></div>
+      <div class="carIcom" @click="toCar"><i class="glyphicon glyphicon-shopping-cart"></i><span class="carNum">{{carNum}}</span></div><div class="prdNum">已选<span>{{this.$store.state.selectTotle}}</span></div><div class="prdprice"><span>￥{{this.$store.state.priceTotle}}</span></div><div class="account"><button>去结算</button></div>
     </div>
   </div>
 </template>
@@ -48,10 +48,8 @@ export default {
     }
   },
   mounted(){
-    console.log(this.$store.state.checkedCarId);
     this.prdNum = this.$store.state.selectTotle;
     this.prdPrice =  this.$store.state.priceTotle;
-
     // console.log(this.$route.params.name)
     this.categoryId = this.$route.params.id;
     this.name = this.$route.params.name;
@@ -60,24 +58,14 @@ export default {
     } else {
       this.ajax(this.categoryId)
     }
-    http.post({"url":'Car.php',parmas:{userid: this.userid}}).then ( res => {
+    http.post({"url":'car1.php',parmas:{userId: this.userid,state: 'selectprdCount'}}).then ( res => {
       // console.log(res.data[0].Price)
       this.carNum = res.data[0].totle;
       // this.prdPrice = res.data[0].Price;
     })
+    this.ajaxCar()
   },
   computed: {
-    // reverseprdPrice:{
-      // console.log('a',this.prdPrice.toFixed(2))
-      // return this.prdPrice;
-    //   get: function(){
-    //     return this.prdPrice;
-    //   },
-    //   set: function(newValue){
-    //     this.prdPrice = newValue;
-        // console.log(this.prdPrice)
-    //   }
-    // }
   },
   methods:{
     // 二次封装ajax请求
@@ -92,6 +80,26 @@ export default {
         })
       }
     },
+    ajaxCar(){
+    // 请求用户购物车的商品
+    http.post({"url":'car1.php',parmas:{userId: this.userid,state: 'selectproduct'}}).then ( res => {
+      // console.log(res.data)
+      this.carprd = res.data;
+      var selectTotle=0;
+      var priceTotle = 0;
+      for(var i=0; i< res.data.length; i++){
+        if(res.data[i].checkedstatus == 'true'){
+          selectTotle += res.data[i].count*1;
+          priceTotle += res.data[i].Price*1*res.data[i].count*1;
+          // console.log('i',i,priceTotle)
+        }
+      }
+
+      this.$store.commit("getSelectTotle",selectTotle)
+      this.$store.commit("getPriceTotle",priceTotle.toFixed(2));
+      // console.log('a',this.$store.state.priceTotle)
+    })
+    },
     addCar(obj){
       // console.log(obj);
       http.post({"url":'Car.php',parmas:{userid: this.userid,goodId:obj}}).then ( res => {
@@ -101,10 +109,10 @@ export default {
       })
       // this.carNum  += this.carNum;
     },
-    toDetailPage(obj,_event){
+    toDetailPage(prdId,_event){
       // console.log()
       if(_event.target.tagName !== 'BUTTON'){
-        this.$router.push({ name: 'detailpage',params: obj});
+        this.$router.push({ name: 'detailpage',params: {id: prdId}});
       }
     },
     toCar(){

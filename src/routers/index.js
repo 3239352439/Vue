@@ -31,6 +31,8 @@ import loginParent from '../components/loginParentComponent/loginParent.vue';
 import detailPageComponent from '../components/detailPageComponent/detailPage.vue';
 import carComponent from '../components/carComponent/car.vue'
 import home from '../components/home/home.vue'
+import address from '../components/address/address'
+import accountComponent from '../components/accountComponent/account.vue'
 Vue.use(Vuex);
 Vue.use(MintUI);
 Vue.use(VueRouter);
@@ -58,7 +60,7 @@ var router = new VueRouter({
             component:autoAddress
         },
         {
-            path:'/addAddress/:id',
+            path:'/addAddress',
             name:'addAddress',
             component:addAddress
         },{
@@ -118,6 +120,16 @@ var router = new VueRouter({
             path:"/myselect",
             name:"myselect",
             component: myselect
+        },
+        {
+            path: '/address',
+            name: "address",
+            component: address
+        },
+        {
+          path: '/account',
+          name: "account",
+          component: accountComponent
         }
 
     ]
