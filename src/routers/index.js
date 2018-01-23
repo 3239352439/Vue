@@ -23,6 +23,9 @@ import login from '../components/loginComponent/login.vue'
 import my from '../components/myComponent/my.vue'
 import setting from '../components/settingComponent/setting.vue'
 import order from '../components/orderComponent/order.vue'
+import pay from '../components/payComponent/pay.vue'
+import orderdetail from '../components/orderdetailComponent/orderdetail.vue'
+import myselect from '../components/myselectComponent/myselect.vue'
 
 import loginParent from '../components/loginParentComponent/loginParent.vue';
 import detailPageComponent from '../components/detailPageComponent/detailPage.vue';
@@ -103,6 +106,18 @@ var router = new VueRouter({
             path:'/',
             name:"home",
             component:home
+        },{
+            path:'/pay',
+            name:'pay',
+            component:pay
+        },{
+            path:"/orderdetail",
+            name:"orderdetail",
+            component: orderdetail
+        },{
+            path:"/myselect",
+            name:"myselect",
+            component: myselect
         }
 
     ]

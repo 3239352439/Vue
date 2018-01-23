@@ -54,17 +54,19 @@
             this.data = [];
             this.dataset = [];
             this.dataPrice = {};
-            var num = this.$route.params.num;
+            var num = this.$route.params.num || this.$store.state.orderNum;
             this.refresh(num*1);
+            console.log(num)
         },
         methods:{
             goback(){
-                this.$router.go(-1);
+                this.$router.push("/my");
             },
             checkedClick(val){
                 this.dataobj = {};
                 this.dataset = [];
                 this.dataPrice = {};
+                this.$store.commit('setOrderNum',val);
                 $(".mint-tab-item").eq(val).siblings().removeClass("is-selected");
                 this.switchF(val);
             },
@@ -179,24 +181,37 @@
                 }
             },
             btn(val,event){
-                if(event.target.tagName == "BUTTON"){
-                    this.$router.push('/my');
-                }else if(event.target.className == "glyphicon glyphicon-trash"){
+                if(event.target.innerText == "去支付"){
+                    this.$router.push({name:'pay',params:{orderId:val,price:this.dataPrice[val].price}});
+                }else if(event.target.innerText == "取消订单"){
+                    MessageBox.confirm('确定执行此操作?').then(action => {
+                        this.data.forEach(function(item,index){
+                            if(item.orderId == val){
+                                item.status = 6;
+                            }
+                        }.bind(this))
+                        this.checkedClick(3);
+                        http.get({url:"order.php?phone=" + this.$store.state.phoneNum + "&state=update&status=6&orderId=" + val}).then(res=>{
+                            // console.log(res)
+                        })
+                    })
+                }else if(event.target.className == "iconfont icon-shanchu"){
                     MessageBox.confirm('确定执行此操作?').then(action => {
                         var phone = this.$store.state.phoneNum;
                         this.data.forEach(function(item,index){
                             if(item.orderId == val){
                                 this.data.splice(index,1);
-                                this.checkedClick(3);
                             }
                         }.bind(this))
+                        this.checkedClick(3);
                         http.get({url:"order.php?phone=" + this.$store.state.phoneNum + "&state=del&orderId=" + val}).then(res=>{
                             // console.log(res)
                         })
                     })
                     
                 }else{
-                    this.$router.push('/');
+                    this.$store.commit('setOrderId',val);
+                    this.$router.push({name:"orderdetail"});
                 }
             },
             

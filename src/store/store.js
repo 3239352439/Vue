@@ -11,7 +11,10 @@ const store = new Vuex.Store({
         categoryId:"",
         selectTotle:"",
         priceTotle:"",
-        checkedCarId: ""
+        checkedCarId: "",
+        orderNum:"",
+        orderId:"",
+        userId:""
     },
     mutations:{
       //获取当前位置
@@ -45,6 +48,9 @@ const store = new Vuex.Store({
         createPhone(state,val){
             state.phoneNum = val;
         },
+        setUserId(state, val){
+          state.userId = val;
+        },
         getCategoryId(state, val){
           state.categoryId = val;
         },
@@ -56,6 +62,12 @@ const store = new Vuex.Store({
         },
         getCheckedCarId(state,val){
           state.checkedCarId = val;
+        },
+        setOrderNum(state, val){
+          state.orderNum = val;
+        },
+        setOrderId(state, val){
+          state.orderId = val;
         }
       }
 })

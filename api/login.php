@@ -13,7 +13,8 @@
     // $row = $result->fetch_all(MYSQLI_ASSOC);
     // 输出结果
     if($result){
-        echo $phone;
+        $result[0]['password'] = "";
+        echo json_encode($result, JSON_UNESCAPED_UNICODE);
     }else{
         echo 'false';
     }

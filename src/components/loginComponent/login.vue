@@ -35,10 +35,12 @@
                 if(this.phone != "" && this.password != ""){
                     spinner.loadspinner();
                     http.get({url:"login.php?phone=" + this.phone + "&password=" + this.password}).then((res)=>{
+                        console.log(res)
                         setTimeout(function(){
                             spinner.closeSpinner();
                             if(res.data !== false){
                                 this.$store.commit('createPhone',this.phone);
+                                this.$store.commit("setUserId",res.data[0].userId);
                                 this.type = false;
                                 var now = new Date();
                                 now.setDate(now.getDate()+90);

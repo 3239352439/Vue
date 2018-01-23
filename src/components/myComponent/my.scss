@@ -81,4 +81,12 @@
     .introduce{
         margin-top:0.13rem;
     }
+    .quit{
+        padding:.1rem;
+        background: white;
+        .mint-button{
+            display: block;
+            width:100%;
+        }
+    }
 }

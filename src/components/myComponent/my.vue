@@ -19,8 +19,8 @@
                 <li @click="order($event,'3')"><i class="glyphicon glyphicon-list-alt"></i><br><span>全部订单</span></li>
             </ul>
         </div>
-        <div class="receiving">
-            <mt-cell title="收货地址" is-link>
+        <div class="receiving"  @click="collect($event)">
+            <mt-cell title="收货地址" is-link id="address">
                 <i slot="icon" class="iconfont icon-weibiaoti2fuzhi08"></i>
             </mt-cell>
 
@@ -32,7 +32,7 @@
                 <i slot="icon" class="iconfont icon-fapiao"></i>
             </mt-cell>
 
-            <mt-cell title="我的收藏/经常买" is-link>
+            <mt-cell title="我的收藏" is-link id="col">
                 <i slot="icon" class="iconfont icon-icowodeshoucang"></i>
             </mt-cell>
 
@@ -61,11 +61,14 @@
                 <i slot="icon" class="iconfont icon-iconfontzhizuobiaozhun20"></i>
             </mt-cell>
         </div>
+        <div class="quit">
+            <mt-button type="primary" v-if="this.$store.state.phoneNum != ''" @click="btn">退出</mt-button>
+        </div>
     </div>
 </template>
 
 <script>
-    import { Cell,Badge } from 'mint-ui';
+    import { Cell,Badge,Button } from 'mint-ui';
     import "./my.scss"
     import cookie from "../../utils/cookie"
     import http from '../../utils/reqAjax'
@@ -107,7 +110,25 @@
                 }
             },
             order(event,val){
-                this.$router.push({name:"order",params:{num:val}});
+                if(this.$store.state.phoneNum == ""){
+                    this.$router.push("/login");
+                }else{
+                    this.$router.push({name:"order",params:{num:val}});
+                }
+            },
+            btn(){
+                this.$store.commit('createPhone','');
+                this.type = !this.type;
+            },
+            collect(val){
+                console.log(val.target.parentNode.id);
+                if(this.$store.state.phoneNum == ""){
+                    this.$router.push("/login");
+                }else if(val.target.parentNode.id == "col"){
+                    this.$router.push({name:"myselect"});
+                }else if(val.target.parentNode.id == "address"){
+                    this.$router.push({name:"adress"});
+                }
             }
         }
     }

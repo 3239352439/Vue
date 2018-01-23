@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50714
 File Encoding         : 65001
 
-Date: 2018-01-19 21:10:39
+Date: 2018-01-22 21:10:43
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -22,6 +22,7 @@ DROP TABLE IF EXISTS `address`;
 CREATE TABLE `address` (
   `receiveId` int(255) NOT NULL AUTO_INCREMENT COMMENT '收货地址id',
   `userId` int(255) DEFAULT NULL COMMENT '用户id',
+  `orderId` int(10) DEFAULT NULL,
   `linkMan` varchar(255) DEFAULT NULL COMMENT '联系人',
   `gender` varchar(10) DEFAULT NULL COMMENT '性别 ',
   `phone` varchar(255) DEFAULT NULL COMMENT '联系电话',
@@ -29,14 +30,13 @@ CREATE TABLE `address` (
   `doorplate` varchar(255) DEFAULT NULL COMMENT '门牌号',
   `type` varchar(255) DEFAULT NULL COMMENT '地址类型',
   PRIMARY KEY (`receiveId`)
-) ENGINE=MyISAM AUTO_INCREMENT=85 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=92 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of address
 -- ----------------------------
-INSERT INTO `address` VALUES ('82', null, '好', '先生', '13369434344', '广东省江门市江海区道路A线', '45号', '公司');
-INSERT INTO `address` VALUES ('81', null, '董', '女士', '13369434345', '广东省韶关市仁化县', '11号', '学校');
-INSERT INTO `address` VALUES ('84', null, 'ha', '先生', '13354544444', 'dada', 'adad', '公司');
+INSERT INTO `address` VALUES ('88', '3', '1', '郝', '先生', '13360438799', '广州市天河区元岗', '310号', '学校');
+INSERT INTO `address` VALUES ('81', null, null, '董', '女士', '15088124065', '广东省韶关市仁化县', '11号', '其他');
 
 -- ----------------------------
 -- Table structure for car
@@ -48,13 +48,18 @@ CREATE TABLE `car` (
   `goodId` int(255) DEFAULT NULL COMMENT '商品id',
   `count` int(12) DEFAULT '1' COMMENT '商品数量',
   PRIMARY KEY (`carId`)
-) ENGINE=MyISAM AUTO_INCREMENT=43 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=48 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of car
 -- ----------------------------
-INSERT INTO `car` VALUES ('41', '1', '7', '1');
-INSERT INTO `car` VALUES ('42', '1', '3', '1');
+INSERT INTO `car` VALUES ('41', '1', '7', '2');
+INSERT INTO `car` VALUES ('42', '1', '3', '2');
+INSERT INTO `car` VALUES ('43', '2', '13', '1');
+INSERT INTO `car` VALUES ('44', '1', '4', '2');
+INSERT INTO `car` VALUES ('45', '1', '6', '1');
+INSERT INTO `car` VALUES ('46', '1', '1', '10');
+INSERT INTO `car` VALUES ('47', '1', '5', '2');
 
 -- ----------------------------
 -- Table structure for category
@@ -64,21 +69,22 @@ CREATE TABLE `category` (
   `categoryId` int(11) NOT NULL AUTO_INCREMENT COMMENT '大的分类',
   `categoryName` varchar(255) DEFAULT NULL COMMENT '分类名',
   `categoryImg` varchar(255) DEFAULT NULL COMMENT '大分类图片',
+  `categoryImg2` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`categoryId`)
 ) ENGINE=MyISAM AUTO_INCREMENT=10 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of category
 -- ----------------------------
-INSERT INTO `category` VALUES ('1', '水果', './src/assets/img/iconv3/l200_banner.jpg');
-INSERT INTO `category` VALUES ('2', '肉蛋鱼菜', './src/assets/img/iconv3/l100_banner.jpg');
-INSERT INTO `category` VALUES ('3', '粮食调味', './src/assets/img/iconv3/l300_banner.png');
-INSERT INTO `category` VALUES ('4', '酒水奶饮', './src/assets/img/iconv3/l400_banner.png');
-INSERT INTO `category` VALUES ('5', '休闲零食', './src/assets/img/iconv3/l500_banner.jpg');
-INSERT INTO `category` VALUES ('6', '护理美妆', './src/assets/img/iconv3/l600_banner.png');
-INSERT INTO `category` VALUES ('7', '日用清洁', './src/assets/img/iconv3/l700_banner.png');
-INSERT INTO `category` VALUES ('8', '母  婴', './src/assets/img/iconv3/l800_banner.png');
-INSERT INTO `category` VALUES ('9', '宠物用品', './src/assets/img/iconv3/l900_banner.png');
+INSERT INTO `category` VALUES ('1', '水果', './src/assets/img/iconv3/l200_banner.jpg', './src/assets/img/iconv3/f1.jpg');
+INSERT INTO `category` VALUES ('2', '肉蛋鱼菜', './src/assets/img/iconv3/l100_banner.jpg', './src/assets/img/iconv3/f2.jpg');
+INSERT INTO `category` VALUES ('3', '粮食调味', './src/assets/img/iconv3/l300_banner.png', './src/assets/img/iconv3/f3.jpg');
+INSERT INTO `category` VALUES ('4', '酒水奶饮', './src/assets/img/iconv3/l400_banner.png', './src/assets/img/iconv3/f4.jpg');
+INSERT INTO `category` VALUES ('5', '休闲零食', './src/assets/img/iconv3/l500_banner.jpg', './src/assets/img/iconv3/f5.jpg');
+INSERT INTO `category` VALUES ('6', '护理美妆', './src/assets/img/iconv3/l600_banner.png', './src/assets/img/iconv3/f6.jpg');
+INSERT INTO `category` VALUES ('7', '日用清洁', './src/assets/img/iconv3/l700_banner.png', './src/assets/img/iconv3/f7.jpg');
+INSERT INTO `category` VALUES ('8', '母婴', './src/assets/img/iconv3/l800_banner.png', './src/assets/img/iconv3/f8.jpg');
+INSERT INTO `category` VALUES ('9', '宠物用品', './src/assets/img/iconv3/l900_banner.png', './src/assets/img/iconv3/f9.jpg');
 
 -- ----------------------------
 -- Table structure for classifysmall
@@ -201,10 +207,26 @@ CREATE TABLE `collect` (
   `userId` int(222) DEFAULT NULL COMMENT '用户id',
   `goodId` int(222) DEFAULT NULL COMMENT '收藏的商品',
   PRIMARY KEY (`collectId`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=12 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of collect
+-- ----------------------------
+INSERT INTO `collect` VALUES ('11', '1', '1');
+
+-- ----------------------------
+-- Table structure for detailsimg
+-- ----------------------------
+DROP TABLE IF EXISTS `detailsimg`;
+CREATE TABLE `detailsimg` (
+  `detailsId` int(11) NOT NULL,
+  `goodId` int(11) DEFAULT NULL,
+  `detailsImg` varchar(255) DEFAULT NULL COMMENT '商品详情图',
+  PRIMARY KEY (`detailsId`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of detailsimg
 -- ----------------------------
 
 -- ----------------------------
@@ -214,15 +236,47 @@ DROP TABLE IF EXISTS `order`;
 CREATE TABLE `order` (
   `orderId` int(255) NOT NULL AUTO_INCREMENT COMMENT '订单id',
   `userId` int(255) DEFAULT NULL COMMENT '用户id',
-  `status` varchar(255) DEFAULT NULL COMMENT '订单状态',
-  `goodId` int(255) DEFAULT NULL COMMENT '商品id',
-  `count` int(11) DEFAULT NULL COMMENT '商品数量',
+  `status` varchar(255) DEFAULT NULL COMMENT '订单状态：0，待付款；1，已付款；2，待收货；3，确认收货；4，待评价；5，已完成；6，已取消',
+  `time` datetime DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`orderId`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=9 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of order
 -- ----------------------------
+INSERT INTO `order` VALUES ('1', '3', '0', '2018-01-20 12:27:08');
+INSERT INTO `order` VALUES ('2', '4', '0', '2018-01-20 12:27:08');
+INSERT INTO `order` VALUES ('3', '3', '2', '2018-01-20 12:27:08');
+INSERT INTO `order` VALUES ('4', '3', '4', '2018-01-20 15:11:42');
+INSERT INTO `order` VALUES ('5', '3', '0', '2018-01-20 17:30:08');
+INSERT INTO `order` VALUES ('7', '3', '6', '2018-01-22 09:17:24');
+INSERT INTO `order` VALUES ('8', '3', '1', '2018-01-22 18:27:05');
+
+-- ----------------------------
+-- Table structure for ordergoods
+-- ----------------------------
+DROP TABLE IF EXISTS `ordergoods`;
+CREATE TABLE `ordergoods` (
+  `id` int(10) NOT NULL AUTO_INCREMENT,
+  `orderId` int(255) NOT NULL,
+  `goodId` int(10) NOT NULL,
+  `time` datetime DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=12 DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of ordergoods
+-- ----------------------------
+INSERT INTO `ordergoods` VALUES ('1', '1', '1', '2018-01-20 10:13:38');
+INSERT INTO `ordergoods` VALUES ('2', '1', '1', '2018-01-20 10:14:00');
+INSERT INTO `ordergoods` VALUES ('3', '1', '3', '2018-01-20 10:14:09');
+INSERT INTO `ordergoods` VALUES ('4', '3', '4', '2018-01-20 11:08:42');
+INSERT INTO `ordergoods` VALUES ('5', '4', '5', '2018-01-20 15:12:01');
+INSERT INTO `ordergoods` VALUES ('6', '5', '6', '2018-01-20 17:30:22');
+INSERT INTO `ordergoods` VALUES ('7', '5', '1', '2018-01-20 17:41:13');
+INSERT INTO `ordergoods` VALUES ('8', '1', '1', '2018-01-20 17:43:50');
+INSERT INTO `ordergoods` VALUES ('10', '7', '7', '2018-01-22 09:17:34');
+INSERT INTO `ordergoods` VALUES ('11', '8', '8', '2018-01-22 18:27:16');
 
 -- ----------------------------
 -- Table structure for product
@@ -264,28 +318,28 @@ INSERT INTO `product` VALUES ('13', '台湾莲雾2个/盒', '15.60', '12.90', nu
 -- ----------------------------
 DROP TABLE IF EXISTS `productimg`;
 CREATE TABLE `productimg` (
-  `goodImgId` varchar(255) DEFAULT NULL COMMENT '商品图片',
+  `goodImgId` varchar(255) NOT NULL COMMENT '商品图片',
   `goodId` int(20) DEFAULT NULL COMMENT '商品id',
   `ImgUrl` varchar(255) DEFAULT NULL COMMENT '商品图片',
-  `detailsImg` varchar(255) DEFAULT NULL COMMENT '商品详情图'
+  PRIMARY KEY (`goodImgId`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of productimg
 -- ----------------------------
-INSERT INTO `productimg` VALUES ('1', '1', './src/assets/img/loading.jpg', '');
-INSERT INTO `productimg` VALUES ('2', '2', './src/assets/img/loading.jpg', null);
-INSERT INTO `productimg` VALUES ('3', '3', './src/assets/img/loading.jpg', null);
-INSERT INTO `productimg` VALUES ('4', '4', './src/assets/img/loading.jpg', null);
-INSERT INTO `productimg` VALUES ('5', '5', './src/assets/img/loading.jpg', null);
-INSERT INTO `productimg` VALUES ('6', '6', './src/assets/img/loading.jpg', null);
-INSERT INTO `productimg` VALUES ('7', '7', './src/assets/img/loading.jpg', null);
-INSERT INTO `productimg` VALUES ('8', '8', './src/assets/img/loading.jpg', null);
-INSERT INTO `productimg` VALUES ('9', '9', './src/assets/img/loading.jpg', null);
-INSERT INTO `productimg` VALUES ('10', '10', './src/assets/img/loading.jpg', null);
-INSERT INTO `productimg` VALUES ('11', '11', './src/assets/img/loading.jpg', null);
-INSERT INTO `productimg` VALUES ('12', '12', './src/assets/img/loading.jpg', null);
-INSERT INTO `productimg` VALUES ('13', '13', './src/assets/img/loading.jpg', null);
+INSERT INTO `productimg` VALUES ('1', '1', './src/assets/goodsImg/201801/6365160417058688346799416.jpg');
+INSERT INTO `productimg` VALUES ('2', '2', './src/assets/goodsImg/201611/6361385289243408335252717.jpg');
+INSERT INTO `productimg` VALUES ('3', '3', './src/assets/goodsImg/201709/6364073536202308967124233.jpg');
+INSERT INTO `productimg` VALUES ('4', '4', './src/assets/goodsImg/201710/6364375175178728913615989.jpg');
+INSERT INTO `productimg` VALUES ('5', '5', './src/assets/goodsImg/201710/6364375154430875803098403.jpg');
+INSERT INTO `productimg` VALUES ('6', '6', './src/assets/goodsImg/201710/6364375191672572245992407.jpg');
+INSERT INTO `productimg` VALUES ('7', '7', './src/assets/goodsImg/201711/6364538771186927671880544.jpg');
+INSERT INTO `productimg` VALUES ('8', '8', './src/assets/goodsImg/201712/6364781978005762521697663.jpg');
+INSERT INTO `productimg` VALUES ('9', '9', './src/assets/goodsImg/201609/6361033145204817601847364.jpg');
+INSERT INTO `productimg` VALUES ('10', '10', './src/assets/goodsImg/201705/6363060939996768858851976.jpg');
+INSERT INTO `productimg` VALUES ('11', '11', './src/assets/goodsImg/201705/6363011701632982088166758.jpg');
+INSERT INTO `productimg` VALUES ('12', '12', './src/assets/goodsImg/201611/6361410513639119691667712.jpg');
+INSERT INTO `productimg` VALUES ('13', '13', './src/assets/goodsImg/201609/6361033145204817601847364.jpg');
 
 -- ----------------------------
 -- Table structure for user
