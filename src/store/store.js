@@ -11,7 +11,8 @@ const store = new Vuex.Store({
         categoryId:"",
         selectTotle:"",
         priceTotle:"",
-        checkedCarId: ""
+        checkedCarId: "",
+        historySearch:[]
     },
     mutations:{
       //获取当前位置
@@ -41,6 +42,7 @@ const store = new Vuex.Store({
           var geocoder= new BMap.Geocoder();
           geocoder.getLocation(e.point,function(rs){
               state.site=rs.address;
+              console.log(state.site)
           });
 
          },
@@ -58,6 +60,14 @@ const store = new Vuex.Store({
         },
         getCheckedCarId(state,val){
           state.checkedCarId = val;
+        },
+        // 保存搜索记录
+        historySave(state,val){
+        state.historySearch.push($.trim(val));
+        state.historySearch = [...new Set(state.historySearch)];
+        },
+        historyClear(state){
+          state.historySearch=[];
         }
       }
 })

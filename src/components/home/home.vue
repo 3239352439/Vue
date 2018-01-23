@@ -29,7 +29,7 @@
             
         <div id="list">
             <div class="l_nav">
-                <ul class="tabs">
+                <ul>
                     <li v-for="(item,idx) in typeData" :key="idx" class="tabs"><span @click.stop="showList" >{{item.categoryName}}</span></li>
                 </ul>
             </div>
@@ -38,7 +38,7 @@
                   <mt-tab-container v-model="active" :swipeable="true">
                    <mt-tab-container-item v-for="item in typeData" :id="item.categoryName" :key="item.categoryName">
                         <ul class="datalist">
-                           <li v-for="obj in datalist" :key="obj.goodName" :gid="obj.goodId">
+                           <li v-for="obj in datalist" :key="obj.goodName" :gid="obj.goodId" @click.stop="toDetailPage(obj,$event)">
                             <div>
                                 <img v-lazy="obj.ImgUrl"/>
                             </div>                           
@@ -47,7 +47,10 @@
                                 <p class="details">{{obj.describe}}</p>
                                 <p class="size"><span>{{obj.size}}</span></p>
                                 <div class="purchase"><p><span v-filter>{{obj.Price}}</span><span v-filter>{{obj.originalPrice}}</span></p>
-                                   <button>立即购买</button> 
+                                   <button class="Addbtn" @click="addCar(obj.goodId,$event)" v-if="!showNum">立即购买</button> 
+                                   <p class="qty" v-else>   
+                                       <span class="compute">-</span><span class="num">1</span><span class="compute">+</span> 
+                                    </p>
                                 </div>
 
                             </div>
@@ -59,10 +62,13 @@
             </div>
           
         </div>
-    <div id="allmap"></div>  
+    
+    <div id="allmap" style="width:0;height:0;"></div> 
+    <publicMenu></publicMenu> 
     </div>
 </template>
 <script>
+    import publicMenu from '../publicMenuComponent/publicMenu'
     import { Swipe, SwipeItem, TabContainer, TabContainerItem,MessageBox,Lazyload } from 'mint-ui';
     import http from '../../utils/reqAjax.js'
     import spinner from "../spinnerComponent/spinner"
@@ -74,6 +80,7 @@
                 typeData:[],
                 active:'水果',
                 datalist:[],
+                showNum:false,
                 allTypeimg:"./src/assets/img/iconv3/f10.jpg",
                 img:["./src/assets/img/banner/1.png","./src/assets/img/banner/2.png","./src/assets/img/banner/3.png","./src/assets/img/banner/4.png","./src/assets/img/banner/5.png","./src/assets/img/banner/6.png",],
                 typeImg:"./src/assets/img/iconv3/f1.jpg"
@@ -84,7 +91,7 @@
                 this.$router.push({name:"getAddress"});
             },
             showList(e){
-                $(e.target).addClass('active').parent().siblings('li').find('span').removeClass('active');
+                $(e.target).css({'color':"#26a2ff","borderBottom":"3px solid #1754fa"}).parent().siblings('li').find('span').css({'color':"#999999","borderBottom":"none"});
                 var tab=e.target.innerText;
                 spinner.loadspinner();
                  http.get({url:this.url+"?type="+tab}).then(res=>{
@@ -92,7 +99,23 @@
                 this.datalist=res.data;
             });
                 this.active=tab;
-            }
+            },
+            toDetailPage(obj,_event){
+                if(_event.target.tagName !== 'BUTTON'){
+                    this.$router.push({ name: 'detailpage',params: obj});
+                }
+             },
+             addCar(obj,e){
+                if(this.$store.state.phoneNum){
+                        http.post({"url":'Car.php',parmas:{userid: this.userid,goodId:obj}}).then ( res => {
+                        // console.log(res.data[0].Price)
+                      
+                    })  
+                 }
+                 else{
+                     MessageBox.alert('请先登录！').then(action => {});
+                 }
+                }
         },
         directives:{
             filter:{
@@ -103,17 +126,10 @@
                 
              }
         },
-        computed:{
-            get(){
-
-            },
-            set(){
-
-            }
+        components: {
+            publicMenu
         },
-        mounted(){  
-            var li=$('.tabs').children("li").get(0);console.log(li)
-            li.children().addClass('active');
+        mounted(){
             spinner.loadspinner();
             http.get({url:this.url}).then(res=>{
                 // spinner.closeSpinner();
@@ -124,11 +140,11 @@
             input.focus(()=>{
                 this.$router.push({name:"search"});
             });
-             spinner.loadspinner();
             http.get({url:this.url+"?type="+this.active}).then(res=>{
                spinner.closeSpinner(); 
                 this.datalist=res.data;
             });
+             
             // 吸顶导航
             nav();
             function nav(){

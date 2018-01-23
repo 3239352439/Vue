@@ -2,7 +2,7 @@
     <div id="sm_auto">
          <div class="auto_header">
             <mt-header title="选择配送地址">
-              <router-link to="/" slot="left">
+              <router-link to="/getAddress" slot="left">
                 <mt-button icon="back">返回</mt-button>
               </router-link>
         </mt-header> 
@@ -27,11 +27,11 @@
 
     data(){
         return {
-          id:this.$route.params.id
+          receiveID:this.$route.params.id
         }
     },
     mounted(){
-      // spinner.loadspinner();
+      spinner.loadspinner();
       var self=this;
       var map = new BMap.Map("allmap");
       var point = new BMap.Point(113.27416, 23.133523);
@@ -48,7 +48,6 @@
        // 当前地址
        // this.$store.commit('getSite');
       function currentAddress(){ 
-       
           var geolocation = new BMap.Geolocation();
            geolocation.getCurrentPosition(function(r){
           if(this.getStatus() == BMAP_STATUS_SUCCESS){
@@ -56,6 +55,7 @@
             map.addOverlay(mk);//
             map.panTo(r.point);
             geocoder.getLocation(r.point,rs=>{
+                spinner.closeSpinner(); 
                  MessageBox.alert('你当前所在位置:'+rs.address).then(action => {});                           
               });
           }
@@ -75,17 +75,16 @@
           map.centerAndZoom(city,11);// 用城市名设置地图中心点
         }
       }
-      
       //给地图添加点击事件 获取点击时的地址
         map.addEventListener("click",(e)=>{
-            this.$store.commit('selectSite',e,self);console.log(self.$store.state.site)
-            if(this.id){
-               self.$router.push({name:"addAddress",parmas:{id:this.id}});
+            this.$store.commit('selectSite',e,self);
+            if(this.receiveID){
+               this.$router.push({name:"addAddress",params:{id:this.receiveID}});
             }
             else{
-              self.$router.push({name:"addAddress"})
+              this.$router.push({name:"addAddress"})
             }
-            
+             
 
         });
         }
