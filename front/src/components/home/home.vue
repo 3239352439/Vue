@@ -38,7 +38,7 @@
                   <mt-tab-container v-model="active" :swipeable="true">
                    <mt-tab-container-item v-for="item in typeData" :id="item.categoryName" :key="item.categoryName">
                         <ul class="datalist">
-                           <li v-for="(obj,idx) in datalist" :key="idx" :gid="obj.goodId" @click.stop.prevent="toDetailPage(obj,$event)">
+                           <li v-for="(obj,idx) in datalist" :key="idx" :gid="obj.goodId" @click.stop="toDetailPage(obj,$event)">
                             <div>
                                 <img v-lazy="obj.ImgUrl"/>
                             </div>                           
@@ -50,7 +50,7 @@
                                     <p><span v-filter>{{obj.Price}}</span><span v-filter>{{obj.originalPrice}}</span></p>   
                                        <button class="Addbtn" @click.stop="addCar(obj.goodId,$event)" v-if="orderObj.indexOf(obj.goodId)<0">立即购买</button> 
                                         <p class="qty" v-else>   
-                                        <span class="compute" @click.stop.prevent="compute(obj.goodId,idx,$event)">-</span><span class="num" @click.stop.prevent="compute(obj.goodId,idx,$event)">1</span><span class="compute">+</span> 
+                                        <span class="compute" @click="compute(obj.goodId,idx,$event)">-</span><span class="num" @click="compute(obj.goodId,idx,$event)">1</span><span class="compute">+</span> 
                                         </p>                                                                                 
                                 </div>
 
@@ -82,7 +82,7 @@
                 active:'水果',
                 datalist:[],
                 showNum:false,
-                orderObj:{},
+                orderObj:[],
                 allTypeimg:"./src/assets/img/iconv3/f10.jpg",
                 img:["./src/assets/img/banner/1.png","./src/assets/img/banner/2.png","./src/assets/img/banner/3.png","./src/assets/img/banner/4.png","./src/assets/img/banner/5.png","./src/assets/img/banner/6.png",],
                 typeImg:"./src/assets/img/iconv3/f1.jpg"
@@ -121,39 +121,39 @@
                 },
                   // 商品数量加减
             compute(idx,subItem,event){
-            var target = event.target;
-            // console.log(subItem)
-            // 加
-            if(target.innerText == '+'){
-                // this.sum=(target.parentNode.childNodes[1].innerText*1)+1
-                // console.log(this.sum)
-                http.post({"url":"car1.php",parmas:{userId: this.userid,goodId:idx,state: 'addProductTotle'}}).then ( res => {
-                // console.log(res.data)
-                if( res.data == 'seccese'){
-                    target.parentNode.childNodes[1].innerHTML = (target.parentNode.childNodes[1].innerText*1)+1;
-                }
-                })
-            // 减
-            } else if( target.innerText == '-'){
-                // 判断当小于一时提示是否删除
-                if(target.parentNode.childNodes[1].innerText*1 >1){
-                http.post({"url":this.url,parmas:{userId: this.userid,goodId:idx,state: 'subProductTotle'}}).then ( res => {
-                // console.log(res.data)
+                var target = event.target;
+                // console.log(subItem)
+                // 加
+                if(target.innerText == '+'){
+                    // this.sum=(target.parentNode.childNodes[1].innerText*1)+1
+                    // console.log(this.sum)
+                    http.post({"url":"car1.php",parmas:{userId: this.userid,goodId:idx,state: 'addProductTotle'}}).then ( res => {
+                    // console.log(res.data)
                     if( res.data == 'seccese'){
-                    target.parentNode.childNodes[1].innerHTML = (target.parentNode.childNodes[1].innerText*1)-1;
+                        target.parentNode.childNodes[1].innerHTML = (target.parentNode.childNodes[1].innerText*1)+1;
                     }
-                })
-                } else {
-                // 删除商品
-                    http.post({"url":this.url,parmas:{userId: this.userid,goodId:idx,state: 'delProduct'}}).then ( res => {
-                        // console.log(this.carprd.splice(aa, 1));
-                        this.carprd.splice(subItem, 1);
-                        this.ajax();
                     })
+                // 减
+                } else if( target.innerText == '-'){
+                    // 判断当小于一时提示是否删除
+                    if(target.parentNode.childNodes[1].innerText*1 >1){
+                    http.post({"url":this.url,parmas:{userId: this.userid,goodId:idx,state: 'subProductTotle'}}).then ( res => {
+                    // console.log(res.data)
+                        if( res.data == 'seccese'){
+                        target.parentNode.childNodes[1].innerHTML = (target.parentNode.childNodes[1].innerText*1)-1;
+                        }
+                    })
+                    } else {
+                    // 删除商品
+                        http.post({"url":this.url,parmas:{userId: this.userid,goodId:idx,state: 'delProduct'}}).then ( res => {
+                            // console.log(this.carprd.splice(aa, 1));
+                            this.carprd.splice(subItem, 1);
+                            this.ajax();
+                        })
+                    }
                 }
-            }
-            this.ajax()
-            },
+               
+                },
         },
         directives:{
             filter:{
@@ -183,13 +183,13 @@
                 this.datalist=res.data;
             });
             // 获取已添加到订单的商品
-            http.get({url:"getAddress.php?uid="+this.userid}).then(res=>{
+            http.get({url:this.url+"?uid="+this.userid}).then(res=>{
                 var arr=[];
                 $.each(res.data,(idx,item)=>{ 
                     arr.push(item.goodId);
                     this.orderObj=[...new Set(arr)];
                 })
-              console.log(this.orderObj)  
+            //   console.log(this.orderObj)  
             }); 
            
             // 吸顶导航
