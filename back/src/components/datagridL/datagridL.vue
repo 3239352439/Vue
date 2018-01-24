@@ -71,20 +71,7 @@
                         this.dataset = res.data;
                     }
                 })
-                // axios({
-                //     url: this.api,
-                //     data: qs.stringify({userName:userName,state:"删除"}),
-                    
-                //     method: 'post',
-                //     headers: {
-                //         'Content-Type': 'application/x-www-form-urlencoded'
-                //     }
-                // }).then(res => {
-                //     console.log(res)
-                //     if(res.date != "false"){
-                //         this.dataset = res.data;
-                //     }
-                // })
+                
             },
             // 保存事件
             save($event){
@@ -105,19 +92,7 @@
                         this.dataset = res.data;
                     }
                 })
-                // axios({
-                //     url: this.api,
-                //     data: qs.stringify(data),
-                //     method: 'post',
-                //     headers: {
-                //         'Content-Type': 'application/x-www-form-urlencoded'
-                //     }
-                // }).then(res => {
-                //     console.log(res)
-                //     if(res.date != "false"){
-                //         this.dataset = res.data;
-                //     }
-                // })
+               
             },
             save1(){
                 var data = {
@@ -136,19 +111,7 @@
                         this.dataset = res.data;
                     }
                 })
-                // axios({
-                //     url: this.api,
-                //     data: qs.stringify(data),
-                //     method: 'post',
-                //     headers: {
-                //         'Content-Type': 'application/x-www-form-urlencoded'
-                //     }
-                // }).then(res => {
-                //     console.log(res)
-                //     if(res.date != "false"){
-                //         this.dataset = res.data;
-                //     }
-                // })
+                
             },
             // 搜索事件
             search(){
@@ -158,16 +121,7 @@
                         console.log(res)
                         this.dataset = res.data;
                     })
-                    // axios({
-                    //     url: this.api,
-                    //     method: 'post',
-                    //     data: qs.stringify({userName:userName,state:"查询"}),
-                    //     headers: {
-                    //         'Content-Type': 'application/x-www-form-urlencoded'
-                    //     }
-                    // }).then(res => {
-                    //     this.dataset = res.data;
-                    // })
+                    
                 }
             },
             search1(){
@@ -175,17 +129,7 @@
                     console.log(res)
                     this.dataset = res.data;
                 })
-                // axios({
-                //     url: this.api,
-                //     method: 'post',
-                //     // data:qs.stringify({userName:this.val,state:this.state}),
-                //     headers: {
-                //         'Content-Type': 'application/x-www-form-urlencoded'
-                //     }
-                // }).then(res => {
-                //     console.log(res)
-                //     this.dataset = res.data;
-                // })
+                
             },
             // 编辑事件
             edit($event,index){
@@ -208,7 +152,6 @@
                     done();
                     this.show = false;
                     this.hide = false;
-                    
                 })
                 .catch(_ => {
                     
@@ -216,33 +159,14 @@
             }
         },
         mounted(){
-            http.post({"url":this.api, params: {userName:this.val,state:this.state}}).then(res=>{
+            http.get({"url":this.api}).then(res=>{
                 console.log(res)
                 this.dataset = res.data;
             })
-            // axios({
-            //     url: this.api,
-            //     method: 'post',
-            //     // data:qs.stringify({userName:this.val,state:this.state}),
-            //     headers: {
-            //         'Content-Type': 'application/x-www-form-urlencoded'
-            //     }
-            // }).then(res => {
-            //     console.log(res)
-            //     this.dataset = res.data;
-            // })
+            
         }
     }
 </script>
 
-<style lang="scss" scoped>
-    tabel{
-        width:80%;
-        tr{
-            td{
 
-            }
-        }
-    }
-</style>
 
