@@ -3,9 +3,13 @@
         // 配置参数
 
         $servername = '10.3.136.49';
-        // $servername = 'localhost';
         $username = 'root';
         $password = 'root';
+
+        // $servername = 'localhost';
+        // $username = 'root';
+        // $password = '';
+
         $database = 'supermarket';
         header('Access-Control-Allow-Origin:*');
         //连接数据库

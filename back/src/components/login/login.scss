@@ -5,6 +5,10 @@
   text-align: center;
 font-family: 'Lato', sans-serif;
 }
+#sm_login{
+  height: 100%;
+  widows: 100%;
+}
 .jconfirm-box{
   width: 400px;
 }
@@ -19,7 +23,14 @@ font-family: 'Lato', sans-serif;
 
 }
 
-
+.el-message{
+  i{
+    margin-left:0;
+  }
+  .el-message__content{
+    text-align:center;
+  }
+}
 .cont_centrar {
   position: relative;
   float: left;
