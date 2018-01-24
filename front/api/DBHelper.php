@@ -2,7 +2,7 @@
     function connect_oop() {
         // 配置参数
 
-        $servername = '10.3.136.48';
+        $servername = '10.3.136.49';
         $username = 'root';
         $password = 'root';
         $database = 'supermarket';
