@@ -5,14 +5,14 @@ import LoginComponent from '../components/login/login.vue'
 import root from '../components/RootComponent/RootComponent.vue'
 import service from '../components/ServerComponent/ServerComponent.vue'
 import order from '../components/orderComponent/order.vue'
-
+import user from '../components/userComponent/user.vue'
 Vue.use(VueRouter);
 
 var router = new VueRouter({
     routes:[
         {
-            path: '/',
-            name: '',
+            path: '/' || '/login',
+            name: '' ||'login',
             component: LoginComponent
         },{
             path: '/root',
@@ -28,6 +28,10 @@ var router = new VueRouter({
                     path: '/order',
                     name: 'order',
                     component: order,
+                },{
+                    path:'/user',
+                    name:'user',
+                    component:user,
                 }
             ]
         }

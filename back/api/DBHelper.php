@@ -2,9 +2,9 @@
     function connect_oop() {
         // 配置参数
 
-        $servername = 'localhost';
+        $servername = '10.3.136.49';
         $username = 'root';
-        $password = '';
+        $password = 'root';
 
         // $servername = 'localhost';
         // $username = 'root';

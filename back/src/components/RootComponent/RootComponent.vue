@@ -13,7 +13,7 @@
           </div>
           <div class="header_right">
               <ul>
-                  <el-button type="primary" @click="$router.push({path: '/login'})">退出</el-button>
+                  <el-button type="primary" @click="quit">退出</el-button>
               </ul>
           </div>
       </div>
@@ -111,6 +111,9 @@ export default {
           if(key == 3){
               this.$router.push("/order");
           }
+          else if(key == 1){
+              this.$router.push("/user");
+          }
       },
       handleClose(key, keyPath) {
       },
@@ -134,6 +137,10 @@ export default {
           if(this.$children[6].updated){
               this.$children[6].updated(data);
           }
+      },
+      quit(){
+        window.localStorage.clear();
+        this.$router.push({path: '/'});
       },
   }
 }
