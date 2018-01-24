@@ -130,6 +130,7 @@ export default {
                     setTimeout(()=>{   
                         this.$router.push({name:"root"});
                     },1000)
+                    window.localStorage.setItem("user", $email);
                 }
                 //失败
                 else{
