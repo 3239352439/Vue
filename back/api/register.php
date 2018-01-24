@@ -17,7 +17,7 @@
         }
     }
     else if($checkEmail){
-        $sql="select * from admin where email= $checkEmail ";
+        $sql="select * from admin where email= '$checkEmail' ";
         $result = query_oop($sql);
         if (!empty($result)){
             echo 'false';//已存在
@@ -27,7 +27,7 @@
         }
     }
     else if($checkUser){
-        $sql="select * from admin where user=$checkUser";
+        $sql="select * from admin where user='$checkUser'";
         $result = query_oop($sql);
         if (!empty($result)){
             echo 'false';//已存在
