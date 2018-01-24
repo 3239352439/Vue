@@ -115,12 +115,15 @@ export default {
       handleClose(key, keyPath) {
       },
       search(){
-          this.$children[6].search(this.num);
-            console.log(this.$children[6])
+          if(this.num){
+            this.$children[6].search(this.num);
+          }
       },
       add(){
-          this.dialog = true;
-          this.dataset = this.$children[6].dataset;
+          if(this.$children[6].dataset){
+            this.dialog = true;
+            this.dataset = this.$children[6].dataset;
+          }
       },
       save(){
           var data = {};

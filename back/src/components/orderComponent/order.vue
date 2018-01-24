@@ -37,9 +37,8 @@
             }
         },
         mounted(){
-            this.$parent.show = false;
+            // this.$parent.show = false;
             http.get({"url":this.url}).then(res=>{
-                console.log(res)
                 for(var i=0;i<res.data.length;i++){
                     res.data[i].status = this.status[res.data[i].status];
                 }
@@ -49,7 +48,7 @@
         methods:{
             search(val){
                 // if(this.num == "待" || this.num == "支" || this.num == "付" || this.num == "待支" || this.num == "支付" || this.num == "待支付"){
-                //     this.num = 0;
+                //     val = 0;
                 // }
                 http.get({"url":this.url + "?state=search&data=" + val}).then(res=>{
                 console.log(res)

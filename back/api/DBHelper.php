@@ -5,6 +5,11 @@
         $servername = 'localhost';
         $username = 'root';
         $password = '';
+
+        // $servername = 'localhost';
+        // $username = 'root';
+        // $password = '';
+
         $database = 'supermarket';
         header('Access-Control-Allow-Origin:*');
         //连接数据库

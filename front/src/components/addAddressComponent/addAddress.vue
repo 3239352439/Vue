@@ -60,8 +60,7 @@
                     this.data.type=e.target.innerText;                    
                 }
             },
-            save(){
-                    
+            save(){     
                     this.data.village=$('.site').find('input').val();               
                     //判断是否为有效电话
                      var ph=new RegExp(/^1[34578]\d{9}$/).test(this.data.phone);
