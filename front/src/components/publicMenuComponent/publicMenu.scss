@@ -7,8 +7,10 @@
   ul{
     display: flex;
     border-top: 1px solid #ccc;
+    
     // flex-wrap: wrap;
     li{
+      
       flex: 1;
       // width: 200px;
       // height: 300px;
@@ -16,6 +18,7 @@
       i,span{
         display: block;
         text-align: center;
+        color:#444;
       }
       i{
         font-size: 48px;

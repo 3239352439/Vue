@@ -6,9 +6,9 @@ $hsize:0.6rem;
     display:flex;
     flex-direction:column;
     .header{
-         height:$hsize;
-         display:flex;
-         background:$mainColor;
+        height:$hsize;
+        display:flex;
+        background:$mainColor;
         .h_center{     
             flex:1;
             height:$hsize;
@@ -18,9 +18,8 @@ $hsize:0.6rem;
                 padding:0;
                 height:$hsize;
                  .mint-searchbar-cancel{
-                background:$mainColor;
-                color:#fff;
-                
+                    background:$mainColor;
+                    color:#fff;
                 }
             }
            
@@ -36,6 +35,7 @@ $hsize:0.6rem;
     }
     .main{         
         flex:1;
+        overflow-x: hidden;
         margin-top:0.133333rem;
         h3{
             font-size:0.266667rem;
