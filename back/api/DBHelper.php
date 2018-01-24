@@ -2,17 +2,14 @@
     function connect_oop() {
         // 配置参数
 
-<<<<<<< HEAD
-        $servername = 'localhost';
-=======
-<<<<<<< HEAD
         $servername = '10.3.136.49';
-=======
-        $servername = 'localhost';
->>>>>>> 78022679f709c829ba5e3f1a0656c2b3c0736501
->>>>>>> 0ec19b928ed2c2aa04449375cfde45a591962587
         $username = 'root';
-        $password = '';
+        $password = 'root';
+
+        // $servername = 'localhost';
+        // $username = 'root';
+        // $password = '';
+
         $database = 'supermarket';
         header('Access-Control-Allow-Origin:*');
         //连接数据库
@@ -71,9 +68,9 @@ function multi_query_oop($sql) {
 
 //初始化连接对象方法
 function connect() {
-    $servername = "localhost";//
+    $servername = "10.3.136.49";//
     $username = "root";
-    $password = "";
+    $password = "root";
     $dbname = 'supermarket';
     // 初始化连接，返回一个连接对象(包含所连接数据库的信息)
     $con = mysqli_connect($servername, $username, $password, $database);

@@ -5,8 +5,8 @@ import store from './vuex/store'
 
 import Element from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
+import './css/base.css'
 Vue.use(Element)
-
 Vue.use(Vuex)
 
 import Router from './router/index.js'

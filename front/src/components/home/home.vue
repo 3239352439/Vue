@@ -76,7 +76,7 @@
     export default{
         data(){
             return {
-                userid:3,
+                userid:1,
                 url:'home.php',
                 typeData:[],
                 active:'水果',
@@ -188,6 +188,7 @@
             // 获取已添加到订单的商品
             http.get({url:this.url+"?uid="+this.userid}).then(res=>{
                 var arr=[];
+
                 $.each(res.data,(idx,item)=>{ 
                     arr.push(item.goodId);
                     this.orderObj=[...new Set(arr)];
