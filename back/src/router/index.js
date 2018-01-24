@@ -8,8 +8,8 @@ Vue.use(VueRouter);
 var router = new VueRouter({
     routes:[
     {
-        path: '/' ||'/login',
-        name: '' || 'login',
+        path: '/login',
+        name: 'login',
         component: LoginComponent
     }
     ]
