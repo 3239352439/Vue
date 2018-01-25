@@ -161,6 +161,10 @@ export default {
                 this.dialog = true;
                 this.dataset = this.$children[6].dataset;
             }
+            else{
+               this.dialog = true;
+                this.dataset = this.$children[7].dataset;
+            }
       },
         save(){
             if(document.querySelector("input[type=file]").files.length){
