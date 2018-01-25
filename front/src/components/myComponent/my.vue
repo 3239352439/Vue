@@ -69,7 +69,7 @@
         <div class="bottom">
             <publicMenu></publicMenu>
         </div>
-       
+
     </div>
 </template>
 
@@ -112,7 +112,12 @@
             },
             setting(){
                 if(this.$store.state.phoneNum){
+                  if(this.userNum == ''){
+                    this.$router.push({name:"setting",params:{userNum:this.phoneNum,imgUrl:this.imgUrl}});
+                  } else {
                     this.$router.push({name:"setting",params:{userNum:this.userNum,imgUrl:this.imgUrl}});
+                  }
+
                 }else{
                     this.$router.push("/login");
                 }

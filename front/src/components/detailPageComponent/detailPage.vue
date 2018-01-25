@@ -36,7 +36,7 @@
         <div class="deteils">
           <h1><span>商品详情</span></h1>
           <ul>
-            <li><img src="" alt=""></li>
+            <li><img src="../../assets/common/product_details_footer6.jpg" alt=""></li>
           </ul>
         </div>
       </div>
@@ -44,7 +44,7 @@
         <div class="carIcom" @click="toCar">
           <i class="glyphicon glyphicon-shopping-cart"></i>
           <span>购物车</span>
-          <span class="carNum">{{this.$store.state.selectTotle}}</span>
+          <span class="carNum">{{this.$store.state.selectTotle || 0}}</span>
         </div>
         <div class="prdNum" @click="addCollect"><i class="glyphicon " :class="className"></i><span>收藏</span></div>
         <div class="account"><button @click="addCar(dataItem.goodId)">加入购物车</button></div>
@@ -55,61 +55,106 @@
 import './detailPage.scss';
 import http from '../../utils/reqAjax';
 import {MessageBox} from 'mint-ui';
+import spinner from "../spinnerComponent/spinner";
+
 export default {
   data: function(){
     return {
       dataItem:'',
       randomData:[],
-      userid: 1,
-      className:'glyphicon-star-empty'
+      userid: '',
+      className:'glyphicon-star-empty',
+      id:''
     }
   },
   mounted(){
     this.userid = this.$store.state.userId;
     // this.dataItem = this.$route.params;
-    console.log(this.$route.params.id)
+    // console.log(this.$route.params.id);
+    this.id = this.$route.params.id;
     http.get({"url":'productListSort.php'+'?Sort="random"& state= 1'}).then ( res => {
       this.randomData = res.data;
       // console.log(res.data)
     })
-    this.ajaxProduct()
-    http.post({"url":'collect.php',parmas:{userid: this.userid,goodId:this.dataItem.goodId,state:'select'}}).then ( res => {
-        // console.log(res.data);
-        if(res.data.length > 1){
-          this.className = 'glyphicon-star'
-        }
-    })
+    spinner.loadspinner();
+      http.post({"url":'getProduct.php',parmas:{goodId:  this.id,state:'select'}}).then ( res => {
+        // console.log('item',res.data[0]);
+        this.dataItem = res.data[0];
+        spinner.closeSpinner();
+        //  console.log('aa',this.dataItem)
+        http.post({"url":'collect.php',parmas:{userid: this.userid,goodId:this.dataItem.goodId,state:'select'}}).then ( res => {
+            // console.log(res.data);
+            // if(res.data.length > 1){
+            //   this.className = 'glyphicon-star'
+            // }
+            if(res.data == 'ok'){
+              this.className = 'glyphicon-star'
+            }
+            // spinner.closeSpinner();
+        })
+    });
+
   },
   methods: {
     back(){
       this.$router.go(-1)
     },
     toDetailPage(id,_event){
+      // console.log(id)
+      this.id = id;
       if(!_event.target.id){
-        this.$router.push({ name: 'detailpage',params: id});
+        this.$router.push({ name: 'detailpage',params:{id: this.id }});
+        this.ajaxProduct()
       } else {
         this.addCar(id)
       }
     },
     ajaxProduct(){
-        http.post({"url":'getProduct.php',parmas:{goodId: this.$route.params.id,state:'select'}}).then ( res => {
-          // console.log(res.data[0]);
+      spinner.loadspinner();
+        http.post({"url":'getProduct.php',parmas:{goodId:  this.id,state:'select'}}).then ( res => {
+          console.log('item',res.data[0]);
           this.dataItem = res.data[0];
+          spinner.closeSpinner();
       });
     },
     addCar(obj){
+       if(this.userid == ''){
+        MessageBox.confirm('用户未登录，是否去登录?').then(action => {
+          if(action == 'confirm'){
+            this.$router.push({name: 'login'})
+          }
+        });
+      } else {
+      spinner.loadspinner();
       MessageBox.alert('成功加入购物车').then(action => {
         //  console.log(obj);
         http.post({"url":'car1.php',parmas:{userId: this.userid,goodId: obj,state: 'addProduct'}}).then ( res => {
           console.log(res.data);
+          spinner.closeSpinner();
         })
       });
-
+      }
     },
     toCar(){
+       if(this.userid == ''){
+        MessageBox.confirm('用户未登录，是否去登录?').then(action => {
+          if(action == 'confirm'){
+            this.$router.push({name: 'login'})
+          }
+        });
+      } else {
       this.$router.push({ name: 'car'});
+      }
     },
     addCollect(){
+      if(this.userid == ''){
+        MessageBox.confirm('用户未登录，是否去登录?').then(action => {
+          if(action == 'confirm'){
+            this.$router.push({name: 'login'})
+          }
+        });
+      } else {
+      spinner.loadspinner();
       if(this.className == 'glyphicon-star'){
         // console.log(666)
         http.post({'url': 'collect.php',parmas:{userid: this.userid,goodId: this.dataItem.goodId,state: 'delete'}}).then ( res => {
@@ -117,7 +162,8 @@ export default {
           if(res.data == 'delete'){
             MessageBox.alert('已取消收藏').then(action => {
               // console.log(action);
-              this.className = 'glyphicon-star-empty'
+              this.className = 'glyphicon-star-empty';
+              spinner.closeSpinner();
             });
           }
         })
@@ -129,13 +175,14 @@ export default {
             MessageBox.alert('收藏成功').then(action => {
               // console.log(action);
               this.className = 'glyphicon-star'
+              spinner.closeSpinner();
             });
           }
           // this.carNum = res.data[0].totle;
           // this.prdPrice = res.data[0].Price;
         })
       }
-
+      }
     }
   }
 }

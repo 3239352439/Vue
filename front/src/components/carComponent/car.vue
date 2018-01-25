@@ -9,6 +9,7 @@
       </mt-header>
     </div>
     <div class="prdItem">
+      <div class="clear" v-if="carprd.length <= 0"> 购物车空空如也</div>
       <ul>
         <li v-for="(obj,idx) in carprd">
           <div class="prdImg">
@@ -30,7 +31,7 @@
         <!-- <span>Checked names: {{ checkedCarId }}</span> -->
         <h1>猜你喜欢</h1>
         <ul>
-          <li v-for="(obj,idx) in randomData" @click.stop="toDetailPage(obj,$event)">
+          <li v-for="(obj,idx) in randomData" @click.stop="toDetailPage(obj.goodId,$event)">
             <img v-bind:src="obj.ImgUrl" alt="">
             <h4><span>￥{{obj.Price}}</span><span class="glyphicon glyphicon-list-alt"  @click.stop="addCar(obj.goodId)"></span></h4>
           </li>
@@ -42,7 +43,7 @@
         <div class="check">
           <label for="aa">
             <!-- <input type="checkbox" name="" id="aa"> -->
-            已选 <span>{{this.$store.state.selectTotle}}</span></label></div>
+            已选 <span>{{this.$store.state.selectTotle || 0}}</span></label></div>
         <div class="price">￥{{this.$store.state.priceTotle}}</div>
         <div class="count"><button @click="toAccount">去结算</button></div>
       </div>
@@ -67,12 +68,19 @@ export default {
     }
   },
   mounted: function(){
-    // this.userid = this.$store.state.userId;
-    // 随机生成商品
+    this.userid = this.$store.state.userId;
+     if(this.userid == ''){
+        MessageBox.confirm('用户未登录，是否去登录?').then(action => {
+          if(action == 'confirm'){
+            this.$router.push({name: 'login'})
+          }
+        });
+      } else {
+      this.ajax()
+    }
     http.get({"url":'productListSort.php'+'?Sort="random"& state= 1'}).then ( res => {
        this.randomData = res.data;
     })
-    this.ajax()
   },
   methods :{
     ajax(){
@@ -184,16 +192,50 @@ export default {
       });
     },
     addCar(id){
-      // console.log(666);
-      http.post({"url":this.url,parmas:{userId: this.userid,goodId:id,state: 'addProduct'}}).then ( res => {
-        // console.log(this.carprd.splice(aa, 1));
-       if( res.data == 'seccese'){
-          this.ajax();
-        }
-      })
+      if(this.userid == ''){
+        MessageBox.confirm('用户未登录，是否去登录?').then(action => {
+          if(action == 'confirm'){
+            this.$router.push({name: 'login'})
+          }
+        });
+      } else {
+        // console.log(666);
+        http.post({"url":this.url,parmas:{userId: this.userid,goodId:id,state: 'addProduct'}}).then ( res => {
+          // console.log(this.carprd.splice(aa, 1));
+        if( res.data == 'seccese'){
+            this.ajax();
+          }
+        })
+      }
     },
     toAccount(){
-      this.$router.push({ name: 'account'});
+      if(this.userid == ''){
+        MessageBox.confirm('用户未登录，是否去登录?').then(action => {
+          if(action == 'confirm'){
+            this.$router.push({name: 'login'})
+          }
+        });
+      } else {
+
+        var totle =0;
+        http.post({"url":this.url,parmas:{userId: this.userid,state: 'selectproduct'}}).then ( res => {
+          // console.log(res.data)
+          this.goods = res.data;
+          for(var i=0; i< this.goods.length; i++){
+            // console.log(res.data[i].checkedstatus)
+            if(res.data[i].checkedstatus == 'true'){
+              totle++;
+            }
+          }
+          console.log('totle',totle)
+          if(totle <= 0){
+            MessageBox('提示', '你还未选择商品');
+          } else {
+            this.$router.push({ name: 'account'});
+          }
+        });
+
+      }
     }
   },
   computed: {

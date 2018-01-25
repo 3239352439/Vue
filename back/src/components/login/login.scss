@@ -122,13 +122,14 @@ animation-direction: alternate;
 .cont_img_back_ {
   position: absolute;
   width: 950px;
-top:-80px;
+  top:-80px;
   left: -116px;
 }
 
 .cont_img_back_ > img {
-  width: 100%;
+ width: 100%;
 opacity: 0.3;
+  height:100%;
 animation-name: animar_fondo;
 animation-duration: 20s;
 animation-timing-function: linear;

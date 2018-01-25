@@ -5,30 +5,58 @@
 
     $userId = isset($_POST['userId']) ? $_POST['userId'] : "";
     $state = isset($_POST['state']) ? $_POST['state'] : "";
+    $orderId = isset($_POST['orderId']) ? $_POST['orderId'] : "";
+    $goodsId = isset($_POST['goodsId']) ? $_POST['goodsId'] : "";
     $sql;
 
     if($state == 'selectaddress'){
         $sql = "SELECT * from address WHERE userId ='$userId'";
         $result = query_oop($sql);
-      
+
         if($result){
             echo json_encode($result, JSON_UNESCAPED_UNICODE);
         }else{
             echo "fail";
         }
-    } 
-    else if($state == 'selectproduct'){
+    } else if($state == 'selectproduct'){
         $sql = "SELECT * from car,product,productimg
         where userId = '$userId' and checkedstatus = 'true'
         and product.goodId = car.goodId and product.goodId = productimg.goodId";
         $result = query_oop($sql);
-      
+
         if($result){
            echo json_encode($result, JSON_UNESCAPED_UNICODE);
         }else{
            echo "fail";
         }
-    } 
+    } else if( $state == 'inserproduct'){
+      $sql = "insert into `order` (orderid,userid) values ('$orderId','$userId')";
+      $result = excute_oop($sql);
+        if($result){
+          for($i=0;$i<count($goodsId);$i++){
+            // echo $goodsId[$i];
+            $item = $goodsId[$i];
+            $sql = "insert into ordergoods (orderId,goodId) values('$orderId','$item')";
+            $result = excute_oop($sql);
+            if($result){
+              echo 'seccese';
+            }else{
+              echo "fail";
+            }
+          }
+          // echo json_encode($goodsId);
+        }else{
+          echo "fail";
+        }
+    } else if( $state == "deleteproduct"){
+      $sql = "DELETE FROM car where checkedstatus = 'true' and userId = '$userId'";
+      $result = excute_oop($sql);
+      if($result){
+        echo 'seccese';
+      }else{
+        echo "fail";
+      }
+    }
     // else if($state == 'delProduct'){
     //   $sql = "delete from car where userId = '$userId' and goodId ='$goodId'";
     //   $result = excute_oop($sql);

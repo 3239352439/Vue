@@ -17,7 +17,8 @@ const store = new Vuex.Store({
         orderId:"",
         userId:"",
         checkedCarId:"",
-        priceTotle: 0
+        priceTotle: '0.00',
+        CategoryName: ''
     },
     mutations:{
       //获取当前位置
@@ -82,6 +83,9 @@ const store = new Vuex.Store({
         },
         setOrderId(state, val){
           state.orderId = val;
+        },
+        getCategoryName(state, val){
+          state.CategoryName = val;
         }
       }
 })

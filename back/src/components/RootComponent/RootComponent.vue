@@ -39,7 +39,6 @@
               default-active="1"
               class="el-menu-vertical-demo menu"
               @open="handleOpen($event)"
-              @close="handleClose"
               background-color="#545c64"
               text-color="#fff"
               active-li-color="#EB9E05">
@@ -48,21 +47,18 @@
                   <i class="el-icon-location"></i>
                   <span>用户管理</span>
                 </template>
-                  <el-menu-item index="1-1">用户信息</el-menu-item>
               </el-submenu>
               <el-submenu index="2" class="in1">
                 <template slot="title">
                   <i class="el-icon-goods"></i>
                   <span>商品管理</span>
                 </template>
-                  <el-menu-item index="1-1">所有商品</el-menu-item>
               </el-submenu>
               <el-submenu index="3" class="in1">
                 <template slot="title">
                   <i class="el-icon-message"></i>
                   <span>订单管理</span>
                 </template>
-                  <el-menu-item index="1-1">所有订单</el-menu-item>
               </el-submenu>
               <el-submenu index="4" class="in1">
                 <template slot="title">
@@ -90,7 +86,23 @@
             </el-menu>
 
         <div class="main">
-            <router-view></router-view>
+            <div class="content">
+              <router-view >
+              </router-view>
+              </div>
+             <div class="page" v-if="showPage">
+              <el-pagination
+              background
+              layout="total, sizes, prev, pager, next, jumper"
+              @size-change="handleSizeChange"
+              @current-change="handleCurrentChange"
+              :current-page="currentPage"
+              :page-sizes="pageSizes"
+              :page-size="pagesize"
+              :total="totalQty">
+              </el-pagination>
+            </div>
+            
         </div>
 
   </div>
@@ -108,7 +120,13 @@ export default {
       imgUrl:'',
       show:true,
       num:'',
-      data:{}
+      pagesize:5,
+      pageSizes:[5, 10, 15,20],
+      totalQty:0,
+      currentPage:1,
+      data:{},
+      showPage:true
+
     }
   },
   methods: {
@@ -129,7 +147,13 @@ export default {
             })
       },
       search(){
-            this.$children[6].search(this.num);
+          // if(this.num){
+            if(this.$children[6].search){
+              this.$children[6].search(this.num);
+            }
+            else{
+              this.$children[7].search(this.num);
+            }
       },
       add(){
           if(this.$children[6].dataset){
@@ -166,7 +190,29 @@ export default {
         window.localStorage.clear();
         this.$router.push({path: '/'});
       },
-  }
+      // 改变记录条数时触发。
+      handleSizeChange(key){
+        if(this.$children[6].changeQty){
+              this.$children[6].changeQty(key);
+            }
+            else{
+             this.$children[7].changeQty(key); 
+            }
+          
+      },
+      // 改变页数时触发。
+      handleCurrentChange(pageNum){
+        if(this.$children[6].changePage){
+              this.$children[6].changePage(pageNum);
+            }
+            else{
+              this.$children[7].changePage(pageNum);
+            }
+          
+      }
+  },
+
+    
 }
 </script>
 <style>

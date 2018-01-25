@@ -62,7 +62,7 @@
       }
     } else if( $state == "selectproduct"){
 
-      $sql = "SELECT * from product,car,productimg WHERE car.userId = 1 and car.goodId = product.goodId and product.goodId = productimg.goodId";
+      $sql = "SELECT * from product,car,productimg WHERE car.userId = '$userId' and car.goodId = product.goodId and product.goodId = productimg.goodId";
 
       $result = query_oop($sql);
       echo json_encode($result, JSON_UNESCAPED_UNICODE);

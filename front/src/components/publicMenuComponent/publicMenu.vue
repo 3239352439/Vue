@@ -14,10 +14,10 @@
           </router-link>
         </li>
         <li @click="goCar">
-          
+
             <i class="glyphicon glyphicon-search"></i>
             <span>购物车</span>
-          
+
         </li>
         <li>
            <router-link to="/my">
@@ -58,11 +58,11 @@ export default {
   },
   methods:{
     goCar(){
-      if(this.$store.state.userId){
+      // if(this.$store.state.userId){
         this.$router.push({name:"car"});
-      }else{
-          this.$router.push("/login");
-      }
+      // }else{
+      //   this.$router.push("/login");
+      // }
     }
   }
 

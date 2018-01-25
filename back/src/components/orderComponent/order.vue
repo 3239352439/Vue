@@ -13,10 +13,12 @@
                 </tr>
             </tbody>
         </table>
+        <spinner v-if="show"></spinner>
     </div>
 </template>
 
 <script>
+    import spinner from '../spinner/spinner'
     import http from '../../utils/reqAjax.js'
     import './order.scss'
     export default {
@@ -26,16 +28,23 @@
                 data:['订单ID','用户手机号','订单状态','订单添加时间'],
                 status:['待支付','已付款','待收货','确认收货','待评价','已完成','已取消'],
                 url:'order.php',
-                num:''
+                num:'',
+                show:false,
+                qty:this.$parent.pagesize,
+                pageNo:this.$parent.currentPage
             }
         },
         mounted(){
+            this.$parent.showPage=true;
             this.$parent.show = false;
-            http.get({"url":this.url}).then(res=>{
-                for(var i=0;i<res.data.length;i++){
-                    res.data[i].status = this.status[res.data[i].status];
+            this.show=true;
+            http.get({"url":this.url + "?qty=" + this.qty+"&pageNo="+this.pageNo}).then(res=>{
+               for(var i=0;i<res.data.data3.length;i++){
+                    res.data.data3[i].status = this.status[res.data.data3[i].status];
                 }
-                this.dataset = res.data;
+                this.dataset = res.data.data3;
+                this.$parent.totalQty=Number(res.data.data2[0].totalQty);
+                this.show=false;
             })
         },
         methods:{
@@ -55,15 +64,43 @@
                 }else if(val == "已取消" ){
                     val = 6;
                 }
-                http.get({"url":this.url + "?state=search&data=" + val}).then(res=>{
-                console.log(res)
-                for(var i=0;i<res.data.length;i++){
-                    res.data[i].status = this.status[res.data[i].status];
+                if(val==""){
+                    this.reqData();
                 }
-                this.dataset = res.data;
-            })
+                this.show=true;
+                http.get({"url":this.url + "?state=search&data=" + val+"&qty="+this.qty+"&pageNo="+this.pageNo}).then(res=>{ 
+                for(var i=0;i<res.data.data1.length;i++){
+                    res.data.data1[i].status = this.status[res.data.data1[i].status];
+                }
+                this.dataset = res.data.data1;
+                 this.$parent.totalQty=Number(res.data.data2[0].totalQty);
+                this.show=false;
+                })
+            },
+            //获取记录条数
+            changeQty(key){
+                this.qty=key;
+                this.reqData(); 
+            },
+            // 获取页数
+            changePage(pageNum){
+                this.pageNo=pageNum;
+                this.reqData();
+            },
+             reqData(){
+                this.show=true;
+                http.get({"url":this.url + "?qty=" + this.qty+"&pageNo="+this.pageNo}).then(res=>{ 
+                for(var i=0;i<res.data.data3.length;i++){
+                    res.data.data3[i].status = this.status[res.data.data3[i].status];
+                }
+                this.dataset = res.data.data3;
+                this.show=false;
+                }) 
             }
-        }
+        },
+         components:{
+                spinner
+            }
 
     }
 </script>

@@ -23,7 +23,7 @@
             
         },
         mounted(){
-            
+            this.$parent.showPage=false;
         }
     }
 </script>

@@ -1,7 +1,10 @@
 <?php
     function connect_oop() {
         // 配置参数
+
         $servername = '10.3.136.49';
+        // $servername = 'localhost';
+
         $username = 'root';
         $password = 'root';
         $database = 'supermarket';

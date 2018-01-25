@@ -3,9 +3,9 @@
 
     include "DBHelper.php";
 
-    $userId = isset($_POST['userid']) ? $_POST['userid'] : "1";
-    $goodId = isset($_POST['goodId']) ? $_POST['goodId'] : "1";
-    $state = isset($_POST['state']) ? $_POST['state'] : "delete";
+    $userId = isset($_POST['userid']) ? $_POST['userid'] : "";
+    $goodId = isset($_POST['goodId']) ? $_POST['goodId'] : "";
+    $state = isset($_POST['state']) ? $_POST['state'] : "";
     $sql;
     // echo $userId
     if( $state == 'insert'){
@@ -19,8 +19,13 @@
     } else if( $state == 'select'){
       $sql = "SELECT * from collect where userId = '$userId' and goodId ='$goodId'";
       $result = query_oop($sql);
+      if(count($result)>0){
+        echo  "ok";
+      }else{
+        echo "fail";
+      }
+      // echo json_encode($result, JSON_UNESCAPED_UNICODE);
 
-      echo json_encode($result, JSON_UNESCAPED_UNICODE);
     } else if( $state == 'delete'){
       $sql = "delete from collect where userId = '$userId' and goodId ='$goodId'";
       $result = excute_oop($sql);
