@@ -9,7 +9,7 @@
         <div v-for="(obj) in category" @click="toSmallcategory(obj)">{{obj}}</div>
       </div>
       <ul class="menus_right">
-        <li v-for="(obj) in cateSamllList" @click="getproductId(obj.classifySmallId,$event)">{{obj.classifyName}}</li>
+        <li v-for="(obj) in cateSamllList" @click="getproductId({id: obj.classifySmallId, name: obj.classifyName},$event)">{{obj.classifyName}}</li>
     </ul>
     </div>
     <div class="sort" v-if="status2">
@@ -70,7 +70,7 @@ export default {
             }
           }.bind(this));
           // console.log(this.category)
-          spinner.closeSpinner(); 
+          spinner.closeSpinner();
         }
       this.status1 = !this.status1;
         if(this.status2 == true){
@@ -115,13 +115,15 @@ export default {
       }
     },
     // 获取点击后的categoryId改变父组件的categoryId
-    getproductId(idx,event){
-      // console.log(event.target.innerText);
+    getproductId(obj,event){
+      // console.log('obj',obj);
       this.all = event.target.innerText;
       // 将获取到的categoryId存入store里
-      this.$store.commit('getCategoryId', idx);
+      this.$store.commit('getCategoryId', obj.id);
+      this.$store.commit('getCategoryName', obj.name);
       // 将从store里获取到的categoryId存入父组件的categoryId
       this.$parent.categoryId = this.$store.state.categoryId;
+      this.$parent.name = this.$store.state.CategoryName;
       // console.log('id',this.$parent.categoryId);
       // console.log(this.status1)
       if(this.status1== true){
@@ -148,7 +150,7 @@ export default {
         // this.dataset = res.data;
         this.$parent.dataset = res.data;
         // console.log(res.data)
-        spinner.closeSpinner(); 
+        spinner.closeSpinner();
       })
       // http.post({"url":'productListSort.php',parmas:{categoryId: this.$parent.categoryId,Sort:name}}).then ( res => {
       //   console.log(res.data)

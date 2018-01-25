@@ -31,7 +31,8 @@
 <script>
     import './myselect.scss'
     import http from '../../utils/reqAjax';
-    
+    import { MessageBox} from 'mint-ui';
+
     export default {
         data: function(){
             return {
@@ -60,7 +61,7 @@
                 // console.log(res.data[0].Price)
                 this.carNum = res.data[0].totle;
                 // this.prdPrice = res.data[0].Price;
-                //  spinner.closeSpinner(); 
+                //  spinner.closeSpinner();
             })
             http.post({"url":'car1.php',parmas:{userId: this.userid,state: 'selectprdCount'}}).then ( res => {
             // console.log(res.data[0].Price)
@@ -69,7 +70,7 @@
             })
             this.ajaxCar()
         },
-        
+
         methods:{
             // 二次封装ajax请求
             // ajax(_param){
@@ -129,12 +130,29 @@
                     // console.log(res.data[0].Price)
                     this.carNum = res.data[0].totle;
                     this.prdPrice = res.data[0].Price;
-                    spinner.closeSpinner(); 
+                    spinner.closeSpinner();
                 })
                 // this.carNum  += this.carNum;
             },
             toAccount(){
-                this.$router.push({ name: 'account'});
+                // this.$router.push({ name: 'account'});
+                 var totle =0;
+              http.post({"url":this.url,parmas:{userId: this.userid,state: 'selectproduct'}}).then ( res => {
+                // console.log(res.data)
+                this.goods = res.data;
+                for(var i=0; i< this.goods.length; i++){
+                  // console.log(res.data[i].checkedstatus)
+                  if(res.data[i].checkedstatus == 'true'){
+                    totle++;
+                  }
+                }
+                console.log('totle',totle)
+                if(totle <= 0){
+                  MessageBox('提示', '你还未选择商品');
+                } else {
+                  this.$router.push({ name: 'account'});
+                }
+              });
             }
         }
     }
