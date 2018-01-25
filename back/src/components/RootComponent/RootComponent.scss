@@ -64,14 +64,16 @@
 .main {
     float: left;
     width: 85%;
-    height:100%;
+    height:500px;
     display:relative;
 }
 .content{
-    height:550px;
+    height:430px;
+    margin-bottom:20px;
     overflow:hidden;
 }
 .page{
+    margin-left:200px;
     height: 30px;
     display:absolute;
     bottom:0px;

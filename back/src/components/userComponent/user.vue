@@ -9,7 +9,7 @@
             <tbody>
                 <tr v-for="(object, index) in dataset" :key="index">
                      <tD>{{index+1}}</td>
-                    <td v-for="(value, key) in object" :key="key" v-if="key=='headeImg'"><img :src="object[key]"/></td>
+                    <td v-for="(value, key) in object" :key="key" v-if="key=='headeImg'"><img :src="headImg"/></td>
                     <td v-else>{{object[key]}}</td>
                 </tr>
             </tbody>
@@ -28,29 +28,35 @@ export default {
           show:false,
           data:['ID','用户名','密码','用户手机号','头像','创建时间'],
           url:'user.php',
+          headImg:'./src/assets/login/head.jpg',
           //记录条数
           qty:this.$parent.pagesize,
           //页码
-          pageNo:this.$parent.currentPage
-          
+          pageNo:this.$parent.currentPage   
       }
   },
   mounted(){
-    //   this.$parent.show=false;
+    this.$parent.showPage=true;
+    this.$parent.show=false;
      this.show=true;
      http.get({"url":this.url + "?qty=" + this.qty+"&pageNo="+this.pageNo}).then(res=>{
-         this.dataset = res.data.data1;
+        this.show=false;
+        this.dataset = res.data.data3;
          this.$parent.totalQty=Number(res.data.data2[0].totalQty);
-          this.show=false;
+          
     })   
   },
   methods:{
       search(val){
+          if(val==""){
+              this.reqData();
+          }
           this.show=true;
         http.get({"url":this.url + "?qty=" + this.qty+"&pageNo="+this.pageNo+"&data="+val}).then(res=>{
-         this.dataset = res.data.data1;
+         this.show=false;
+        this.dataset = res.data.data1;
          this.$parent.totalQty=Number(res.data.data2[0].totalQty);
-          this.show=false;
+         
          })   
        
     },
@@ -67,8 +73,9 @@ export default {
     reqData(){
          this.show=true;
          http.get({"url":this.url + "?qty=" + this.qty+"&pageNo="+this.pageNo}).then(res=>{ 
-        this.dataset = res.data.data1;
          this.show=false;
+        this.dataset = res.data.data3;
+        
          }) 
     }
   },

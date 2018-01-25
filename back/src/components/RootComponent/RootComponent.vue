@@ -88,9 +88,9 @@
         <div class="main">
             <div class="content">
               <router-view >
-            </router-view>
+              </router-view>
               </div>
-             <div class="page">
+             <div class="page" v-if="showPage">
               <el-pagination
               background
               layout="total, sizes, prev, pager, next, jumper"
@@ -120,11 +120,12 @@ export default {
       imgUrl:'',
       show:true,
       num:'',
-      pagesize:10,
+      pagesize:5,
       pageSizes:[5, 10, 15,20],
       totalQty:0,
       currentPage:1,
-      data:{}
+      data:{},
+      showPage:true
 
     }
   },
