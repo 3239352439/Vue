@@ -10,8 +10,10 @@
         $sql.=";select FOUND_ROWS() as totalQty";    
     }
     else{
-        $sql="select userName,password,phone,headeImg,time from user limit $page,$qty";
+        $sql="select userName,password,phone,headeImg,time from user";
         $sql.=";select FOUND_ROWS() as totalQty";
+        $sql.=";select userName,password,phone,headeImg,time from user limit $page,$qty";
+        
         
     }
      $result = multi_query_oop($sql);
