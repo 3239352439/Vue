@@ -43,7 +43,8 @@
     }else if($state == "search"){
         $num = ($page-1)*$limit;
         $sql="select product.goodId,product.goodName,product.originalPrice,product.Price,product.size,product.T,productimg.ImgUrl from product INNER JOIN productimg on productimg.goodId = product.goodId WHERE product.goodId LIKE '%$data%' OR product.goodName like '%$data%' limit $num,$limit";
-        $result = query_oop($sql);
+        $sql.=" ;select FOUND_ROWS() as qty";
+        $result = multi_query_oop($sql);
         if ($result){
             echo json_encode($result,JSON_UNESCAPED_UNICODE);
         }
@@ -63,7 +64,8 @@
     }else{
         $num = ($page-1)*$limit;
         $sql="select product.goodId,product.goodName,product.originalPrice,product.Price,product.size,product.T,productimg.ImgUrl from product INNER JOIN productimg on productimg.goodId = product.goodId limit $num,$limit";
-        $result = query_oop($sql);
+        $sql.=" ;select count(*) as qty from product";
+        $result = multi_query_oop($sql);
         if ($result){
             echo json_encode($result,JSON_UNESCAPED_UNICODE);
         }
