@@ -1,13 +1,6 @@
 <template>
     <div id="order">
-        <!-- <div class="search">
-            <el-input
-            placeholder="请输入内容"
-            v-model="num"
-            clearable>
-            </el-input>
-            <el-button type="primary" @click="search">搜索</el-button>
-        </div> -->
+        
         <table v-if="dataset.length > 0" class="table table-bordered table-condensed table-hover table-striped">
             <thead>
                 <tr>
@@ -43,13 +36,26 @@
                     res.data[i].status = this.status[res.data[i].status];
                 }
                 this.dataset = res.data;
+               
             })
         },
         methods:{
             search(val){
-                // if(this.num == "待" || this.num == "支" || this.num == "付" || this.num == "待支" || this.num == "支付" || this.num == "待支付"){
-                //     val = 0;
-                // }
+                if(val == "待支付"){
+                    val = 0;
+                }else if(val == "已付款" ){
+                    val = 1;
+                }else if(val == "待收货" ){
+                    val = 2;
+                }else if(val == "确认收货" ){
+                    val = 3;
+                }else if(val == "待评价" ){
+                    val = 4;
+                }else if(val == "已完成" ){
+                    val = 5;
+                }else if(val == "已取消" ){
+                    val = 6;
+                }
                 http.get({"url":this.url + "?state=search&data=" + val}).then(res=>{
                 console.log(res)
                 for(var i=0;i<res.data.length;i++){
