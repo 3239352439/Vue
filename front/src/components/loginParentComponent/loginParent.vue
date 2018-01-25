@@ -27,7 +27,8 @@
         },
         methods:{
             goback(){
-                this.$router.go(-1);
+                // this.$router.go(-1);
+                this.$router.push({ name: 'my'});
             },
             loginP(){
                 this.$router.push({name:"login"});

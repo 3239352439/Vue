@@ -1,8 +1,11 @@
 <template>
   <div class="category_cen">
-    <mt-header title="分类">
-      <mt-button slot="right">搜索</mt-button>
-    </mt-header>
+    <div class="top"> 
+      <mt-header title="分类">
+        <mt-button slot="right" @click="toSerch">搜索</mt-button>
+      </mt-header>
+    </div>
+   
     <div class="menu">
       <ul class="left">
         <li v-for="(obj,idx) in category" @click="toSmallcategory(obj)">{{obj}}</li>
@@ -19,14 +22,18 @@
         </div>
       </div>
     </div>
-    <publicMenu></publicMenu>
+    <div class="buttom">
+      <publicMenu></publicMenu>
+    </div>
+    
   </div>
 </template>
 
 <script>
 import './classify.scss';
 import http from '../../utils/reqAjax'
-import publicMenu from '../publicMenuComponent/publicMenu'
+import publicMenu from '../publicMenuComponent/publicMenu';
+import spinner from "../spinnerComponent/spinner"
 export default {
   data: function(){
     return {
@@ -39,8 +46,8 @@ export default {
     }
   },
   mounted(){
+    spinner.loadspinner();
     http.get({"url":this.url}).then( res => {
-
       if(res.data){
         this.categoryList = res.data;
         this.catesm('水果');
@@ -50,6 +57,7 @@ export default {
           }
         }.bind(this))
       }
+      spinner.closeSpinner(); 
     });
   },
   methods:{
@@ -69,6 +77,9 @@ export default {
     toProduct(obj,_event){
       // console.log(obj)
       this.$router.push({ name: 'product',params: obj});
+    },
+    toSerch(){
+      this.$router.push({ name: 'search'});
     }
   },
   components: {

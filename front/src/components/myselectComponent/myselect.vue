@@ -21,7 +21,9 @@
             </div>
         </div>
         <div class="addCar">
-            <div class="carIcom"><i class="glyphicon glyphicon-shopping-cart"></i><span class="carNum">{{carNum}}</span></div><div class="prdNum">已选<span>{{this.$store.state.selectTotle}}</span></div><div class="prdprice"><span>￥{{this.$store.state.priceTotle}}</span></div><div class="account"><button  @click="toCar">去购物车</button></div>
+            <div class="carIcom" @click="toCar">
+                <i class="glyphicon glyphicon-th"></i><span class="carNum">{{carNum}}</span></div><div class="prdNum">已选<span>{{prdNum}}</span></div><div class="prdprice"><span>￥{{prdPrice}}</span></div><div class="account"><button @click="toAccount">去结算</button>
+            </div>
         </div>
     </div>
 </template>
@@ -53,6 +55,12 @@
             http.get({url:this.url + "?phone=" + this.$store.state.phoneNum}).then(res=>{
                 console.log(res)
                 this.dataset = res.data;
+            });
+            http.post({"url":'car1.php',parmas:{userId: this.$store.state.userId,state: 'selectprdCount'}}).then ( res => {
+                // console.log(res.data[0].Price)
+                this.carNum = res.data[0].totle;
+                // this.prdPrice = res.data[0].Price;
+                //  spinner.closeSpinner(); 
             })
             http.post({"url":'car1.php',parmas:{userId: this.userid,state: 'selectprdCount'}}).then ( res => {
             // console.log(res.data[0].Price)
@@ -111,7 +119,22 @@
             }
             },
             toCar(){
-            this.$router.push({ name: 'car'});
+                // console.log(666)
+                this.$router.push({ name: 'car'});
+            },
+            addCar(obj){
+                spinner.loadspinner();
+                // console.log(obj);
+                http.post({"url":'Car.php',parmas:{userid: this.userid,goodId:obj}}).then ( res => {
+                    // console.log(res.data[0].Price)
+                    this.carNum = res.data[0].totle;
+                    this.prdPrice = res.data[0].Price;
+                    spinner.closeSpinner(); 
+                })
+                // this.carNum  += this.carNum;
+            },
+            toAccount(){
+                this.$router.push({ name: 'account'});
             }
         }
     }

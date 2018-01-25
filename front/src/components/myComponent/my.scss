@@ -1,5 +1,21 @@
+body,html{
+    height: 100%;
+    width: 100%;
+}
 #myCenter{
     background: rgb(196, 158, 240);
+    display: flex;
+    flex-direction:column;
+    height: 100%;
+    width: 100%;
+    
+    .top{
+        flex: 1;
+        overflow-x: hidden;
+    }
+    .bottom{
+        height: 105px;
+    }
     .myhead{
         display: flex;
         height:1.33rem;

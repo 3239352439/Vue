@@ -18,15 +18,19 @@
           </div>
       </div>
       <el-dialog
-        title="用户信息"
+        title="信息 ："
         :visible.sync="dialog"
         width="40%"
         :before-close="handleClose">
             <div v-for="(value,idx) in dataset[0]" :key="idx">
-                <label>{{idx + ":"}}</label><el-input clearable :id="idx"></el-input>
+                <label v-if="idx != 'ImgUrl'">{{idx + ":"}}</label><el-input clearable :id="idx" v-if="idx != 'ImgUrl'" v-model="data[idx]"></el-input>
+                <form class="ImgUrl" v-if="idx == 'ImgUrl'">
+                    <label>{{idx + ":"}}</label>
+                    <input type="file" name="file" :id="idx"/>
+                </form>
             </div>
             <span slot="footer" class="dialog-footer">
-                <el-button type="primary" @click="save()">保 存</el-button>
+                <el-button type="primary" @click="save">保 存</el-button>
                 <el-button @click="dialog = false">取 消</el-button>
             </span>
         </el-dialog>
@@ -35,7 +39,6 @@
               default-active="1"
               class="el-menu-vertical-demo menu"
               @open="handleOpen($event)"
-              @close="handleClose"
               background-color="#545c64"
               text-color="#fff"
               active-li-color="#EB9E05">
@@ -106,6 +109,7 @@
 </template>
 
 <script>
+import baseUrl from '../../utils/baseUrl'
 export default {
   name: 'RootComponent',
   data () {
@@ -113,24 +117,33 @@ export default {
       msg: '',
       dialog:false,
       dataset:[],
+      imgUrl:'',
       show:true,
       num:'',
       pagesize:10,
       pageSizes:[5, 10, 15,20],
       totalQty:0,
-      currentPage:2
+      currentPage:1,
+      data:{}
+
     }
   },
   methods: {
       handleOpen(key) {
           if(key == 3){
               this.$router.push("/order");
+          }else if(key == 2){
+              this.$router.push("/goods");
           }
           else if(key == 1){
               this.$router.push("/user");
           }
       },
-      handleClose(key, keyPath) {
+      handleClose(done) {
+          this.$confirm('确认关闭？')
+            .then(_ => {
+                done();
+            })
       },
       search(){
           // if(this.num){
@@ -140,25 +153,38 @@ export default {
             else{
               this.$children[7].search(this.num);
             }
-            
-          // }
       },
       add(){
           if(this.$children[6].dataset){
-            this.dialog = true;
-            this.dataset = this.$children[6].dataset;
-          }
+                // this.data = {};
+                this.dialog = true;
+                this.dataset = this.$children[6].dataset;
+            }
       },
-      save(){
-          var data = {};
-          for(var attr in this.dataset[0]){
-              data[attr] = document.getElementById(attr).value;
-          }
-          this.dialog = false;
-          if(this.$children[6].updated){
-              this.$children[6].updated(data);
-          }
-      },
+        save(){
+            if(document.querySelector("input[type=file]").files.length){
+                jQuery('form').ajaxSubmit({
+                    type: 'post',
+                    url: baseUrl.url + 'form.php',
+                    success:function(data){
+                        console.log(data);
+                        data = JSON.parse(data);
+                        var dataObj = {};
+                        for(var attr in this.dataset[0]){
+                            dataObj[attr] = document.getElementById(attr).value;
+                        }
+                        dataObj['ImgUrl'] = "../" + data.path + "/" + data.fileName;
+                        $("input[type=file]").val('');
+                        this.data = {};
+                        if(this.$children[6].updated){
+                            this.$children[6].updated(dataObj);
+                            this.dialog = false;
+                        }
+                    }.bind(this)
+                })
+            }
+            
+        },
       quit(){
         window.localStorage.clear();
         this.$router.push({path: '/'});

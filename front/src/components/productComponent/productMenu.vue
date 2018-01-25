@@ -39,6 +39,7 @@
 
 <script>
 import http from '../../utils/reqAjax';
+import spinner from "../spinnerComponent/spinner";
 export default {
   data: function(){
     return {
@@ -58,6 +59,7 @@ export default {
   },
   methods: {
     type(){
+      spinner.loadspinner();
       http.get({"url":this.url}).then( res => {
         if(res.data){
           this.categoryList = res.data;
@@ -66,8 +68,9 @@ export default {
             if( this.category.indexOf(item.categoryName) == -1){
               this.category.push(item.categoryName);
             }
-          }.bind(this))
+          }.bind(this));
           // console.log(this.category)
+          spinner.closeSpinner(); 
         }
       this.status1 = !this.status1;
         if(this.status2 == true){
@@ -136,6 +139,7 @@ export default {
       // console.log(obj);
     },
     ajax(name){
+      spinner.loadspinner();
       var categoryId = this.$parent.categoryId;
       if(this.$parent.categoryId == undefined){
         categoryId = '0'
@@ -144,6 +148,7 @@ export default {
         // this.dataset = res.data;
         this.$parent.dataset = res.data;
         // console.log(res.data)
+        spinner.closeSpinner(); 
       })
       // http.post({"url":'productListSort.php',parmas:{categoryId: this.$parent.categoryId,Sort:name}}).then ( res => {
       //   console.log(res.data)

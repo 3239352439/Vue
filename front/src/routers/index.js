@@ -28,7 +28,7 @@ import orderdetail from '../components/orderdetailComponent/orderdetail.vue'
 import myselect from '../components/myselectComponent/myselect.vue'
 
 import loginParent from '../components/loginParentComponent/loginParent.vue';
-import detailPageComponent from '../components/detailPageComponent/detailPage.vue';
+import detailPageComponent from '../components/detailPageComponent/detailPage.vue'
 import carComponent from '../components/carComponent/car.vue'
 import home from '../components/home/home.vue'
 import address from '../components/address/address'
@@ -95,11 +95,13 @@ var router = new VueRouter({
             path: "/order",
             name: "order",
             component: order
-        },{
+        }
+        ,{
           path: '/detailpage',
           name: 'detailpage',
           component: detailPageComponent
-        },{
+        }
+        ,{
           path: '/car',
           name: 'car',
           component: carComponent

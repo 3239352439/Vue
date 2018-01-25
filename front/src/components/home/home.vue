@@ -20,7 +20,7 @@
                     </dt>
                     <dd>{{item.categoryName}}</dd>            
             </dl>
-            <dl v-if="typeData.length>=1">    
+            <dl v-if="typeData.length>=1" @click="toClassify">    
                     <dt><img :src="allTypeimg" alt="" />
                     </dt>
                     <dd>全部品类</dd>      
@@ -106,8 +106,11 @@
                 if(_event.target.tagName !== 'BUTTON'){
                     this.$router.push({ name: 'detailpage',params: obj});
                 }
-             },
-             addCar(id,e){
+            },
+            toClassify(){
+                this.$router.push({ name: 'category'});
+            },
+            addCar(id,e){
                 if(this.userid){
                     http.post({"url":"car1.php",parmas:{userId: this.userid,goodId:id,state: 'addProduct'}}).then ( res => {
                     if( res.data == 'seccese'){
