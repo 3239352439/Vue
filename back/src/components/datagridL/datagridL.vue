@@ -141,8 +141,8 @@
         },
         mounted(){
             http.get({"url":this.api}).then(res=>{
-                this.$parent.dataset = res.data;
-                this.dataset = res.data;
+                this.$parent.qty = res.data.data2[0].qty*1;
+                this.dataset = res.data.data1;
             })
             
         }

@@ -1,4 +1,5 @@
 ﻿<?php
+header('Access-Control-Allow-Origin:*');
 //载入ucpass类
 require_once('lib/Ucpaas.class.php');
 require_once('serverSid.php');

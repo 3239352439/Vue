@@ -72,7 +72,7 @@
                 var reg = /^[0-9a-zA-Z]{6,20}$/g;
                 if(reg.test(val)){
                     this.type2 = false;
-                    
+
                 }else{
                     this.type2 = true;
                 }
@@ -111,19 +111,19 @@
                 this.codenum = codenum
                 function vCode(){
                     var arr_char = '0123456789abcdefghijklmnopqrstuvwxyz'.split('');
-                    var res = ''; 
-                    for(var i=0;i<4;i++){ 
-                        // 获取随机索引值 
+                    var res = '';
+                    for(var i=0;i<4;i++){
+                        // 获取随机索引值
                         var idx = parseInt(Math.random()*arr_char.length);
                         // 根据索引值获取字符，并拼接
                         res += arr_char[idx];
                     }
-                    return res; 
+                    return res;
                 }
 
                 $.ajax({
                     type: 'POST',
-                    url: "http://localhost:888/smsyzm.php",
+                    url: "http://10.3.136.96:888/smsyzm.php",
                     data: {yzm:codenum,yzmtel:phonenum},
                     success: function(res){
                         res = eval('(' + res + ')');

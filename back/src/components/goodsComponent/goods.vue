@@ -1,13 +1,17 @@
 <template>
-    <div id="goods" @click="check($event)">
+    <div id="goods">
         <datagrid :api="url" :filterCols="filterColumns"></datagrid>
-        <el-pagination
-        background
-        layout="prev, pager, next"
-        small
-        :page-size=6
-        :total="13">
-        </el-pagination>
+        <div class="block">
+            <el-pagination
+            @size-change="handleSizeChange"
+            @current-change="handleCurrentChange"
+            :current-page="currentPage4"
+            :page-sizes="[5, 10, 20, 100]"
+            :page-size="5"
+            layout="total, sizes, prev, pager, next, jumper"
+            :total="qty">
+            </el-pagination>
+    </div>
     </div>
 </template>
 
@@ -19,7 +23,10 @@
         data(){
             return{
                 url:"goodsB.php",
-                total:"",
+                qty:0,
+                currentPage4: 4,
+                limit:6,
+                page:1,
                 filterColumns:['capacity','describe','classifySmallId','productionAddress']
             }
         },
@@ -30,17 +37,24 @@
             this.$parent.show = true;
         },
         methods:{
-            check(val){
-                if(val.target.tagName.toLowerCase() == "li"){
-                    http.get({"url":this.url + "?page=" + val.target.innerText}).then(res=>{
-                        this.$children[0].dataset = res.data;
-                    })
-                }
+            handleSizeChange(val) {
+                console.log(123)
+                this.limit = val;
+                http.get({"url":this.url + "?page=" + this.page + "&limit=" + val}).then(res=>{
+                    this.$children[0].dataset = res.data.data1;
+                })
+            },
+            handleCurrentChange(val) {
+                console.log(222)
+                this.page = val;
+                http.get({"url":this.url + "?page=" + val + "&limit=" + this.limit}).then(res=>{
+                    this.$children[0].dataset = res.data.data1;
+                })
             },
             search(val){
                 http.get({"url":this.url + "?state=search&data=" + val}).then(res=>{
-                console.log(res)
-                    this.$children[0].dataset = res.data;
+                    this.$children[0].dataset = res.data.data1;
+                    this.qty = res.data.data2.qty;
                 })
             },
             updated(val){

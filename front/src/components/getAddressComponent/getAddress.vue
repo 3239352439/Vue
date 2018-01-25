@@ -5,8 +5,8 @@
               <router-link to="/" slot="left">
                 <mt-button icon="back">返回</mt-button>
               </router-link>
-        </mt-header> 
-        </div> 
+        </mt-header>
+        </div>
         <div class="searchAddr">
             <mt-search
               v-model="value"
@@ -18,7 +18,7 @@
             <div class="address" @click.stop="kipAuto">
                 <p><i class="glyphicon glyphicon-screenshot"></i>定位到当前位置<i class="glyphicon glyphicon-chevron-right"></i></p>
             </div>
-            
+
             <div class="myAddress">
                 <h4><i class="glyphicon glyphicon-map-marker"> </i>我的配送地址</h4>
                 <ul class="addressList" v-if="data.length>=0">
@@ -36,9 +36,9 @@
                             <i class="glyphicon glyphicon-edit" @click.stop="edit" :id="item.receiveId"></i>
                         </div>
                     </li>
-                </ul> 
+                </ul>
             </div>
-           
+
         </div>
         <div class="get_footer" @click="kipAdd">添加收货地址</div>
     </div>
@@ -47,13 +47,13 @@
     import { Spinner,Search} from 'mint-ui';
     import http from '../../utils/reqAjax.js'
     import spinner from "../spinnerComponent/spinner"
-    import './getAddress.scss'
+    import './getAddress.scss';
     export default{
         data(){
             return {
                 value:'',
                 url:'getAddress.php',
-                data:[]                
+                data:[]
             }
         },
         methods:{
@@ -64,9 +64,9 @@
                 this.$router.push({name:'autoAddress'});
             },
             reBack(e){
-                 var tag=e.target.tagName.toLowerCase(); 
+                 var tag=e.target.tagName.toLowerCase();
                  if(tag=="button"){
-                     this.$router.back(-1); 
+                     this.$router.back(-1);
                  }
             },
             edit(e){
@@ -74,10 +74,10 @@
                 if(tag=="i"){
                   var $id=$(e.target).attr('id');
                   if(!isNaN($id)){
-                      this.$router.push({name:"addAddress",params:{id:$id}});  
-                  }     
+                      this.$router.push({name:"addAddress",params:{id:$id}});
+                  }
                 }
-                
+
             }
         },
         mounted(){
@@ -86,9 +86,8 @@
                 if(res.data){
                 spinner.closeSpinner();
                   this.data=res.data;
-                  
                 }
-                
+
             });
             var input=$('.mint-searchbar-core');
             input.focus(()=>{

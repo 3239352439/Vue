@@ -40,7 +40,7 @@
     <div class="bottom">
       <div class="priceTotle">合计：￥{{totle}}</div>
       <div class="pay">
-        <button>去支付</button>
+        <button @click="toPay">去支付</button>
       </div>
     </div>
   </div>
@@ -63,17 +63,17 @@ export default {
   mounted: function(){
     this.userid = this.$store.state.userId;
     http.post({"url":this.url,parmas:{userId: this.userid,state: 'selectaddress'}}).then ( res => {
-      // console.log(res.data)
+      console.log('userAddress',res.data)
       this.userAddress = res.data[0];
     });
     http.post({"url":this.url,parmas:{userId: this.userid,state: 'selectproduct'}}).then ( res => {
       console.log(res.data)
       this.goods = res.data;
       for(var i=0; i< this.goods.length; i++){
-
-        this.sum += res.data[i].Price*1
+        this.sum += res.data[i].Price*1*res.data[i].count;
       }
-      this.totle = this.sum + 10
+      this.sum = this.sum.toFixed(2);
+      this.totle = this.sum*1 + 10;
     });
   },
   methods :{
@@ -82,7 +82,24 @@ export default {
     },
     toAddress(){
       // console.log(666);
-      this.$router.push({ name: 'address'});
+      this.$router.push({ name: 'getAddress'});
+    },
+    toPay(){
+      var timestamp = (new Date()).valueOf();
+      var goodsId = [];
+      console.log('timestamp',timestamp);
+      console.log('user',this.$store.state.userId);
+      for(var i=0; i<this.goods.length; i++){
+        goodsId.push(this.goods[i].goodId)
+      }
+      console.log('goodsId', goodsId)
+      http.post({"url":this.url,parmas:{orderId:timestamp,userId: this.$store.state.userId,goodsId: goodsId,state: 'inserproduct'}}).then ( res => {
+        // console.log(res.data)
+        this.$router.push({name: 'pay',params:{orderId: timestamp,totle:  this.totle}});
+      });
+      http.post({"url":this.url,parmas:{userId: this.userid,state: 'deleteproduct'}}).then ( res => {
+        console.log(res.data)
+      });
     }
   },
   computed: {

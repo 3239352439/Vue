@@ -8,7 +8,8 @@
 	// echo '</pre>';
 
 	// $q = $_POST["data"];
-	// echo $q;
+  // echo $q;
+  header('Access-Control-Allow-Origin:*');
 	include "fileupload.php";
 
     $array = '';
@@ -18,7 +19,7 @@
         //实例化上传插件
         $uploadFileObject = new FileUpload();
         // $uploadFileObject->path = "upload";//文件存放目录
-        // uploadFileObject.allowtype =  
+        // uploadFileObject.allowtype =
         $uploadFileObject->allowtype = array('jpg','gif','png','jpeg', 'txt');//可以不设置，类中有默认类型
         // $uploadFileObject->maxsize = "100000000";//可以不设置，类中有默认
         //调用上传方法开始上传文件，上传的文件保存到 file 文件夹
@@ -46,5 +47,5 @@
         }
     }
     echo $array;
-	 
+
 ?>
