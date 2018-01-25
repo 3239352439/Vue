@@ -1,14 +1,11 @@
 <template>
     <div id="sm_search">
         <div class="header">
-           <router-link to="/" slot="left">
-            <mt-button icon="back">返回</mt-button>
-          </router-link>
-         <mt-search class="h_center"
-              placeholder="搜索"
-              >        
-        </mt-search>
-        <mt-button icon="search" slot="right" @click="skip"></mt-button>
+          
+                <mt-button icon="back" slot="left" @click="back">返回</mt-button>
+     
+            <mt-search class="h_center" placeholder="搜索"></mt-search>
+            <mt-button icon="search" slot="right" @click="skip"></mt-button>
         </div>
         <div class="main" @click.stop="getValue">
             <div class="hostory" v-if="$store.state.historySearch.length>0">
@@ -23,9 +20,7 @@
                   <li v-for="item in hot" :key="item">{{item}}</li>
                 </ul>
             </div>
-
-        </div>
-        
+        </div>    
      </div>
 </template>
 
@@ -60,6 +55,9 @@
                 this.$store.commit('historyClear');
               });
                 
+            },
+            back(){
+                this.$router.go(-1)
             }
         }
     }

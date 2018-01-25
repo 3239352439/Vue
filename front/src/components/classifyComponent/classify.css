@@ -1,0 +1,78 @@
+.category_cen {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.category_cen .top {
+  height: 0.7rem;
+}
+
+.category_cen .top .mint-header {
+  height: 0.7rem;
+  background: #26a2ff;
+}
+
+.category_cen .top .mint-header h1 {
+  font-size: 0.25rem;
+  margin: 0;
+}
+
+.category_cen .menu {
+  flex: 1;
+  overflow-x: hidden;
+  font-size: 0.2rem;
+  display: flex;
+}
+
+.category_cen .menu .left {
+  width: 180px;
+  background: #f0eded;
+}
+
+.category_cen .menu .left li {
+  height: 0.7rem;
+  background: #f0eded;
+  line-height: 0.7rem;
+  list-style-type: none;
+  text-align: center;
+}
+
+.category_cen .menu .right {
+  flex: 1;
+  overflow-x: hidden;
+}
+
+.category_cen .menu .right .cateBigImg {
+  padding: 15px;
+}
+
+.category_cen .menu .right .cateBigImg img {
+  width: 100%;
+  height: 100%;
+}
+
+.category_cen .menu .right .menus {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.category_cen .menu .right .menus .menusItem {
+  padding: 20px;
+  height: 200px;
+  width: 33%;
+}
+
+.category_cen .menu .right .menus .menusItem img {
+  width: 100px;
+  height: 100px;
+  margin: 0 auto;
+}
+
+.category_cen .menu .right .menus .menusItem span {
+  height: 0.25rem;
+  line-height: 0.25rem;
+  text-align: center;
+  display: block;
+}

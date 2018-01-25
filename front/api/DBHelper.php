@@ -1,14 +1,9 @@
 <?php
     function connect_oop() {
         // 配置参数
-
-<<<<<<< HEAD
         $servername = '10.3.136.49';
-=======
-        $servername = 'localhost';
->>>>>>> 78022679f709c829ba5e3f1a0656c2b3c0736501
         $username = 'root';
-        $password = '';
+        $password = 'root';
         $database = 'supermarket';
         header('Access-Control-Allow-Origin:*');
         //连接数据库

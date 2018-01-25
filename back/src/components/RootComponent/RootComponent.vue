@@ -13,7 +13,7 @@
           </div>
           <div class="header_right">
               <ul>
-                  <el-button type="primary" @click="$router.push({path: '/login'})">退出</el-button>
+                  <el-button type="primary" @click="quit">退出</el-button>
               </ul>
           </div>
       </div>
@@ -118,6 +118,9 @@ export default {
           }else if(key == 2){
               this.$router.push("/goods");
           }
+          else if(key == 1){
+              this.$router.push("/user");
+          }
       },
       handleClose(done) {
           this.$confirm('确认关闭？')
@@ -148,11 +151,6 @@ export default {
                             dataObj[attr] = document.getElementById(attr).value;
                         }
                         dataObj['ImgUrl'] = "../" + data.path + "/" + data.fileName;
-                        // for(var i=0;i<this.dataset.length;i++){
-                        //     $(".el-input__inner").eq(i).val("");
-                        //     $(".el-input__inner").eq(i).attr('clearable',false);
-                        // }
-                        // console.log($(".el-dialog__body input"))
                         $("input[type=file]").val('');
                         this.data = {};
                         if(this.$children[6].updated){
@@ -164,6 +162,10 @@ export default {
             }
             
         },
+      quit(){
+        window.localStorage.clear();
+        this.$router.push({path: '/'});
+      },
   }
 }
 </script>

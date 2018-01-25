@@ -14,14 +14,14 @@
           <div class="prdImg">
             <!-- <input type="checkbox" checked  v-bind:id="obj.carId"  class="check" v-bind:value="obj.carId" v-model="checkedCarId" @click="checked($event)"> -->
             <input type="checkbox" class="check" :checked="obj.checkedstatus == 'true'"  @click="checked(obj.goodId,$event)">
-            <img v-bind:src="obj.ImgUrl" alt="" @click="ToDetailPage(obj.goodId,$event)">
+            <img v-bind:src="obj.ImgUrl" alt="" @click.stop="ToDetailPage(obj.goodId,$event)">
           </div>
           <div class="prdinfor">
             <h3 @click.stop="ToDetailPage(obj.goodId,$event)">{{obj.goodName}}</h3>
             <h4>{{obj.describe}}</h4>
             <div class="prdprice">
               <span class="price">￥{{obj.Price}}</span>
-              <p><span class="compute" @click.stop="compute(obj.goodId,idx,$event)">-</span><span class="num">{{obj.count}}</span><span class="compute" @click.stop="compute(obj.goodId,idx,$event)">+</span></p>
+              <p><span class="compute" @click="compute(obj.goodId,idx,$event)">-</span><span class="num">{{obj.count}}</span><span class="compute" @click="compute(obj.goodId,idx,$event)">+</span></p>
             </div>
           </div>
         </li>
@@ -44,7 +44,7 @@
             <!-- <input type="checkbox" name="" id="aa"> -->
             已选 <span>{{this.$store.state.selectTotle}}</span></label></div>
         <div class="price">￥{{this.$store.state.priceTotle}}</div>
-        <div class="count"><button>去结算</button></div>
+        <div class="count"><button @click="toAccount">去结算</button></div>
       </div>
       <publicMenu></publicMenu>
     </div>
@@ -60,14 +60,14 @@ export default {
   data: function(){
     return {
       randomData:[],
-      userid:1,
+      userid:'',
       carprd:[],
       sum:'',
       url:'car1.php'
     }
   },
   mounted: function(){
-    this.userid = this.$store.state.userId;
+    // this.userid = this.$store.state.userId;
     // 随机生成商品
     http.get({"url":'productListSort.php'+'?Sort="random"& state= 1'}).then ( res => {
        this.randomData = res.data;
@@ -78,7 +78,7 @@ export default {
     ajax(){
       // 请求用户购物车的商品
       http.post({"url":this.url,parmas:{userId: this.userid,state: 'selectproduct'}}).then ( res => {
-        console.log(res.data)
+        // console.log(res.data)
         this.carprd = res.data;
         var selectTotle=0;
         var priceTotle = 0;
@@ -191,6 +191,9 @@ export default {
           this.ajax();
         }
       })
+    },
+    toAccount(){
+      this.$router.push({ name: 'account'});
     }
   },
   computed: {

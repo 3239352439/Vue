@@ -7,13 +7,14 @@ import service from '../components/ServerComponent/ServerComponent.vue'
 import order from '../components/orderComponent/order.vue'
 import goods from '../components/goodsComponent/goods.vue'
 
+import user from '../components/userComponent/user.vue'
 Vue.use(VueRouter);
 
 var router = new VueRouter({
     routes:[
         {
-            path: '/',
-            name: '',
+            path: '/' || '/login',
+            name: '' ||'login',
             component: LoginComponent
         },{
             path: '/root',
@@ -33,6 +34,12 @@ var router = new VueRouter({
                     path: '/goods',
                     name: 'goods',
                     component: goods,
+                    
+                },
+                {
+                    path: '/user',
+                    name: 'user',
+                    component: user,
                 }
             ]
         }

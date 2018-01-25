@@ -1,12 +1,14 @@
 <template>
   <div class="product_cen">
     <div class="top">
-      <mt-header title="搜索框">
+      <mt-header>
         <router-link to="/category" slot="left">
           <mt-button icon="back">返回</mt-button>
         </router-link>
-        <mt-button icon="more" slot="right"></mt-button>
+        <-- <mt-button icon="more" class="glyphicon glyphicon-home"></mt-button> -->
       </mt-header>
+      <span class="glyphicon glyphicon-home" @click="toHome"></span>
+      <input type="text"  placeholder="搜索" class="serch" @focus="toSerch">
       <productMenu v-bind:SmallId="name"></productMenu>
     </div>
     <div class="product_menu">
@@ -23,7 +25,7 @@
       </div>
     </div>
     <div class="addCar">
-      <div class="carIcom" @click="toCar"><i class="glyphicon glyphicon-shopping-cart"></i><span class="carNum">{{carNum}}</span></div><div class="prdNum">已选<span>{{this.$store.state.selectTotle}}</span></div><div class="prdprice"><span>￥{{this.$store.state.priceTotle}}</span></div><div class="account"><button>去结算</button></div>
+      <div class="carIcom" @click="toCar"><i class="glyphicon glyphicon-shopping-cart"></i><span class="carNum">{{carNum}}</span></div><div class="prdNum">已选<span>{{this.$store.state.selectTotle}}</span></div><div class="prdprice"><span>￥{{this.$store.state.priceTotle}}</span></div><div class="account"><button @click="ToAccount">去结算</button></div>
     </div>
   </div>
 </template>
@@ -33,6 +35,8 @@
 import http from '../../utils/reqAjax';
 import './productList.scss';
 import productMenu from './productMenu';
+import spinner from "../spinnerComponent/spinner";
+import { Search } from 'mint-ui';
 
 export default {
   data: function(){
@@ -48,10 +52,13 @@ export default {
     }
   },
   mounted(){
+    spinner.loadspinner();
+
     this.userid = this.$store.state.userId;
     this.prdNum = this.$store.state.selectTotle;
     this.prdPrice =  this.$store.state.priceTotle;
     // console.log(this.$route.params.name)
+
     this.categoryId = this.$route.params.id;
     this.name = this.$route.params.name;
     if(this.categoryId == undefined){
@@ -59,10 +66,12 @@ export default {
     } else {
       this.ajax(this.categoryId)
     }
+
     http.post({"url":'car1.php',parmas:{userId: this.userid,state: 'selectprdCount'}}).then ( res => {
-      // console.log(res.data[0].Price)
+
       this.carNum = res.data[0].totle;
       // this.prdPrice = res.data[0].Price;
+
     })
     this.ajaxCar()
   },
@@ -71,42 +80,49 @@ export default {
   methods:{
     // 二次封装ajax请求
     ajax(_param){
+      spinner.loadspinner();
       if(_param){
         http.get({"url":this.url+'?categoryId='+_param}).then ( res => {
           this.dataset = res.data;
+          spinner.closeSpinner();
         })
       } else {
         http.get({"url":this.url}).then ( res => {
           this.dataset = res.data;
+          spinner.closeSpinner();
         })
       }
     },
     ajaxCar(){
-    // 请求用户购物车的商品
-    http.post({"url":'car1.php',parmas:{userId: this.userid,state: 'selectproduct'}}).then ( res => {
-      // console.log(res.data)
-      this.carprd = res.data;
-      var selectTotle=0;
-      var priceTotle = 0;
-      for(var i=0; i< res.data.length; i++){
-        if(res.data[i].checkedstatus == 'true'){
-          selectTotle += res.data[i].count*1;
-          priceTotle += res.data[i].Price*1*res.data[i].count*1;
-          // console.log('i',i,priceTotle)
+      // 请求用户购物车的商品
+      spinner.loadspinner();
+      http.post({"url":'car1.php',parmas:{userId: this.userid,state: 'selectproduct'}}).then ( res => {
+        // console.log(res.data)
+        this.carprd = res.data;
+        var selectTotle=0;
+        var priceTotle = 0;
+        for(var i=0; i< res.data.length; i++){
+          if(res.data[i].checkedstatus == 'true'){
+            selectTotle += res.data[i].count*1;
+            priceTotle += res.data[i].Price*1*res.data[i].count*1;
+            // console.log('i',i,priceTotle)
+          }
         }
-      }
 
-      this.$store.commit("getSelectTotle",selectTotle)
-      this.$store.commit("getPriceTotle",priceTotle.toFixed(2));
-      // console.log('a',this.$store.state.priceTotle)
-    })
+        this.$store.commit("getSelectTotle",selectTotle)
+        this.$store.commit("getPriceTotle",priceTotle.toFixed(2));
+        // console.log('a',this.$store.state.priceTotle)
+        spinner.closeSpinner();
+      })
     },
     addCar(obj){
+      spinner.loadspinner();
       // console.log(obj);
       http.post({"url":'Car.php',parmas:{userid: this.userid,goodId:obj}}).then ( res => {
         // console.log(res.data[0].Price)
         this.carNum = res.data[0].totle;
         this.prdPrice = res.data[0].Price;
+        spinner.closeSpinner();
       })
       // this.carNum  += this.carNum;
     },
@@ -118,6 +134,15 @@ export default {
     },
     toCar(){
       this.$router.push({ name: 'car'});
+    },
+    ToAccount(){
+      this.$router.push({name: 'account'})
+    },
+    toHome(){
+      this.$router.push({ name: 'home'});
+    },
+    toSerch(){
+      this.$router.push({ name: 'search'});
     }
   },
   watch: {

@@ -36,7 +36,7 @@
         <div class="deteils">
           <h1><span>商品详情</span></h1>
           <ul>
-            <li><img src="../../assets/common/product_details_footer6.jpg" alt=""></li>
+            <li><img src="" alt=""></li>
           </ul>
         </div>
       </div>
