@@ -23,7 +23,7 @@
       </div>
     </div>
     <div class="addCar">
-      <div class="carIcom" @click="toCar"><i class="glyphicon glyphicon-shopping-cart"></i><span class="carNum">{{carNum}}</span></div><div class="prdNum">已选<span>{{this.$store.state.selectTotle}}</span></div><div class="prdprice"><span>￥{{this.$store.state.priceTotle}}</span></div><div class="account"><button>去结算</button></div>
+      <div class="carIcom" @click="toCar"><i class="glyphicon glyphicon-shopping-cart"></i><span class="carNum">{{carNum}}</span></div><div class="prdNum">已选<span>{{this.$store.state.selectTotle}}</span></div><div class="prdprice"><span>￥{{this.$store.state.priceTotle}}</span></div><div class="account"><button @click="ToAccount">去结算</button></div>
     </div>
   </div>
 </template>
@@ -117,6 +117,9 @@ export default {
     },
     toCar(){
       this.$router.push({ name: 'car'});
+    },
+    ToAccount(){
+      this.$router.push({name: 'account'})
     }
   },
   watch: {

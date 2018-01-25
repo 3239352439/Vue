@@ -2,9 +2,9 @@
   <div class="account_cen">
     <div class="top">
       <mt-header title="确认订单">
-        <!-- <router-link to="/product" slot="left">
-          <mt-button icon="back">返回</mt-button>
-        </router-link> -->
+        <!-- <router-link to="/product" > -->
+          <mt-button icon="back" slot="left" @click="back">返回</mt-button>
+        <!-- </router-link> -->
       </mt-header>
     </div>
     <div class="account">
@@ -87,7 +87,9 @@ export default {
 
   },
   methods :{
-
+    back(){
+      this.$router.go(-1)
+    },
   },
   computed: {
   },
