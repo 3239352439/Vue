@@ -23,7 +23,7 @@
         },
         methods:{
             goback(){
-                this.$router.push({name: order});
+                this.$router.push({name: 'order'});
             },
             payMoney(){
                 MessageBox.confirm('确定执行此操作?').then(action => {

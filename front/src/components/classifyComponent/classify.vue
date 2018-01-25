@@ -1,21 +1,21 @@
 <template>
   <div class="category_cen">
-    <div class="top"> 
+    <div class="top">
       <mt-header title="分类">
         <mt-button slot="right" @click="toSerch">搜索</mt-button>
       </mt-header>
     </div>
-   
+
     <div class="menu">
       <ul class="left">
-        <li v-for="(obj,idx) in category" @click="toSmallcategory(obj)">{{obj}}</li>
+        <li v-for="(obj,idx) in category" @click="toSmallcategory(obj)" :key="idx">{{obj}}</li>
       </ul>
       <div class="right">
         <div class="cateBigImg">
           <img v-if="cateSamllList[1]" v-bind:src="cateSamllList[0].categoryImg" alt="加载中"/>
         </div>
         <div class="menus">
-          <div class="menusItem" v-for="(obj,idx) in cateSamllList"  v-bind:data-SmallId="obj.classifySmallId"  @click="toProduct({id:obj.classifySmallId,name:obj.classifyName},$event)">
+          <div class="menusItem" v-for="(obj,idx) in cateSamllList"  v-bind:data-SmallId="obj.classifySmallId"  @click="toProduct({id:obj.classifySmallId,name:obj.classifyName},$event)" :key="idx">
             <img v-bind:src="obj.classifyImg" alt="加载中"/>
             <span>{{obj.classifyName}}</span>
           </div>
@@ -25,7 +25,7 @@
     <div class="buttom">
       <publicMenu></publicMenu>
     </div>
-    
+
   </div>
 </template>
 
@@ -57,7 +57,7 @@ export default {
           }
         }.bind(this))
       }
-      spinner.closeSpinner(); 
+      spinner.closeSpinner();
     });
   },
   methods:{

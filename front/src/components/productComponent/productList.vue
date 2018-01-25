@@ -12,7 +12,7 @@
       <productMenu v-bind:SmallId="name"></productMenu>
     </div>
     <div class="product_menu">
-      <div v-for="obj in dataset" class="goodItem" @click.stop="toDetailPage(obj.goodId,$event)">
+      <div v-for="(obj,key) in dataset" class="goodItem" @click.stop="toDetailPage(obj.goodId,$event)" :key="key">
         <div class="left_img">
           <img v-bind:src="obj.ImgUrl" alt="加载中"/>
         </div>
@@ -49,7 +49,8 @@ export default {
       prdNum:0,
       prdPrice:0,
       userid:'',
-      categoryName:''
+      categoryName:'',
+      cateid: ''
     }
   },
   mounted(){
@@ -61,23 +62,23 @@ export default {
     this.categoryId = this.$route.params.id;
     this.categoryName = this.$route.params.catename;
     this.name = this.$route.params.name;
-    if(this.categoryId == undefined){
-      // this.ajax();
-      console.log(this.categoryName);
-      if(this.categoryName){
-        this.ajax(this.categoryName,'search')
-      } else {
-        this.ajax()
-      }
-    } else {
-      var state = '';
-      if(this.categoryId>10){
-        state = 'small'
-      } else {
-        state = 'bigCategory'
-      }
-      this.ajax(this.categoryId,state)
-    }
+    this.cateid = this.$route.params.cateid
+    console.log('categoryId', this.categoryId)
+
+    // if(this.categoryId){
+    //   var state = '';
+    //   if(this.categoryId>10){
+    //     state = 'small'
+    //   } else {
+    //     state = 'bigCategory'
+    //   }
+    //   this.ajax(this.categoryId,state)
+    // }
+    // if(this.categoryName){
+    //   console.log(this.categoryName);
+    //   this.ajax(this.cateid,'search')
+    //   this.name = this.categoryName
+    // }
 
     http.post({"url":'car1.php',parmas:{userId: this.userid,state: 'selectprdCount'}}).then ( res => {
 
