@@ -5,6 +5,7 @@ import LoginComponent from '../components/login/login.vue'
 import root from '../components/RootComponent/RootComponent.vue'
 import service from '../components/ServerComponent/ServerComponent.vue'
 import order from '../components/orderComponent/order.vue'
+import goods from '../components/goodsComponent/goods.vue'
 
 Vue.use(VueRouter);
 
@@ -28,6 +29,10 @@ var router = new VueRouter({
                     path: '/order',
                     name: 'order',
                     component: order,
+                },{
+                    path: '/goods',
+                    name: 'goods',
+                    component: goods,
                 }
             ]
         }

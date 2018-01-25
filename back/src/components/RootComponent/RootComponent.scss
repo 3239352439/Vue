@@ -67,13 +67,21 @@
 }
 .el-dialog__body .el-input{
     width:320px;
+    text-align:left;
 }
 .el-dialog__body div label{
-    width:100px;
+    width:120px;
     text-align: center;
 }
 .el-dialog__body div input{
     margin-left:20px;
     margin-top:5px;
     width:300px;
+    
+}
+*{
+    text-align:left;
+}
+.ImgUrl input{
+    display: inline;
 }

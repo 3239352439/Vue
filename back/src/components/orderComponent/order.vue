@@ -1,13 +1,6 @@
 <template>
     <div id="order">
-        <!-- <div class="search">
-            <el-input
-            placeholder="请输入内容"
-            v-model="num"
-            clearable>
-            </el-input>
-            <el-button type="primary" @click="search">搜索</el-button>
-        </div> -->
+        
         <table v-if="dataset.length > 0" class="table table-bordered table-condensed table-hover table-striped">
             <thead>
                 <tr>
@@ -32,12 +25,12 @@
                 dataset:[],
                 data:['订单ID','用户手机号','订单状态','订单添加时间'],
                 status:['待支付','已付款','待收货','确认收货','待评价','已完成','已取消'],
-                url:'http://10.3.136.49:555/order.php',
+                url:'order.php',
                 num:''
             }
         },
         mounted(){
-            // this.$parent.show = false;
+            this.$parent.show = false;
             http.get({"url":this.url}).then(res=>{
                 for(var i=0;i<res.data.length;i++){
                     res.data[i].status = this.status[res.data[i].status];
@@ -47,9 +40,21 @@
         },
         methods:{
             search(val){
-                // if(this.num == "待" || this.num == "支" || this.num == "付" || this.num == "待支" || this.num == "支付" || this.num == "待支付"){
-                //     val = 0;
-                // }
+                if(val == "待支付"){
+                    val = 0;
+                }else if(val == "已付款" ){
+                    val = 1;
+                }else if(val == "待收货" ){
+                    val = 2;
+                }else if(val == "确认收货" ){
+                    val = 3;
+                }else if(val == "待评价" ){
+                    val = 4;
+                }else if(val == "已完成" ){
+                    val = 5;
+                }else if(val == "已取消" ){
+                    val = 6;
+                }
                 http.get({"url":this.url + "?state=search&data=" + val}).then(res=>{
                 console.log(res)
                 for(var i=0;i<res.data.length;i++){

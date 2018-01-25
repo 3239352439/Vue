@@ -9,7 +9,7 @@
             clearable>
             </el-input>
             <el-button type="primary" @click="search">搜索</el-button>
-            <el-button type="primary" @click="add" v-if="show">新增</el-button>
+            <el-button type="primary" @click="add" v-show="show">新增</el-button>
           </div>
           <div class="header_right">
               <ul>
@@ -18,15 +18,19 @@
           </div>
       </div>
       <el-dialog
-        title="用户信息"
+        title="信息 ："
         :visible.sync="dialog"
         width="40%"
         :before-close="handleClose">
             <div v-for="(value,idx) in dataset[0]" :key="idx">
-                <label>{{idx + ":"}}</label><el-input clearable :id="idx"></el-input>
+                <label v-if="idx != 'ImgUrl'">{{idx + ":"}}</label><el-input clearable :id="idx" v-if="idx != 'ImgUrl'" v-model="data[idx]"></el-input>
+                <form class="ImgUrl" v-if="idx == 'ImgUrl'">
+                    <label>{{idx + ":"}}</label>
+                    <input type="file" name="file" :id="idx"/>
+                </form>
             </div>
             <span slot="footer" class="dialog-footer">
-                <el-button type="primary" @click="save()">保 存</el-button>
+                <el-button type="primary" @click="save">保 存</el-button>
                 <el-button @click="dialog = false">取 消</el-button>
             </span>
         </el-dialog>
@@ -52,7 +56,6 @@
                   <span>商品管理</span>
                 </template>
                   <el-menu-item index="1-1">所有商品</el-menu-item>
-                  <el-menu-item index="1-2">上架管理</el-menu-item>
               </el-submenu>
               <el-submenu index="3" class="in1">
                 <template slot="title">
@@ -90,11 +93,11 @@
             <router-view></router-view>
         </div>
 
-
   </div>
 </template>
 
 <script>
+import baseUrl from '../../utils/baseUrl'
 export default {
   name: 'RootComponent',
   data () {
@@ -102,39 +105,65 @@ export default {
       msg: '',
       dialog:false,
       dataset:[],
+      imgUrl:'',
       show:true,
-      num:''
+      num:'',
+      data:{}
     }
   },
   methods: {
       handleOpen(key) {
           if(key == 3){
               this.$router.push("/order");
+          }else if(key == 2){
+              this.$router.push("/goods");
           }
       },
-      handleClose(key, keyPath) {
+      handleClose(done) {
+          this.$confirm('确认关闭？')
+            .then(_ => {
+                done();
+            })
       },
       search(){
-          if(this.num){
             this.$children[6].search(this.num);
-          }
       },
       add(){
           if(this.$children[6].dataset){
-            this.dialog = true;
-            this.dataset = this.$children[6].dataset;
-          }
+                // this.data = {};
+                this.dialog = true;
+                this.dataset = this.$children[6].dataset;
+            }
       },
-      save(){
-          var data = {};
-          for(var attr in this.dataset[0]){
-              data[attr] = document.getElementById(attr).value;
-          }
-          this.dialog = false;
-          if(this.$children[6].updated){
-              this.$children[6].updated(data);
-          }
-      },
+        save(){
+            if(document.querySelector("input[type=file]").files.length){
+                jQuery('form').ajaxSubmit({
+                    type: 'post',
+                    url: baseUrl.url + 'form.php',
+                    success:function(data){
+                        console.log(data);
+                        data = JSON.parse(data);
+                        var dataObj = {};
+                        for(var attr in this.dataset[0]){
+                            dataObj[attr] = document.getElementById(attr).value;
+                        }
+                        dataObj['ImgUrl'] = "../" + data.path + "/" + data.fileName;
+                        // for(var i=0;i<this.dataset.length;i++){
+                        //     $(".el-input__inner").eq(i).val("");
+                        //     $(".el-input__inner").eq(i).attr('clearable',false);
+                        // }
+                        // console.log($(".el-dialog__body input"))
+                        $("input[type=file]").val('');
+                        this.data = {};
+                        if(this.$children[6].updated){
+                            this.$children[6].updated(dataObj);
+                            this.dialog = false;
+                        }
+                    }.bind(this)
+                })
+            }
+            
+        },
   }
 }
 </script>

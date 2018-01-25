@@ -9,7 +9,8 @@
             </thead>
             <tbody>
                 <tr v-for="(object, index) in dataset" :key="index">
-                    <td v-for="(value, key) in object" v-if="filterCols.indexOf(key) < 0" :key="key">{{object[key]}}</td>
+                    <td v-for="(value, key) in object" v-if="key != 'ImgUrl' && filterCols.indexOf(key) < 0" :key="key">{{object[key]}}</td>
+                    <td v-for="(value, key) in object" v-if="key == 'ImgUrl'" :key="key"><img :src="object[key]" alt=""></td>
                     <td>
                         <el-button type="success" plain @click="edit($event,index)">编辑</el-button>
                         <el-button type="success" plain @click="btn($event,index)">删除</el-button>
@@ -22,14 +23,15 @@
         :visible.sync="dialogVisible"
         width="40%"
         :before-close="handleClose">
-            <label for="userName">用户名 :</label><el-input placeholder="请输入用户名" v-model="userName" clearable id="userName" disabled>{{userName}}</el-input>
-            <label for="nickName">昵称 :</label><el-input placeholder="请输入昵称" v-model="nickName" clearable id="nickName">{{nickName}}</el-input>
-            <label for="userImg">图片 :</label><el-input placeholder="请输入图片路径" v-model="userImg" clearable id="userImg">{{userImg}}</el-input>
-            <label for="history">历史足迹 :</label><el-input placeholder="请输入历史足迹" v-model="history" clearable id="history" disabled></el-input>
-            <label for="dAddress">默认收货地址 :</label><el-input placeholder="请输入默认收货地址" v-model="dAddress" clearable id="dAddress">{{dAddress}}</el-input>
-            <label for="address1">收货地址1 :</label><el-input placeholder="请输入收货地址1" v-model="address1" clearable id="address1">{{address1}}</el-input>
-            <label for="address2">收货地址2 :</label><el-input placeholder="请输入收货地址2" v-model="address2" clearable id="address2">{{address2}}</el-input>
-            <label for="update">更新时间 :</label><el-input placeholder="请输入更新时间" v-model="update" clearable id="update">{{update}}</el-input>
+            <div v-for="(value,idx) in data" :key="idx">
+                <label v-if="idx != 'ImgUrl'">{{idx + ":"}}</label><el-input clearable :id="idx" v-if="idx != 'ImgUrl'" :value="value" :disabled=" idx == 'goodId' ? 'disabled' : false"></el-input>
+                <form class="ImgUrl" v-if="idx == 'ImgUrl'">
+                    <label>{{idx + ":"}}</label>
+                    <input type="file" name="file" :id="idx">
+                    <img :src="data.ImgUrl" class="imgs">
+                </form>
+            </div>
+            
             <span slot="footer" class="dialog-footer">
                 <el-button type="primary" @click="save($event)">保 存</el-button>
                 <el-button @click="dialogVisible = false">取 消</el-button>
@@ -40,111 +42,90 @@
 
 <script>
     import http from '../../utils/reqAjax.js'
-
+    import './datagridL.scss'
+    import baseUrl from '../../utils/baseUrl'
     export default {
         data: function(){
             return {
-                userName:"",
-                nickName:"",
-                userImg:"",
-                history:"",
-                dAddress:"",
-                address1:"",
-                address2:"",
-                update:"",
                 dialogVisible: false,
-                val:"",
-                state:"",
-                dataset: []
+                dataset: [],
+                index:"",
+                data:{}
             }
         },
         props: ['api', 'filterCols'],
         methods:{
             // 删除事件
             btn($event,index){
-                // console.log(this.dataset)
-                // console.log($event.path[3].children[0].innerHTML)
-                var userName = this.dataset[index].userName;
-                http.post({"url":this.api, params: {userName: userName,state:"删除"}}).then(res=>{
-                    console.log(res)
-                    if(res.date != "false"){
-                        this.dataset = res.data;
+                var goodId = this.dataset[index].goodId;
+                http.get({"url":this.api + "?state=del&goodId=" + goodId}).then(res=>{
+                    if(res.data == "ok"){
+                        this.dataset.splice(index,1);
                     }
-                })
-                
-            },
-            // 保存事件
-            save($event){
-                this.dialogVisible = false;
-                var data = {
-                    state:"修改",
-                    userName:this.userName,
-                    nickName:this.nickName,
-                    userImg:this.userImg,
-                    dAddress:this.dAddress,
-                    address1:this.address1,
-                    address2:this.address2,
-                    update:this.update
-                };
-                http.post({"url":this.api, params: data}).then(res=>{
-                    console.log(res)
-                    if(res.date != "false"){
-                        this.dataset = res.data;
-                    }
-                })
-               
-            },
-            save1(){
-                var data = {
-                    state:"增加",
-                    userName:this.$parent.username,
-                    password:this.$parent.password,
-                    nickName:this.$parent.nickName,
-                    userImg:this.$parent.dialogImageUrl,
-                    dAddress:this.$parent.dAddress,
-                    address1:this.$parent.address1,
-                    address2:this.$parent.address2,
-                };
-                http.post({"url":this.api, params: data}).then(res=>{
-                    console.log(res)
-                    if(res.date != "false"){
-                        this.dataset = res.data;
-                    }
-                })
-                
-            },
-            // 搜索事件
-            search(){
-                if(this.$parent.num != ""){
-                    var userName = this.$parent.num;
-                    http.post({"url":this.api, params: {userName:userName,state:"查询"}}).then(res=>{
-                        console.log(res)
-                        this.dataset = res.data;
-                    })
-                    
-                }
-            },
-            search1(){
-                http.post({"url":this.api, params: {userName:this.val,state:this.state}}).then(res=>{
-                    console.log(res)
-                    this.dataset = res.data;
                 })
                 
             },
             // 编辑事件
             edit($event,index){
+                this.data = this.dataset[index];
+                this.index = index;
                 this.dialogVisible = true;
-                var date = new Date();
-                date = date.toLocaleString();
-                date = date.replace(/[\u4E00-\u9FA5]{2}/g,"");
-                this.userName = this.dataset[index].userName;
-                this.nickName = this.dataset[index].nickName;
-                this.userImg = this.dataset[index].userImg;
-                this.history = this.dataset[index].history;
-                this.dAddress = this.dataset[index].dAddress;
-                this.address1 = this.dataset[index].address1;
-                this.address2 = this.dataset[index].address2;
-                this.update = date;
+                console.log(this.data)
+            },
+            save(){
+                if(document.querySelector("input[type=file]").files.length){
+                    jQuery('form').ajaxSubmit({
+                        type: 'post',
+                        url: baseUrl.url + 'form.php',
+                        success:function(data){
+                            console.log(data);
+                            data = JSON.parse(data);
+                            var dataObj = {};
+                            for(var attr in this.dataset[0]){
+                                dataObj[attr] = document.getElementById(attr).value;
+                            }
+                            dataObj['ImgUrl'] = "../" + data.path + "/" + data.fileName;
+                            $("input[type=file]").val('');
+                            this.data = {};
+                            this.dialogVisible = false;
+                            
+                            dataObj.state = 'update';
+                            var str = '?';
+                            for(var attr in dataObj){
+                                str += attr + '=' + dataObj[attr] + "&";
+                            }
+                            str = str.slice(0,str.length-1);
+                            http.get({url:"goodsB.php" + str}).then(res=>{
+                                if(res.data == "ok"){
+                                    delete dataObj.state;
+                                    this.dataset.splice(this.index,1,dataObj);
+                                }
+                            })
+                        }.bind(this)
+                    })
+                }else{
+                    var dataObj = {};
+                    for(var attr in this.dataset[0]){
+                        dataObj[attr] = document.getElementById(attr).value;
+                    }
+                    dataObj['ImgUrl'] = $('.imgs').attr('src');
+                    $("input[type=file]").val('');
+                    this.data = {};
+                    this.dialogVisible = false;
+                    
+                    dataObj.state = 'update';
+                    var str = '?';
+                    for(var attr in dataObj){
+                        str += attr + '=' + dataObj[attr] + "&";
+                    }
+                    str = str.slice(0,str.length-1);
+                    http.get({url:"goodsB.php" + str}).then(res=>{
+                        if(res.data == "ok"){
+                            delete dataObj.state;
+                            this.dataset.splice(this.index,1,dataObj);
+                        }
+                    })
+                }
             },
             handleClose(done) {
                 this.$confirm('确认关闭？')
@@ -160,7 +141,7 @@
         },
         mounted(){
             http.get({"url":this.api}).then(res=>{
-                console.log(res)
+                this.$parent.dataset = res.data;
                 this.dataset = res.data;
             })
             
