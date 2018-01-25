@@ -55,8 +55,8 @@ export default {
             show:false,
             loginData:{l_user:'',l_pwd:''},
             data:{email:'',user:'',password:'',dbpassword:''},
-            img:"./src/assets/login/po.jpg",
-            bgimg:{'background-image':"url('./src/assets/login/timg.jpg')"}
+            img:"./src/assets/login/timg.jpg",
+            bgimg:{'background-image':"url('./src/assets/login/bg.jpg')"}
         }
     },
     methods:{

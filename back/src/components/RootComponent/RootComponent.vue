@@ -9,7 +9,7 @@
             clearable>
             </el-input>
             <el-button type="primary" @click="search">搜索</el-button>
-            <el-button type="primary" @click="add" v-if="show">新增</el-button>
+            <el-button type="primary" @click="add" v-show="show">新增</el-button>
           </div>
           <div class="header_right">
               <ul>
@@ -44,22 +44,18 @@
                   <i class="el-icon-location"></i>
                   <span>用户管理</span>
                 </template>
-                  <el-menu-item index="1-1">用户信息</el-menu-item>
               </el-submenu>
               <el-submenu index="2" class="in1">
                 <template slot="title">
                   <i class="el-icon-goods"></i>
                   <span>商品管理</span>
                 </template>
-                  <el-menu-item index="1-1">所有商品</el-menu-item>
-                  <el-menu-item index="1-2">上架管理</el-menu-item>
               </el-submenu>
               <el-submenu index="3" class="in1">
                 <template slot="title">
                   <i class="el-icon-message"></i>
                   <span>订单管理</span>
                 </template>
-                  <el-menu-item index="1-1">所有订单</el-menu-item>
               </el-submenu>
               <el-submenu index="4" class="in1">
                 <template slot="title">
@@ -87,9 +83,24 @@
             </el-menu>
 
         <div class="main">
-            <router-view></router-view>
+            <div class="content">
+              <router-view >
+            </router-view>
+              </div>
+             <div class="page">
+              <el-pagination
+              background
+              layout="total, sizes, prev, pager, next, jumper"
+              @size-change="handleSizeChange"
+              @current-change="handleCurrentChange"
+              :current-page="currentPage"
+              :page-sizes="pageSizes"
+              :page-size="pagesize"
+              :total="totalQty">
+              </el-pagination>
+            </div>
+            
         </div>
-
 
   </div>
 </template>
@@ -103,7 +114,11 @@ export default {
       dialog:false,
       dataset:[],
       show:true,
-      num:''
+      num:'',
+      pagesize:10,
+      pageSizes:[5, 10, 15,20],
+      totalQty:0,
+      currentPage:2
     }
   },
   methods: {
@@ -118,9 +133,15 @@ export default {
       handleClose(key, keyPath) {
       },
       search(){
-          if(this.num){
-            this.$children[6].search(this.num);
-          }
+          // if(this.num){
+            if(this.$children[6].search){
+              this.$children[6].search(this.num);
+            }
+            else{
+              this.$children[7].search(this.num);
+            }
+            
+          // }
       },
       add(){
           if(this.$children[6].dataset){
@@ -142,7 +163,29 @@ export default {
         window.localStorage.clear();
         this.$router.push({path: '/'});
       },
-  }
+      // 改变记录条数时触发。
+      handleSizeChange(key){
+        if(this.$children[6].changeQty){
+              this.$children[6].changeQty(key);
+            }
+            else{
+             this.$children[7].changeQty(key); 
+            }
+          
+      },
+      // 改变页数时触发。
+      handleCurrentChange(pageNum){
+        if(this.$children[6].changePage){
+              this.$children[6].changePage(pageNum);
+            }
+            else{
+              this.$children[7].changePage(pageNum);
+            }
+          
+      }
+  },
+
+    
 }
 </script>
 <style>

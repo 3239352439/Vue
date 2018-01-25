@@ -37,12 +37,13 @@
             }
         },
         mounted(){
-            // this.$parent.show = false;
+            this.$parent.show =true;
             http.get({"url":this.url}).then(res=>{
                 for(var i=0;i<res.data.length;i++){
                     res.data[i].status = this.status[res.data[i].status];
                 }
                 this.dataset = res.data;
+               
             })
         },
         methods:{

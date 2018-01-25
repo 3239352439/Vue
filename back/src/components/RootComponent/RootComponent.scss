@@ -64,6 +64,19 @@
 .main {
     float: left;
     width: 85%;
+    height:100%;
+    display:relative;
+}
+.content{
+    height:550px;
+    overflow:hidden;
+}
+.page{
+    height: 30px;
+    display:absolute;
+    bottom:0px;
+    left:0;
+    right:0;
 }
 .el-dialog__body .el-input{
     width:320px;
