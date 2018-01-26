@@ -22,7 +22,7 @@
         :visible.sync="dialog"
         width="40%"
         :before-close="handleClose">
-            <div v-for="(value,idx) in dataset[0]" :key="idx">
+            <div v-for="(value,idx) in dataset" :key="idx">
                 <label v-if="idx != 'ImgUrl'">{{idx + ":"}}</label><el-input clearable :id="idx" v-if="idx != 'ImgUrl'" v-model="data[idx]"></el-input>
                 <form class="ImgUrl" v-if="idx == 'ImgUrl'">
                     <label>{{idx + ":"}}</label>
@@ -156,14 +156,16 @@ export default {
             }
       },
       add(){
+         console.log(this)
           if(this.$children[6].dataset){
                 // this.data = {};
                 this.dialog = true;
-                this.dataset = this.$children[6].dataset;
+               
+                this.dataset = this.$children[6].dataset[0];
             }
             else{
                this.dialog = true;
-                this.dataset = this.$children[7].dataset;
+                this.dataset = this.$children[7].dataset[0];
             }
       },
         save(){
@@ -175,7 +177,7 @@ export default {
                         console.log(data);
                         data = JSON.parse(data);
                         var dataObj = {};
-                        for(var attr in this.dataset[0]){
+                        for(var attr in this.dataset){
                             dataObj[attr] = document.getElementById(attr).value;
                         }
                         dataObj['ImgUrl'] = "../" + data.path + "/" + data.fileName;
@@ -183,6 +185,10 @@ export default {
                         this.data = {};
                         if(this.$children[6].updated){
                             this.$children[6].updated(dataObj);
+                            this.dialog = false;
+                        }
+                        else{
+                           this.$children[7].updated(dataObj);
                             this.dialog = false;
                         }
                     }.bind(this)

@@ -1,60 +1,53 @@
 <template>
     <div id="goods">
         <datagrid :api="url" :filterCols="filterColumns"></datagrid>
-        <div class="block">
-            <el-pagination
-            @size-change="handleSizeChange"
-            @current-change="handleCurrentChange"
-            :current-page="currentPage4"
-            :page-sizes="[5, 10, 20, 100]"
-            :page-size="5"
-            layout="total, sizes, prev, pager, next, jumper"
-            :total="qty">
-            </el-pagination>
-    </div>
+        <spinner v-if="show"></spinner>
     </div>
 </template>
 
 <script>
+    import spinner from '../spinner/spinner'
     import datagrid from "../datagridL/datagridL.vue";
     import http from "../../utils/reqAjax";
     import './goods.scss'
-    export default {
+     export default {
         data(){
             return{
                 url:"goodsB.php",
-                qty:0,
-                currentPage4: 4,
-                limit:6,
-                page:1,
-                filterColumns:['capacity','describe','classifySmallId','productionAddress']
+                 filterColumns:['capacity','describe','classifySmallId','productionAddress'],
+                //记录条数
+                qty:this.$parent.pagesize,
+                //页码
+                pageNo:this.$parent.currentPage,
+                show:false
+               
             }
         },
         components:{
-            datagrid
+            datagrid,
+            spinner
         },
         mounted(){
             this.$parent.show = true;
         },
         methods:{
-            handleSizeChange(val) {
-                console.log(123)
-                this.limit = val;
-                http.get({"url":this.url + "?page=" + this.page + "&limit=" + val}).then(res=>{
-                    this.$children[0].dataset = res.data.data1;
-                })
+            changeQty(key) {
+                 this.qty=key;
+                this.reqData(); 
             },
-            handleCurrentChange(val) {
-                console.log(222)
-                this.page = val;
-                http.get({"url":this.url + "?page=" + val + "&limit=" + this.limit}).then(res=>{
-                    this.$children[0].dataset = res.data.data1;
-                })
+           changePage(pageNum) {
+                this.pageNo=pageNum;
+                this.reqData();
             },
             search(val){
+                if(val==''){
+                    this.reqData();
+                }
+                this.show=true;
                 http.get({"url":this.url + "?state=search&data=" + val}).then(res=>{
+                    this.show=false;
                     this.$children[0].dataset = res.data.data1;
-                    this.qty = res.data.data2.qty;
+                    this.$parent.totalQty=Number(res.data.data2[0].qty);
                 })
             },
             updated(val){
@@ -67,7 +60,17 @@
                 http.get({url:"goodsB.php" + str}).then(res=>{
                     console.log(res)
                 })
-            }
+            },
+            reqData(){
+            this.show=true;
+            http.get({"url":this.url + "?limit=" + this.qty+"&page="+this.pageNo}).then(res=>{ 
+            this.$children[0].dataset = res.data.data1;
+             this.$parent.totalQty=Number(res.data.data2[0].qty);
+            this.show=false;
+            
+            }) 
+    }
+
         }
     }
 </script>

@@ -16,10 +16,11 @@
 
 
     if($state == "add"){
-        $sql = "insert INTO product (goodId,Price,T,goodName,originalPrice,size) VALUES ('$goodId','$Price','$T','$goodName','$originalPrice','$size')";
+        $sql = "insert INTO product (goodId,Price,T,goodName,originalPrice,size) VALUES ($goodId,$Price,'$T','$goodName',$originalPrice,'$size')";
         $result = excute_oop($sql);
+        // var_dump($sql);
         if ($result){
-            $sql1 = "INSERT into productimg (goodId,ImgUrl) VALUES ('$goodId','$ImgUrl')";
+            $sql1 = "INSERT into productimg (goodId,ImgUrl) VALUES ($goodId,'$ImgUrl')";
             $result1 = excute_oop($sql1);
             if ($result1){
                 echo 'ok';
