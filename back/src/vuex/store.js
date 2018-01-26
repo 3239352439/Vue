@@ -11,6 +11,9 @@ const store=new Vuex.Store({
         saveUser(state,val){
             state.user=val;
             console.log(state.user)
+        },
+        clearUser(state){
+            state.user='';
         }
     }
 })

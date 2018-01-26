@@ -99,7 +99,7 @@
                    }
                 }
                 //填写完整信息后
-                spinner.loadspinner();
+                spinner.loadspinner();this.data.userId=this.$store.state.userId;console.log(this.data);
                 var $data=JSON.stringify(this.data);
                     if(!this.editID){//保存新地址
                      http.get({url:this.url+'?checkData='+$data}).then(result=>{

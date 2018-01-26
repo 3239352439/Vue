@@ -27,7 +27,8 @@
 
     data(){
         return {
-          receiveID:this.$route.params.id
+          receiveID:this.$route.params.id,
+          uid:this.$route.params.userId
         }
     },
     mounted(){
