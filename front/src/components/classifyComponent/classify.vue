@@ -75,8 +75,8 @@ export default {
       }
     },
     toProduct(obj,_event){
-      // console.log(obj)
-      this.$router.push({ name: 'product',params: obj});
+      console.log(obj)
+      this.$router.push({ name: 'product',params: {id:obj.id,catename: obj.name,state: 'cate'}});
     },
     toSerch(){
       this.$router.push({ name: 'search'});

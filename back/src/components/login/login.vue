@@ -40,7 +40,7 @@
                 </div>
             </div>
             </div>
-        </div>  
+        </div>
     </div>
     <spinner v-if="show"></spinner>
 </div>
@@ -62,31 +62,31 @@ export default {
     methods:{
         // 返回箭头点击事件
         ocultar_login_sign_up(){
-            document.querySelector('.cont_forms').className = "cont_forms";  
-            document.querySelector('.cont_form_sign_up').style.opacity = "0";               
-            document.querySelector('.cont_form_login').style.opacity = "0"; 
+            document.querySelector('.cont_forms').className = "cont_forms";
+            document.querySelector('.cont_form_sign_up').style.opacity = "0";
+            document.querySelector('.cont_form_login').style.opacity = "0";
             setTimeout(function(){
             document.querySelector('.cont_form_sign_up').style.display = "none";
             document.querySelector('.cont_form_login').style.display = "none";
-            },500); 
+            },500);
         },
         cambiar_login1(){
-            document.querySelector('.cont_forms').className = "cont_forms cont_forms_active_login";  
+            document.querySelector('.cont_forms').className = "cont_forms cont_forms_active_login";
             document.querySelector('.cont_form_login').style.display = "block";
-            document.querySelector('.cont_form_sign_up').style.opacity = "0"; 
+            document.querySelector('.cont_form_sign_up').style.opacity = "0";
                setTimeout(function(){
                 document.querySelector('.cont_form_login').style.opacity = "1";
-                 },400);  
-                setTimeout(function(){    
+                 },400);
+                setTimeout(function(){
                     document.querySelector('.cont_form_sign_up').style.display = "none";
-                },200);   
+                },200);
         },
         cambiar_sign_up1(){
             document.querySelector('.cont_forms').className = "cont_forms cont_forms_active_sign_up";
             document.querySelector('.cont_form_sign_up').style.display = "block";
-            document.querySelector('.cont_form_login').style.opacity = "0"; 
+            document.querySelector('.cont_form_login').style.opacity = "0";
             setTimeout(function(){  document.querySelector('.cont_form_sign_up').style.opacity = "1";
-            },100);  
+            },100);
             setTimeout(function(){   document.querySelector('.cont_form_login').style.display = "none";
             },400);
         },
@@ -126,8 +126,8 @@ export default {
                     type: 'success',
                     center: true,
                     duration:'700'
-                    });            
-                    setTimeout(()=>{   
+                    });
+                    setTimeout(()=>{
                         this.$router.push({name:"root"});
                     },1000)
                     window.localStorage.setItem("user", $email);
@@ -143,7 +143,7 @@ export default {
 
                 }
             })
- 
+
         },
         // sign up按钮事件
         cambiar_sign_up(){
@@ -156,8 +156,8 @@ export default {
                 showClose: true,
                 message: '密码输入不一致!',
                 type: 'warning'
-                });     
-            }     
+                });
+            }
              // 判断是否填写完整
             for(var key in this.data){
                  if(!this.data[key]){
@@ -190,7 +190,7 @@ export default {
                                 type: 'warning'
                                 });
                                break;
-                        } 
+                        }
                        return;
                    }
                  }
@@ -203,10 +203,11 @@ export default {
                             type: 'success',
                             center: true
                         });
+                        this.cambiar_login1()
                         for(var key in this.data){
                             this.data[key]="";
                         }
-                        
+
                     } else {
                         this.show=false;
                         this.$message({
@@ -215,8 +216,8 @@ export default {
                         type: 'error'
                         });
                     }
-                }) 
-           
+                })
+
         },
         checkUser(e){
             var user=this.data.user;
@@ -252,9 +253,9 @@ export default {
                             });
                             this.data.email="";
                         }
-                    }) 
+                    })
                 }
-                
+
         }
     },
     components:{

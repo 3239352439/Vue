@@ -40,7 +40,7 @@
                   console.log('val',val)
                     this.$store.commit('historySave',val);
                   // 直接跳转列表页面
-                  this.$router.push({ name: 'product',params: {catename: val}});
+                  this.$router.push({ name: 'product',params: {catename: val,state: 'serch'}});
                 }
             },
             getValue(e){
