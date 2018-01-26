@@ -42,7 +42,7 @@
             return {
                 url:'getAddress.php',
                 data:[],
-                userId:''
+                userId:this.$store.state.userId
             }
         },
         methods:{
@@ -64,9 +64,9 @@
             }
         },
         mounted(){
-            this.userId = this.$store.state.userId;
+            
             spinner.loadspinner();
-            http.get({url:this.url+'?userId='+this.userId}).then(res=>{
+            http.get({url:this.url+'?uid='+this.userId}).then(res=>{
                 if(res.data){
                 spinner.closeSpinner();
                   this.data=res.data;
