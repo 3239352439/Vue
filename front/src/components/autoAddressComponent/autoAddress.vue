@@ -2,9 +2,7 @@
     <div id="sm_auto">
          <div class="auto_header">
             <mt-header title="选择配送地址">
-              <router-link to="/getAddress" slot="left">
-                <mt-button icon="back">返回</mt-button>
-              </router-link>
+                <mt-button icon="back" slot="left" @click="back">返回</mt-button>
         </mt-header> 
         </div> 
         <div class="auto_main">
@@ -30,6 +28,11 @@
           receiveID:this.$route.params.id,
           uid:this.$route.params.userId
         }
+    },
+    methods:{
+       back(){
+                this.$router.go(-1);
+            }
     },
     mounted(){
       spinner.loadspinner();

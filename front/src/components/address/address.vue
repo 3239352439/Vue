@@ -2,9 +2,7 @@
     <div id="sm_address">
         <div class="get_header">
             <mt-header title="配送地址">
-              <!-- <router-link to="/" > -->
                 <mt-button icon="back" slot="left" @click="back">返回</mt-button>
-              <!-- </router-link> -->
         </mt-header>
         </div>
         <div class="get_main">
