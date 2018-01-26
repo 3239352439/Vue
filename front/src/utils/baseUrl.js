@@ -1,3 +1,3 @@
 export default {
-  Url : 'http://10.3.136.96:888/'
+  Url : 'http://10.3.136.49:888/'
 }

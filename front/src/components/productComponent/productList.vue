@@ -64,7 +64,12 @@ export default {
     this.name = this.$route.params.name;
     this.cateid = this.$route.params.cateid
     console.log('categoryId', this.categoryId)
-
+    console.log('cateid', this.cateid)
+    if(this.categoryName !== undefined){
+      console.log(666);
+      this.ajax(this.cateid,'search')
+      this.name = this.categoryName
+    }
     // if(this.categoryId){
     //   var state = '';
     //   if(this.categoryId>10){
