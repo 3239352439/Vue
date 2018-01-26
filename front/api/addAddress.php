@@ -9,7 +9,7 @@
     $receiveId=isset($_POST['receiveId'])?$_POST['receiveId']:'';
     $id=isset($_GET['id'])?$_GET['id']:'';
     $delId=isset($_POST['delId'])?$_POST['delId']:'';
-
+    $uid=isset($_GET['uid'])?$_GET['uid']:'';
     if($data){
         $arr=changeArr($data);
         $key=implode(',',$arr[0]);

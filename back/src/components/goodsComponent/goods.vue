@@ -29,6 +29,7 @@
         },
         mounted(){
             this.$parent.show = true;
+            this.$parent.showPage=true;
         },
         methods:{
             changeQty(key) {

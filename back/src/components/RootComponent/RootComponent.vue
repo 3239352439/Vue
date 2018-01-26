@@ -125,7 +125,8 @@ export default {
       totalQty:0,
       currentPage:1,
       data:{},
-      showPage:true
+      showPage:true,
+      uid:this.$store.state.user
 
     }
   },
@@ -199,6 +200,8 @@ export default {
       quit(){
         window.localStorage.clear();
         this.$router.push({path: '/'});
+        this.$store.commit('clearUser');
+
       },
       // 改变记录条数时触发。
       handleSizeChange(key){
@@ -221,6 +224,18 @@ export default {
           
       }
   },
+  mounted(){
+    if(!this.uid){
+       
+        setTimeout(() => {
+          this.$alert('请先登录/注册！！！', '提示', {
+          confirmButtonText: '确定'
+        });
+         this.$router.push({path: '/'}); 
+        }, 800);
+        
+    }
+  }
 
     
 }

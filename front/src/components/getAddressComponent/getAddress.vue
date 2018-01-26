@@ -53,7 +53,8 @@
             return {
                 value:'',
                 url:'getAddress.php',
-                data:[]
+                data:[],
+                userId:this.$store.state.userId
             }
         },
         methods:{
@@ -82,7 +83,7 @@
         },
         mounted(){
             spinner.loadspinner();
-            http.get({url:this.url}).then(res=>{
+            http.get({url:this.url+"?uid="+this.userId}).then(res=>{
                 if(res.data){
                 spinner.closeSpinner();
                   this.data=res.data;

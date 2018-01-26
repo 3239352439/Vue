@@ -1,27 +1,27 @@
 .menu_cen{
-  // height: 52.5px;
+  // height: 0.7rem;
   // position: fixed;
   bottom: 0;
   width: 100%;
   background: rgb(252, 247, 247);
   ul{
     display: flex;
-    border-top: 0.01rem solid #ccc;
+    border-top: 1px solid #ccc;
 
     // flex-wrap: wrap;
     li{
 
       flex: 1;
-      // width: 2.67rem;
-      // height: 4rem;
-      padding-top:0.13rem;
+      // width: 200px;
+      // height: 300px;
+      padding-top:10px;
       i,span{
         display: block;
         text-align: center;
         color:#444;
       }
       i{
-        font-size: 0.32rem;
+        font-size: 20px;
         margin:0 auto;
       }
     }

@@ -1,5 +1,5 @@
 .menu_cen {
-  height: 52.5px;
+  height: 0.7rem;
   bottom: 0;
   width: 100%;
   background: #fcf7f7;
@@ -7,12 +7,12 @@
 
 .menu_cen ul {
   display: flex;
-  border-top: 0.01rem solid #ccc;
+  border-top: 1px solid #ccc;
 }
 
 .menu_cen ul li {
   flex: 1;
-  padding-top: 0.13rem;
+  padding-top: 10px;
 }
 
 .menu_cen ul li i, .menu_cen ul li span {
@@ -22,6 +22,6 @@
 }
 
 .menu_cen ul li i {
-  font-size: 0.64rem;
+  font-size: 48px;
   margin: 0 auto;
 }

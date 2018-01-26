@@ -119,12 +119,19 @@ export default {
       // console.log('obj',obj);
       this.all = event.target.innerText;
       // 将获取到的categoryId存入store里
-      this.$store.commit('getCategoryId', obj.id);
-      this.$store.commit('getCategoryName', obj.name);
+      // this.$store.commit('getCategoryId', obj.id);
+      // this.$store.commit('getCategoryName', obj.name);
+      // this.$store.commit('getCateState', 'cate');
       // 将从store里获取到的categoryId存入父组件的categoryId
-      this.$parent.categoryId = this.$store.state.categoryId;
-      this.$parent.name = this.$store.state.CategoryName;
-      // console.log('id',this.$parent.categoryId);
+      // this.$parent.categoryId = obj.id;
+      // console.log('parent',this.$parent.categoryId);
+      http.get({"url":'productList.php'+'?categoryId='+ obj.id+"&state="+'small'}).then ( res => {
+          this.$parent.dataset = res.data;
+          spinner.closeSpinner();
+      })
+      // this.$parent.name = this.$store.state.CategoryName;
+      // this.$parent.state = this.$store.state.CateState;
+      // console.log('id',this.$store.state.categoryId);
       // console.log(this.status1)
       if(this.status1== true){
         this.status1 = !this.status1;
