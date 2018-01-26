@@ -5,7 +5,7 @@
         <!-- <router-link to="/category" > -->
           <mt-button icon="back" slot="left" @click="back">返回</mt-button>
         <!-- </router-link> -->
-        <-- <mt-button icon="more" class="glyphicon glyphicon-home"></mt-button> -->
+        <!-- <-- <mt-button icon="more" class="glyphicon glyphicon-home"></mt-button> --> -->
       </mt-header>
       <span class="glyphicon glyphicon-home" @click="toHome"></span>
       <input type="text"  placeholder="搜索" class="serch" @focus="toSerch">

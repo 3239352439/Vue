@@ -31,7 +31,7 @@
                     <img :src="data.ImgUrl" class="imgs">
                 </form>
             </div>
-            
+
             <span slot="footer" class="dialog-footer">
                 <el-button type="primary" @click="save($event)">保 存</el-button>
                 <el-button @click="dialogVisible = false">取 消</el-button>
@@ -63,7 +63,7 @@
                         this.dataset.splice(index,1);
                     }
                 })
-                
+
             },
             // 编辑事件
             edit($event,index){
@@ -88,7 +88,7 @@
                             $("input[type=file]").val('');
                             this.data = {};
                             this.dialogVisible = false;
-                            
+
                             dataObj.state = 'update';
                             var str = '?';
                             for(var attr in dataObj){
@@ -104,6 +104,7 @@
                         }.bind(this)
                     })
                 }else{
+
                     var dataObj = {};
                     for(var attr in this.dataset[0]){
                         dataObj[attr] = document.getElementById(attr).value;
@@ -112,8 +113,8 @@
                     $("input[type=file]").val('');
                     this.data = {};
                     this.dialogVisible = false;
-                    
                     dataObj.state = 'update';
+                    console.log(this.dataset[0]);
                     var str = '?';
                     for(var attr in dataObj){
                         str += attr + '=' + dataObj[attr] + "&";
@@ -135,7 +136,7 @@
                     this.hide = false;
                 })
                 .catch(_ => {
-                    
+
                 });
             }
         },
@@ -144,9 +145,9 @@
                 this.$parent.$parent.totalQty = res.data.data2[0].qty*1;
                 this.$parent.dataset = res.data.data1;
                 this.dataset=res.data.data1;
-                
+
             })
-            
+
         }
     }
 </script>

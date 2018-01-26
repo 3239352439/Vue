@@ -30,13 +30,14 @@
                 <button>{{arr[0].status == 0 ? "去支付" : arr[0].status == 1 ? "取消订单" : arr[0].status == 2 ? "查看快递" : arr[0].status == 3 || arr[0].status == 4 ? "去评价" : "再来一单"}}</button>
             </div>
         </div>
-        
+
     </div>
 </template>
 
 <script>
     import { Navbar, TabItem, MessageBox, Cell } from 'mint-ui';
     import http from "../../utils/reqAjax"
+    import spinner from "../spinnerComponent/spinner";
     import "./order.scss"
     export default {
         data(){
@@ -75,7 +76,9 @@
                 this.dataset = [];
                 this.dataPrice = {};
                  // 请求所有数据
+                  spinner.loadspinner();
                 http.get({'url':"order.php?phone=" + this.$store.state.phoneNum + "&state=" + 'get'}).then(res=>{
+                    spinner.closeSpinner();
                     this.data = res.data;
                     $(".mint-tab-item").eq(num).addClass("is-selected");
                     var status;
@@ -208,13 +211,13 @@
                             // console.log(res)
                         })
                     })
-                    
+
                 }else{
                     this.$store.commit('setOrderId',val);
                     this.$router.push({name:"orderdetail"});
                 }
             },
-            
+
         }
     }
 </script>
