@@ -20,7 +20,7 @@
                 //页码
                 pageNo:this.$parent.currentPage,
                 show:false
-               
+
             }
         },
         components:{
@@ -29,11 +29,12 @@
         },
         mounted(){
             this.$parent.show = true;
+            this.$parent.showPage=true;
         },
         methods:{
             changeQty(key) {
                  this.qty=key;
-                this.reqData(); 
+                this.reqData();
             },
            changePage(pageNum) {
                 this.pageNo=pageNum;
@@ -63,12 +64,12 @@
             },
             reqData(){
             this.show=true;
-            http.get({"url":this.url + "?limit=" + this.qty+"&page="+this.pageNo}).then(res=>{ 
+            http.get({"url":this.url + "?limit=" + this.qty+"&page="+this.pageNo}).then(res=>{
             this.$children[0].dataset = res.data.data1;
              this.$parent.totalQty=Number(res.data.data2[0].qty);
             this.show=false;
-            
-            }) 
+
+            })
     }
 
         }
