@@ -76,7 +76,7 @@
     export default{
         data(){
             return {
-                userid:'',
+                userid:this.$store.state.userId,
                 url:'home.php',
                 typeData:[],
                 active:'水果',

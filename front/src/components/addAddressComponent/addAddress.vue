@@ -2,9 +2,9 @@
     <div id="sm_add">
         <div class="add_header">
             <mt-header title="添加收货人">
-              <router-link to="/getAddress" slot="left">
-                <mt-button icon="back">返回</mt-button>
-              </router-link>
+              <!-- <router-link to="/getAddress" slot="left"> -->
+                <mt-button icon="back" slot="left" @click="goback">返回</mt-button>
+              <!-- </router-link> -->
         </mt-header>
         </div>
         <div class="add_main">
@@ -47,6 +47,9 @@
             }
         },
         methods:{
+            goback(){
+                this.$router.go(-1);
+            },
             getGender(e){
                 var tag=e.target.tagName.toLowerCase();
                 if(tag=="span"){

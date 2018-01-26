@@ -58,6 +58,7 @@
             // 删除事件
             btn($event,index){
                 var goodId = this.dataset[index].goodId;
+                console.log(goodId)
                 http.get({"url":this.api + "?state=del&goodId=" + goodId}).then(res=>{
                     if(res.data == "ok"){
                         this.dataset.splice(index,1);
