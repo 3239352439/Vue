@@ -125,7 +125,7 @@ export default {
       totalQty:0,
       currentPage:1,
       data:{},
-      showPage:true,
+      showPage:false,
       uid:this.$store.state.user
 
     }
