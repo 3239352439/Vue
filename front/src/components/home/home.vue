@@ -38,7 +38,7 @@
                   <mt-tab-container v-model="active" :swipeable="true">
                    <mt-tab-container-item v-for="item in typeData" :id="item.categoryName" :key="item.categoryName">
                         <ul class="datalist">
-                           <li v-for="(obj,idx) in datalist" :key="idx" :gid="obj.goodId" @click.stop="toDetailPage(obj,$event)">
+                           <li v-for="(obj,idx) in datalist" :key="idx" :gid="obj.goodId" @click.stop="toDetailPage(obj.goodId,$event)">
                             <div>
                                 <img v-lazy="obj.ImgUrl"/>
                             </div>
@@ -105,7 +105,7 @@
             },
             toDetailPage(obj,_event){
                 if(_event.target.tagName !== 'BUTTON'){
-                    this.$router.push({ name: 'detailpage',params: obj});
+                    this.$router.push({ name: 'detailpage',params: {id: obj}});
                 }
             },
             toClassify(){
