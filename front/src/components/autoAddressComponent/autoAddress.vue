@@ -6,7 +6,7 @@
         </mt-header> 
         </div> 
         <div class="auto_main">
-            <div id="r-result">        
+            <div id="r-result">
               <input id="cityName" type="text" placeholder="请输入地址"/>
               <button class="btn"><i class="mintui mintui-search"></i></button>
             </div>
@@ -18,9 +18,9 @@
     </div>
 </template>
 <script type="text/javascript">
- import './autoAddress.scss' 
+ import './autoAddress.scss'
  import spinner from "../spinnerComponent/spinner"
- import {MessageBox} from 'mint-ui';  
+ import {MessageBox} from 'mint-ui';
   export default{
 
     data(){
@@ -42,16 +42,16 @@
       var geocoder= new BMap.Geocoder();
       map.centerAndZoom(point,11);
       // map.addEventListener("tilesloaded",function(){
-      //      spinner.closeSpinner();  
+      //      spinner.closeSpinner();
       // });
-     map.enableScrollWheelZoom();   
+     map.enableScrollWheelZoom();
       //启用滚轮放大缩小，默认禁用
-      map.enableContinuousZoom();   
+      map.enableContinuousZoom();
        //启用地图惯性拖拽，默认禁用
        currentAddress();
        // 当前地址
        // this.$store.commit('getSite');
-      function currentAddress(){ 
+      function currentAddress(){
           var geolocation = new BMap.Geolocation();
            geolocation.getCurrentPosition(function(r){
           if(this.getStatus() == BMAP_STATUS_SUCCESS){
@@ -59,13 +59,13 @@
             map.addOverlay(mk);//
             map.panTo(r.point);
             geocoder.getLocation(r.point,rs=>{
-                spinner.closeSpinner(); 
-                 MessageBox.alert('你当前所在位置:'+rs.address).then(action => {});                           
+                spinner.closeSpinner();
+                 MessageBox.alert('你当前所在位置:'+rs.address).then(action => {});
               });
           }
           else {
             alert('failed'+this.getStatus());
-          }        
+          }
         },{enableHighAccuracy: true})
       }
       $('.local').click(()=>{
@@ -88,10 +88,10 @@
             else{
               this.$router.push({name:"addAddress"})
             }
-             
+
 
         });
         }
     }
-   
+
 </script>
