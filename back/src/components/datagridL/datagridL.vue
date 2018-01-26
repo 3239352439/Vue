@@ -33,7 +33,7 @@
             </div>
 
             <span slot="footer" class="dialog-footer">
-                <el-button type="primary" @click="save($event)">保 存</el-button>
+                <el-button type="primary" @click="saved">保 存</el-button>
                 <el-button @click="dialogVisible = false">取 消</el-button>
             </span>
         </el-dialog>
@@ -57,8 +57,8 @@
         methods:{
             // 删除事件
             btn($event,index){
+
                 var goodId = this.dataset[index].goodId;
-                console.log(goodId)
                 http.get({"url":this.api + "?state=del&goodId=" + goodId}).then(res=>{
                     if(res.data == "ok"){
                         this.dataset.splice(index,1);
@@ -71,9 +71,10 @@
                 this.data = this.dataset[index];
                 this.index = index;
                 this.dialogVisible = true;
-                console.log(this.data)
+                console.log(index)
             },
-            save(){
+            saved(){
+
                 if(document.querySelector("input[type=file]").files.length){
                     jQuery('form').ajaxSubmit({
                         type: 'post',
@@ -105,17 +106,18 @@
                         }.bind(this)
                     })
                 }else{
-
                     var dataObj = {};
                     for(var attr in this.dataset[0]){
                         dataObj[attr] = document.getElementById(attr).value;
+                        console.log(document.getElementById(attr))
                     }
+                    console.log(this.dataset[0])
                     dataObj['ImgUrl'] = $('.imgs').attr('src');
                     $("input[type=file]").val('');
                     this.data = {};
                     this.dialogVisible = false;
+
                     dataObj.state = 'update';
-                    console.log(this.dataset[0]);
                     var str = '?';
                     for(var attr in dataObj){
                         str += attr + '=' + dataObj[attr] + "&";
@@ -133,8 +135,7 @@
                 this.$confirm('确认关闭？')
                 .then(_ => {
                     done();
-                    this.show = false;
-                    this.hide = false;
+
                 })
                 .catch(_ => {
 

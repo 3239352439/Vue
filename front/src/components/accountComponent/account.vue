@@ -8,8 +8,8 @@
     <div class="account">
       <div class="address" @click="toAddress">
         <i class="glyphicon glyphicon-map-marker"></i>
-        <h2>收货人：{{userAddress.linkMan}}{{userAddress.gender}} <span>{{userAddress.phone}}</span></h2>
-        <h3>收货地址:  {{userAddress.village}}</h3>
+        <h4>收货人：{{userAddress.linkMan}}{{userAddress.gender}} <span>{{userAddress.phone}}</span></h4>
+        <p>收货地址:  {{userAddress.village}}</p>
         <i class="glyphicon glyphicon-chevron-right"></i>
       </div>
       <div class="prdItem">
@@ -33,7 +33,7 @@
           <h4>小计<span>￥{{sum}}</span></h4>
           <h4>配送费<span>￥10.00</span></h4>
           <h4>合计<span>￥{{totle}}</span></h4>
-          <h4>留言：<input type="text" placeholder="卖家留言"></h4>
+          <h4 style="height:1.33rem;">留言：<input type="text" placeholder="卖家留言"></h4>
         </div>
       </div>
     </div>

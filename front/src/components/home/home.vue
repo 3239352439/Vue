@@ -186,17 +186,18 @@
             this.userid = ''
           }
             spinner.loadspinner();
-            http.get({url:this.url}).then(res=>{
+            setTimeout(()=>{
+                 http.get({url:this.url}).then(res=>{
                 // spinner.closeSpinner();
                this.typeData=res.data;
             });
-            this.$store.commit('getSite');
+
             var input=$('.kipSearch');
             input.focus(()=>{
                 this.$router.push({name:"search"});
             });
             http.get({url:this.url+"?type="+this.active}).then(res=>{
-               spinner.closeSpinner();
+
                 this.datalist=res.data;
             });
             // 获取已添加到订单的商品
@@ -209,6 +210,9 @@
                 })
             //   console.log(this.orderObj)
             });
+             spinner.closeSpinner();
+            },500)
+             this.$store.commit('getSite');
 
             // 吸顶导航
             nav();
