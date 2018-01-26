@@ -29,9 +29,9 @@
 </template>
 
 <script>
-    import spinner from "../spinnerComponent/spinner"
     import './myselect.scss'
     import http from '../../utils/reqAjax';
+    import spinner from "../spinnerComponent/spinner"
     import { MessageBox} from 'mint-ui';
 
     export default {

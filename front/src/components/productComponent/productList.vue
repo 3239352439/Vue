@@ -5,7 +5,7 @@
         <!-- <router-link to="/category" > -->
           <mt-button icon="back" slot="left" @click="back">返回</mt-button>
         <!-- </router-link> -->
-        <-- <mt-button icon="more" class="glyphicon glyphicon-home"></mt-button> -->
+        <!-- <-- <mt-button icon="more" class="glyphicon glyphicon-home"></mt-button> --> -->
       </mt-header>
       <span class="glyphicon glyphicon-home" @click="toHome"></span>
       <input type="text"  placeholder="搜索" class="serch" @focus="toSerch">
@@ -189,11 +189,11 @@ export default {
         });
       } else {
         var totle =0;
-        http.post({"url":this.url,parmas:{userId: this.userid,state: 'selectproduct'}}).then ( res => {
+        http.post({"url": 'car1.php',parmas:{userId: this.userid,state: 'selectproduct'}}).then ( res => {
           // console.log(res.data)
           this.goods = res.data;
           for(var i=0; i< this.goods.length; i++){
-            // console.log(res.data[i].checkedstatus)
+            console.log('aa',res.data[i].checkedstatus)
             if(res.data[i].checkedstatus == 'true'){
               totle++;
             }

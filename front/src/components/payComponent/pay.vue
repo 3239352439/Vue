@@ -5,7 +5,7 @@
         </mt-header>
         <div>
             <p>订单编号：<span>{{$route.params.orderId}}</span></p>
-            <p>支付金额：<span>{{"￥" + $route.params.totle}}</span></p>
+            <p>支付金额：<span>{{"￥" + ($route.params.totle || $route.params.price)}}</span></p>
             <mt-button type="primary" @click="payMoney">确认支付</mt-button>
         </div>
     </div>

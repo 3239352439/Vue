@@ -70,7 +70,8 @@
 .content{
     height:450px;
     margin-bottom:20px;
-    overflow:hidden;
+    // overflow:hidden;
+    overflow:auto;
 }
 .page{
     height: 30px;
@@ -91,7 +92,7 @@
     margin-left:20px;
     margin-top:5px;
     width:300px;
-    
+
 }
 *{
     text-align:left;

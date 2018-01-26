@@ -45,6 +45,9 @@
             }
         },
         methods:{
+            goback(){
+                this.$router.go(-1);
+            },
             getGender(e){
                 var tag=e.target.tagName.toLowerCase();
                 if(tag=="span"){

@@ -131,6 +131,7 @@
             },
             btn(){
                 this.$store.commit('createPhone','');
+                this.$store.commit('setUserId','');
                 this.type = !this.type;
             },
             collect(val){
