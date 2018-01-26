@@ -50,7 +50,7 @@ export default {
       prdPrice:0,
       userid:'',
       categoryName:'',
-      cateid: ''
+      state:''
     }
   },
   mounted(){
@@ -62,14 +62,26 @@ export default {
     this.categoryId = this.$route.params.id;
     this.categoryName = this.$route.params.catename;
     this.name = this.$route.params.name;
-    this.cateid = this.$route.params.cateid
+    this.state = this.$route.params.state;
     console.log('categoryId', this.categoryId)
-    console.log('cateid', this.cateid)
-    if(this.categoryName !== undefined){
-      console.log(666);
-      this.ajax(this.cateid,'search')
+    console.log('cateid',  this.categoryName);
+    console.log('state', this.state);
+    if(this.state == 'home'){
+      this.ajax(this.categoryId,'bigCategory')
       this.name = this.categoryName
+    } else if( this.state == 'serch'){
+      this.ajax(this.categoryName,'search')
+      this.name = this.categoryName
+
+    } else if( this.state == 'cate'){
+      this.ajax(this.categoryId,'small');
+      this.name = this.categoryName;
     }
+    // if(this.cateid !== ''){
+    //   console.log(666);
+    //   this.ajax(this.cateid,'search')
+    //   this.name = this.categoryName
+    // }
     // if(this.categoryId){
     //   var state = '';
     //   if(this.categoryId>10){
@@ -79,14 +91,13 @@ export default {
     //   }
     //   this.ajax(this.categoryId,state)
     // }
-    // if(this.categoryName){
-    //   console.log(this.categoryName);
+    // if(this.categoryName2){
+    //   console.log(this.categoryName2);
     //   this.ajax(this.cateid,'search')
-    //   this.name = this.categoryName
+    //   this.name = this.categoryName2
     // }
 
     http.post({"url":'car1.php',parmas:{userId: this.userid,state: 'selectprdCount'}}).then ( res => {
-
       this.carNum = res.data[0].totle;
       // this.prdPrice = res.data[0].Price;
     })
@@ -100,11 +111,6 @@ export default {
       spinner.loadspinner();
       if(_param,state){
         http.get({"url":this.url+'?categoryId='+_param+"&state="+state}).then ( res => {
-          this.dataset = res.data;
-          spinner.closeSpinner();
-        })
-      } else {
-        http.get({"url":this.url}).then ( res => {
           this.dataset = res.data;
           spinner.closeSpinner();
         })
@@ -216,7 +222,9 @@ export default {
     // 监听子组件是否改变categoryId
     categoryId: function( newval, oldval){
       // console.log(newval,oldval);
-      this.ajax(this.categoryId,'small')
+      // if(this.categoryId !== undefined){
+      //   this.ajax(this.categoryId,'small')
+      // }
     }
   },
   components:{

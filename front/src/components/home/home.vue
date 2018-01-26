@@ -164,7 +164,7 @@
 
               },
             toCategory(id,name){
-              this.$router.push({ name: 'product',params: {cateid: id,catename:name}})
+              this.$router.push({ name: 'product',params: {id: id,catename: name,state: 'home'}})
             }
         },
         directives:{
