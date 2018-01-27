@@ -27,7 +27,9 @@ $fontsize1:0.2rem;
     .left{
       width: 1.4rem;
       background: rgb(240, 237, 237);
-
+      li:first-child {
+        background: #fff;
+      }
       li{
         height: $hsize;
         background: rgb(240, 237, 237);
@@ -40,6 +42,11 @@ $fontsize1:0.2rem;
     .right{
       flex: 1;
       overflow-x: hidden;
+      position: relative;
+      .rigth_child{
+        position: absolute;
+        bottom: 0px;
+      }
       .cateBigImg{
         padding: 0.2rem;
         img{
@@ -71,6 +78,6 @@ $fontsize1:0.2rem;
       }
     }
   }
-
+  
 
 }

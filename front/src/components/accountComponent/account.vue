@@ -33,7 +33,11 @@
           <h4>小计<span>￥{{sum}}</span></h4>
           <h4>配送费<span>￥10.00</span></h4>
           <h4>合计<span>￥{{totle}}</span></h4>
+<<<<<<< HEAD
+          <h4 style="height:1.33rem;">留言：<input type="text" placeholder="买家留言" v-model="leveword"></h4>
+=======
           <h4 style="height:1.33rem">留言：<input type="text" placeholder="卖家留言"></h4>
+>>>>>>> f579330c428117802559cc52b7a13e5ac6d3c945
         </div>
       </div>
     </div>
@@ -57,14 +61,19 @@ export default {
       userAddress:[],
       goods: [],
       sum:0,
-      totle:0
+      totle:0,
+      leveword:''
     }
   },
   mounted: function(){
     this.userid = this.$store.state.userId;
     http.post({"url":this.url,parmas:{userId: this.userid,state: 'selectaddress'}}).then ( res => {
       console.log('userAddress',res.data)
-      this.userAddress = res.data[0];
+      if(res.data == 'fail'){
+        this.$router.push({name: 'getAddress'})
+      } else {
+        this.userAddress = res.data[0];
+      }
     });
     http.post({"url":this.url,parmas:{userId: this.userid,state: 'selectproduct'}}).then ( res => {
       console.log(res.data)
@@ -87,13 +96,14 @@ export default {
     toPay(){
       var timestamp = (new Date()).valueOf();
       var goodsId = [];
-      console.log('timestamp',timestamp);
-      console.log('user',this.$store.state.userId);
+      // console.log('timestamp',timestamp);
+      // console.log('user',this.$store.state.userId);
       for(var i=0; i<this.goods.length; i++){
         goodsId.push(this.goods[i].goodId)
       }
-      console.log('goodsId', goodsId)
-      http.post({"url":this.url,parmas:{orderId:timestamp,userId: this.$store.state.userId,goodsId: goodsId,state: 'inserproduct'}}).then ( res => {
+      // console.log(this.leveword)
+      // console.log('goodsId', goodsId)
+      http.post({"url":this.url,parmas:{orderId:timestamp,userId: this.$store.state.userId,goodsId: goodsId,leaveword: this.leveword,state: 'inserproduct'}}).then ( res => {
         // console.log(res.data)
         this.$router.push({name: 'pay',params:{orderId: timestamp,totle:  this.totle}});
       });

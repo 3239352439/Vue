@@ -7,6 +7,7 @@
     $state = isset($_POST['state']) ? $_POST['state'] : "";
     $orderId = isset($_POST['orderId']) ? $_POST['orderId'] : "";
     $goodsId = isset($_POST['goodsId']) ? $_POST['goodsId'] : "";
+    $leaveword = isset($_POST['leaveword']) ? $_POST['leaveword'] : "";
     $sql;
 
     if($state == 'selectaddress'){
@@ -30,7 +31,7 @@
            echo "fail";
         }
     } else if( $state == 'inserproduct'){
-      $sql = "insert into `order` (orderid,userid) values ('$orderId','$userId')";
+      $sql = "insert into `order` (orderid,userid,leavewords) values ('$orderId','$userId','$leaveword')";
       $result = excute_oop($sql);
         if($result){
           for($i=0;$i<count($goodsId);$i++){
