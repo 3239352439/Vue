@@ -2,9 +2,9 @@
     <div id="sm_auto">
          <div class="auto_header">
             <mt-header title="选择配送地址">
-            <mt-button icon="back" slot="left" @click="$router.go(-1)">返回</mt-button>
-        </mt-header>
-        </div>
+                <mt-button icon="back" slot="left" @click="back">返回</mt-button>
+        </mt-header> 
+        </div> 
         <div class="auto_main">
             <div id="r-result">
               <input id="cityName" type="text" placeholder="请输入地址"/>
@@ -28,6 +28,11 @@
           receiveID:this.$route.params.id,
           uid:this.$route.params.userId
         }
+    },
+    methods:{
+       back(){
+                this.$router.go(-1);
+            }
     },
     mounted(){
       spinner.loadspinner();

@@ -2,9 +2,7 @@
     <div id="sm_add">
         <div class="add_header">
             <mt-header title="添加收货人">
-              <!-- <router-link to="/getAddress" slot="left"> -->
-                <mt-button icon="back" slot="left" @click="goback">返回</mt-button>
-              <!-- </router-link> -->
+                <mt-button icon="back" slot="left" @click="back">返回</mt-button>
         </mt-header>
         </div>
         <div class="add_main">
@@ -182,6 +180,9 @@
                 })
               });
 
+            },
+             back(){
+                this.$router.go(-1);
             }
         },
         mounted(){console.log(this.editID)

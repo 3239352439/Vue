@@ -89,7 +89,6 @@
             }
         },
         methods:{
-
             kipGet(){
                 this.$router.push({name:"getAddress"});
             },
@@ -120,7 +119,6 @@
                     })
                  }
                  else{
-                    //  MessageBox.alert('请先登录！').then(action => {});
                     MessageBox.confirm('用户未登录，是否去登录?').then(action => {
                       if(action == 'confirm'){
                         this.$router.push({name: 'login'})
@@ -187,11 +185,11 @@
           }
             spinner.loadspinner();
             setTimeout(()=>{
-                 http.get({url:this.url}).then(res=>{
+
+                http.get({url:this.url}).then(res=>{
                 // spinner.closeSpinner();
                this.typeData=res.data;
             });
-
             var input=$('.kipSearch');
             input.focus(()=>{
                 this.$router.push({name:"search"});
@@ -203,7 +201,6 @@
             // 获取已添加到订单的商品
             http.get({url:this.url+"?uid="+this.userid}).then(res=>{
                 var arr=[];
-
                 $.each(res.data,(idx,item)=>{
                     arr.push(item.goodId);
                     this.orderObj=[...new Set(arr)];

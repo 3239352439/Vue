@@ -55,7 +55,7 @@
             this.categoryId = this.$route.params.id;
             this.name = this.$route.params.name;
             http.get({url:this.url + "?phone=" + this.$store.state.phoneNum}).then(res=>{
-                console.log(res)
+                // console.log(res)
                 this.dataset = res.data;
             });
             http.post({"url":'car1.php',parmas:{userId: this.$store.state.userId,state: 'selectprdCount'}}).then ( res => {
@@ -147,7 +147,7 @@
                     totle++;
                   }
                 }
-                console.log('totle',totle)
+                // console.log('totle',totle)
                 if(totle <= 0){
                   MessageBox('提示', '你还未选择商品');
                 } else {

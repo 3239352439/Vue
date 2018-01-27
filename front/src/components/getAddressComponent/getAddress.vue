@@ -2,7 +2,7 @@
     <div id="sm_get">
         <div class="get_header">
             <mt-header title="选择配送地址">
-            <mt-button icon="back" slot="left" @click="back">返回</mt-button>
+                <mt-button icon="back" slot="left" @click="back">返回</mt-button>
         </mt-header>
         </div>
         <div class="searchAddr">
@@ -78,8 +78,8 @@
                 }
 
             },
-            back(){
-                this.$router.back();
+             back(){
+                this.$router.go(-1);
             }
         },
         mounted(){

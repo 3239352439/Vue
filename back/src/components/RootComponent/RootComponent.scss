@@ -1,7 +1,7 @@
 .header{
     width: 100%;
     height: 80px;
-    background: #08a2ba;
+    background: #08A2BA;
     min-width:740px;
 }
 .search{
@@ -70,6 +70,7 @@
 .content{
     height:450px;
     margin-bottom:20px;
+    // overflow:hidden;
     overflow:auto;
 }
 .page{
