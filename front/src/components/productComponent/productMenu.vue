@@ -127,6 +127,8 @@ export default {
       // console.log('parent',this.$parent.categoryId);
       http.get({"url":'productList.php'+'?categoryId='+ obj.id+"&state="+'small'}).then ( res => {
           this.$parent.dataset = res.data;
+          this.$parent.categoryId = obj.id;
+          this.$parent.name = obj.categoryName;
           spinner.closeSpinner();
       })
       // this.$parent.name = this.$store.state.CategoryName;

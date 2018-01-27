@@ -252,3 +252,11 @@ $fontsize1:0.2rem;
     }
   }
 }
+.icon{
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background: red;
+  position: absolute;
+  z-index: 100;
+}

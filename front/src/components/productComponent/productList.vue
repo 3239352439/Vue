@@ -5,7 +5,6 @@
         <!-- <router-link to="/category" > -->
           <mt-button icon="back" slot="left" @click="back">返回</mt-button>
         <!-- </router-link> -->
-        <!-- <-- <mt-button icon="more" class="glyphicon glyphicon-home"></mt-button> --> -->
       </mt-header>
       <span class="glyphicon glyphicon-home" @click="toHome"></span>
       <input type="text"  placeholder="搜索" class="serch" @focus="toSerch">
@@ -14,18 +13,18 @@
     <div class="product_menu">
       <div v-for="(obj,key) in dataset" class="goodItem" @click.stop="toDetailPage(obj.goodId,$event)" :key="key">
         <div class="left_img">
-          <img v-bind:src="obj.ImgUrl" alt="加载中"/>
+          <img v-lazy="obj.ImgUrl" alt="加载中"/>
         </div>
         <div class="right_prd_mess">
           <h3 class="goodName">{{obj.goodName}}</h3>
           <h4 class="goodDescribe">{{obj.describe}}</h4>
           <h4 class="goodSize"><span>{{obj.size}}</span></h4>
-          <h4><span class="goodPre">￥{{obj.Price}}</span><span class="goodOrgpre">￥{{obj.originalPrice}}</span><button class="buy" @click="addCar(obj.goodId)">立即购买</button></h4>
+          <h4><span class="goodPre">￥{{obj.Price}}</span><span class="goodOrgpre">￥{{obj.originalPrice}}</span><button class="buy" @click="addCar(obj.goodId,$event)">立即购买</button></h4>
         </div>
       </div>
     </div>
     <div class="addCar">
-      <div class="carIcom" @click="toCar"><i class="glyphicon glyphicon-shopping-cart"></i><span class="carNum">{{carNum || 0}}</span></div><div class="prdNum">已选<span>{{this.$store.state.selectTotle|| 0}}</span></div><div class="prdprice"><span>￥{{this.$store.state.priceTotle}}</span></div><div class="account"><button @click="ToAccount">去结算</button></div>
+      <div class="carIcom" @click="toCar"><i class="glyphicon glyphicon-shopping-cart"></i><span class="carNum"  v-if="carNum">{{carNum}}</span></div><div class="prdNum">已选<span>{{this.$store.state.selectTotle|| 0}}</span></div><div class="prdprice"><span>￥{{this.$store.state.priceTotle}}</span></div><div class="account"><button @click="ToAccount">去结算</button></div>
     </div>
   </div>
 </template>
@@ -36,7 +35,7 @@ import http from '../../utils/reqAjax';
 import './productList.scss';
 import productMenu from './productMenu';
 import spinner from "../spinnerComponent/spinner";
-import { Search, MessageBox } from 'mint-ui';
+import { Search, MessageBox, Lazyload } from 'mint-ui';
 
 export default {
   data: function(){
@@ -63,9 +62,10 @@ export default {
     this.categoryName = this.$route.params.catename;
     this.name = this.$route.params.name;
     this.state = this.$route.params.state;
-    console.log('categoryId', this.categoryId)
-    console.log('cateid',  this.categoryName);
-    console.log('state', this.state);
+    // console.log('categoryId',this.categoryId);
+    // console.log('categoryName',this.categoryName);
+    // console.log('name',this.name);
+    // console.log('state',this.state)
     if(this.state == 'home'){
       this.ajax(this.categoryId,'bigCategory')
       this.name = this.categoryName
@@ -76,26 +76,9 @@ export default {
     } else if( this.state == 'cate'){
       this.ajax(this.categoryId,'small');
       this.name = this.categoryName;
+    } else  if( this.state == undefined) {
+      this.ajax();
     }
-    // if(this.cateid !== ''){
-    //   console.log(666);
-    //   this.ajax(this.cateid,'search')
-    //   this.name = this.categoryName
-    // }
-    // if(this.categoryId){
-    //   var state = '';
-    //   if(this.categoryId>10){
-    //     state = 'small'
-    //   } else {
-    //     state = 'bigCategory'
-    //   }
-    //   this.ajax(this.categoryId,state)
-    // }
-    // if(this.categoryName2){
-    //   console.log(this.categoryName2);
-    //   this.ajax(this.cateid,'search')
-    //   this.name = this.categoryName2
-    // }
 
     http.post({"url":'car1.php',parmas:{userId: this.userid,state: 'selectprdCount'}}).then ( res => {
       this.carNum = res.data[0].totle;
@@ -111,6 +94,11 @@ export default {
       spinner.loadspinner();
       if(_param,state){
         http.get({"url":this.url+'?categoryId='+_param+"&state="+state}).then ( res => {
+          this.dataset = res.data;
+          spinner.closeSpinner();
+        })
+      } else {
+        http.get({"url":this.url}).then ( res => {
           this.dataset = res.data;
           spinner.closeSpinner();
         })
@@ -140,10 +128,9 @@ export default {
             spinner.closeSpinner();
           })
       }
-
-
     },
-    addCar(obj){
+    addCar(obj,e){
+      // console.log(e.screenX)
       if(this.userid == ''){
         MessageBox.confirm('用户未登录，是否去登录?').then(action => {
           if(action == 'confirm'){
@@ -151,12 +138,19 @@ export default {
           }
         });
       } else {
+        
         spinner.loadspinner();
         // console.log(obj);
         http.post({"url":'Car.php',parmas:{userid: this.userid,goodId:obj}}).then ( res => {
           // console.log(res.data[0].Price)
-          this.carNum = res.data[0].totle;
-          this.prdPrice = res.data[0].Price;
+          
+          var icom = $('<span/>').addClass('icon').css({top: e.clientY,left: e.clientX})
+          $(e.target).closest('.right_prd_mess').append(icom);
+          $('.icon').animate({top:'95%',left:30},500,function(){
+            $('.icon').remove();
+            this.carNum = res.data[0].totle;
+            this.prdPrice = res.data[0].Price;
+          }.bind(this))
           spinner.closeSpinner();
         })
       // this.carNum  += this.carNum;

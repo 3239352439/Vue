@@ -8,9 +8,10 @@
 
     <div class="menu">
       <ul class="left">
-        <li v-for="(obj,idx) in category" @click="toSmallcategory(obj)" :key="idx">{{obj}}</li>
+        <li v-for="(obj,idx) in category" @click="toSmallcategory(obj,$event)" :key="idx">{{obj}}</li>
       </ul>
       <div class="right">
+        <div class="rigth_child">
         <div class="cateBigImg">
           <img v-if="cateSamllList[1]" v-bind:src="cateSamllList[0].categoryImg" alt="加载中"/>
         </div>
@@ -21,6 +22,7 @@
           </div>
         </div>
       </div>
+    </div>
     </div>
     <div class="buttom">
       <publicMenu></publicMenu>
@@ -51,6 +53,7 @@ export default {
       if(res.data){
         this.categoryList = res.data;
         this.catesm('水果');
+       
         res.data.forEach(function(item){
           if( this.category.indexOf(item.categoryName) == -1){
             this.category.push(item.categoryName);
@@ -61,8 +64,11 @@ export default {
     });
   },
   methods:{
-    toSmallcategory(idx){
-      this.catesm(idx)
+    toSmallcategory(idx,e){ 
+      $('.rigth_child').css({bottom: '-100%'});
+      this.catesm(idx);
+      $(e.target).css({background:'#fff'}).siblings('li').css({background:'rgb(240, 237, 237)'})
+      // console.log('e',e.target)
     },
     catesm(name){
       this.cateSamllList = [];
@@ -73,6 +79,7 @@ export default {
           }
         })
       }
+      $('.rigth_child').css('top','').stop().animate({top:0},400);
     },
     toProduct(obj,_event){
       console.log(obj)
