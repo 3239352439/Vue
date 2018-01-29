@@ -35,7 +35,6 @@
                 if(this.phone != "" && this.password != ""){
                     spinner.loadspinner();
                     http.get({url:"login.php?phone=" + this.phone + "&password=" + this.password}).then((res)=>{
-                        console.log(res)
                         setTimeout(function(){
                             spinner.closeSpinner();
                             if(res.data !== false){

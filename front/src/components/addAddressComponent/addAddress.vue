@@ -7,12 +7,13 @@
         </div>
         <div class="add_main">
             <mt-field label="收货人" placeholder="点击输入姓名" v-model="data.linkMan">
-                <p class="gender sel" @click="getGender"><span v-for="item in allGender" v-if="item == '先生'" class="active" :key="item">{{item}}</span><span v-else>{{item}}</span></p>
+                <p class="gender sel" @click.stop="getGender"><span v-for="(item,idx) in allGender" v-if="data.gender==item" class="active" :key="idx" >{{item}}</span><span v-else>{{item}}</span></p>
+                <p class="gender sel" @click="getGender"><span v-for="item in allGender" v-if="data.gender==item" class="active" :key="item">{{item}}</span><span v-else>{{item}}</span></p>
             </mt-field>
                 <mt-field label="手机号码" placeholder="输入手机号码" type="tel" v-model="data.phone"></mt-field>
                 <mt-field label="小区" class="site" placeholder="请输入小区地址" type="text" v-model="$store.state.site" ></mt-field>
                 <mt-field label="单元门牌" placeholder="请输入门牌号" type="text" v-model="data.doorplate"></mt-field>
-                <div class="address sel" @click="getType"><p><label>地址分类</label><span v-for="item in allType" v-if="data.type==item" class="active" :key="item">{{item}}</span><span v-else>{{item}}</span></p></div>
+                <div class="address sel" @click.stop.prevent="getType"><p><label>地址分类</label><span v-for="item in allType" v-if="data.type==item" class="active" :key="item">{{item}}</span><span v-else>{{item}}</span></p></div>
 
             <mt-button type="primary" size="large" @click.stop="save">保存</mt-button>
             <mt-button type="primary" size="large" @click.stop="del"  v-if="editID">删除地址</mt-button>
@@ -51,18 +52,18 @@
             getGender(e){
                 var tag=e.target.tagName.toLowerCase();
                 if(tag=="span"){
-                    $(e.target).addClass('active').siblings('span').removeClass('active');
-                    this.data.gender=e.target.innerText;
+                    $(e.target).addClass('active').siblings().removeClass('active');                     
                 }
             },
             getType(e){
                 var tag=e.target.tagName.toLowerCase();
                 if(tag=="span"){
-                    $(e.target).addClass('active').siblings('span').removeClass('active');
-                    this.data.type=e.target.innerText;
+                    $(e.target).addClass('active').siblings('span').removeClass('active');     
                 }
             },
             save(){
+                    this.data.gender=$('.gender').find('.active').html();
+                    this.data.type=$('.address').find('.active').html();
                     this.data.village=$('.site').find('input').val();
                     //判断是否为有效电话
                      var ph=new RegExp(/^1[34578]\d{9}$/).test(this.data.phone);
@@ -83,9 +84,6 @@
                             case 'phone':
                             MessageBox.alert('请输入有效的电话号码！').then(action => {});
                             break;
-                            case 'gender':
-                            MessageBox.alert('请选择性别！').then(action => {});
-                            break;
                             case 'village':
                             MessageBox.alert('请填写小区信息！').then(action => {});
                             break;
@@ -100,7 +98,8 @@
                    }
                 }
                 //填写完整信息后
-                spinner.loadspinner();this.data.userId=this.$store.state.userId;console.log(this.data);
+                spinner.loadspinner();
+                this.data.userId=this.$store.state.userId;
                 var $data=JSON.stringify(this.data);
                     if(!this.editID){//保存新地址
                      http.get({url:this.url+'?checkData='+$data}).then(result=>{
@@ -185,7 +184,7 @@
                 this.$router.go(-1);
             }
         },
-        mounted(){console.log(this.editID)
+        mounted(){
             this.userId = this.$store.state.userId;
             if(this.editID){
                  spinner.loadspinner();

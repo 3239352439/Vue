@@ -149,11 +149,13 @@ export default {
     },
     toDetailPage(obj,_event){
       if(!_event.target.id){
+         this.$store.commit("getDetailsIdState",obj);
         this.$router.push({ name: 'detailpage',params: {id:obj}});
       }
     },
     ToDetailPage(obj,_event){
       // console.log(_event.target.tagName)
+       this.$store.commit("getDetailsIdState",obj);
       this.$router.push({ name: 'detailpage',params: {id: obj}});
       // if(_event.target.tagName !== 'P' || _event.target.tagName !== 'INPUT'){
         // console.log(666)
