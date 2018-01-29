@@ -35,7 +35,7 @@
                 <mt-tab-container v-model="selected" :swipeable="true">
                     <mt-tab-container-item v-for="(obj,index) in datalist" :id="index" :key="index">
                             <ul class="datalist" v-if="obj.length>0">
-                             <li v-for="arr in obj" :key="arr.goodName" :gid="arr.goodId" @click.stop="toDetailPage(arr.goodId,$event)">
+                             <li v-for="(arr,idx) in obj" :key="arr.goodName" :gid="arr.goodId" @click.stop="toDetailPage(arr.goodId,$event)">
                                 <div>
                                     <img v-lazy="arr.ImgUrl"/>
                                 </div>
@@ -47,7 +47,7 @@
                                         <p><span v-filter>{{arr.Price}}</span><span v-filter>{{arr.originalPrice}}</span></p>
                                         <button class="Addbtn" @click.stop="addCar(arr.goodId,$event)" v-if="orderObj.indexOf(arr.goodId)<0">立即购买</button>
                                             <p class="qty" v-else>
-                                            <span class="compute" @click="compute(arr.goodId,index,$event)">-</span><span class="num" @click="compute(arr.goodId,idx,$event)">1</span><span class="compute">+</span>
+                                            <span class="compute" @click="compute(arr.goodId,idx,$event)">-</span><span class="num" @click="compute(arr.goodId,idx,$event)">1</span><span class="compute">+</span>
                                             </p>
                                     </div>
 
