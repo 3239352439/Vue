@@ -1,59 +1,89 @@
-body{
-    margin:0;
-    #register{
-        .mint-header{
-            .mint-button-icon{
+body {
+    margin: 0;
+    #register {
+        .mint-header {
+            .mint-button-icon {
                 text-align: top;
-                .mintui{
-                    font-size:0.36rem;
+                .mintui {
+                    font-size: 0.36rem;
                 }
             }
-            .mint-header-title{
-                font-size:0.27rem;
+            .mint-header-title {
+                font-size: 0.27rem;
             }
-            .mint-button-text{
-                font-size:0.27rem;
-                margin-right:0.08rem;
+            .mint-button-text {
+                font-size: 0.27rem;
+                margin-right: 0.08rem;
             }
         }
-        .reg{
-            margin:0.4rem 0;
-            padding:0.13rem;
-            div{
+        .reg {
+            margin: 0.4rem 0;
+            padding: 0.13rem;
+            div {
                 display: flex;
-                label{
-                    display: inline-block;
-                    width:1.73rem;
+                label {
+                    // display: inline-block;
+                    width: 1.47rem;
                     height: 0.67rem;
                     line-height: 0.67rem;
                     text-align: center;
-                    margin:0.13rem 0;
+                    margin: 0.13rem 0;
                     font-size: 0.21rem;
                 }
-                input{
-                    flex:1;
-                    height:0.67rem;
-                    margin-top:0.13rem;
-                    border:0;
-                    outline:0;
+                input {
+                    flex: 1;
+                    height: 0.67rem;
+                    margin-top: 0.13rem;
+                    border: 0;
+                    outline: 0;
                     font-size: 0.21rem;
                 }
-                >button{
-                    flex:1;
-                    margin-top:0.13rem;
-                    height:0.67rem;
+                >button {
+                    flex: 1;
+                    margin-top: 0.13rem;
+                    height: 0.67rem;
                     font-size: 0.16rem;
                 }
             }
-            span{
-                color:red;
-                margin-left: 0.4rem;
+            .getCode {
+                margin-left: 1.47rem;
+                height: 0.6rem;
+                border-radius: 0.13rem;
+                font-size: 0.16rem;
             }
-            .mint-button--primary{
-                width:100%;
-                margin-top:0.4rem;
-                label{
-                    margin-bottom:0;
+            p {
+                display:flex;
+                .codeing {
+                    flex:1;
+                    border: 0.01rem solid #ccc;
+                    padding: 0.07rem 0.13rem;
+                    font-size: 0.16rem;
+                    color: rgb(66, 111, 235);
+                    margin-right: 0.13rem;
+                    background: rgb(204, 204, 204);
+                    margin-left: 0.67rem;
+                    border-radius: 0.07rem;
+                }
+                span {
+                    flex:1;
+                    margin: 0;
+                    padding: 0.07rem 0;
+                    font-size: 0.16rem;
+                    color: rgb(66, 111, 235);
+                }
+            }
+            span {
+                color: red;
+                margin-left: 0.4rem;
+                font-size: 0.16rem;
+                display: block;
+                margin-bottom:0.13rem;
+            }
+            .mint-button--primary {
+                width: 100%;
+                margin-top: 0.4rem;
+                label {
+                    margin-bottom: 0;
                 }
             }
         }

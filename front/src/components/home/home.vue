@@ -9,66 +9,67 @@
                 <input class="kipSearch" type="text" placeholder="1元起送，30分钟达">
             </div>
         </header>
-        <main>
-           <div id="banner">
-                <mt-swipe :auto="4000">
-                    <mt-swipe-item v-for="(n,idx) in 6" :key="n"><img :src="img[idx]" alt=""></mt-swipe-item>
-                </mt-swipe>
+        <div id="banner">
+            <mt-swipe :auto="4000">
+                <mt-swipe-item v-for="(n,idx) in 6" :key="n"><img :src="img[idx]" alt=""></mt-swipe-item>
+            </mt-swipe>
+        </div>
+        <div id="type">
+            <dl v-for="(item) in typeData" :key="item.categoryId" @click="toCategory(item.categoryId,item.categoryName)">
+                    <dt><img :src="item.categoryImg2" alt="" />
+                    </dt>
+                    <dd>{{item.categoryName}}</dd>
+            </dl>
+            <dl v-if="typeData.length>=1" @click="toClassify">
+                    <dt><img :src="allTypeimg" alt="" />
+                    </dt>
+                    <dd>全部品类</dd>
+            </dl>
+        </div>
+
+        <div id="list">
+            <div class="l_nav">
+                <ul>
+                    <li v-for="(item,idx) in typeData" :key="idx" class="tabs"><span @click.stop="showList" >{{item.categoryName}}</span></li>
+                </ul>
             </div>
-             <div id="type">
-                <dl v-for="(item) in typeData" :key="item.categoryId" @click="toCategory(item.categoryId,item.categoryName)">
-                        <dt><img :src="item.categoryImg2" alt="" />
-                        </dt>
-                        <dd>{{item.categoryName}}</dd>
-                </dl>
-                <dl v-if="typeData.length>=1" @click="toClassify">
-                        <dt><img :src="allTypeimg" alt="" />
-                        </dt>
-                        <dd>全部品类</dd>
-                </dl>
-             </div>
 
-            <div id="list">
-            <mt-navbar v-model="selected">
-                    <mt-tab-item v-for="(item,idx) in typeData" :key="idx" :id="'data'+(idx*1+1)" >{{item.categoryName}}</mt-tab-item>
-            </mt-navbar>
-                <mt-tab-container v-model="selected" :swipeable="true">
-                    <mt-tab-container-item v-for="(obj,index) in datalist" :id="index" :key="index">
-                            <ul class="datalist" v-if="obj.length>0">
-                             <li v-for="(arr,idx) in obj" :key="arr.goodName" :gid="arr.goodId" @click.stop="toDetailPage(arr.goodId,$event)">
-                                <div>
-                                    <img v-lazy="arr.ImgUrl"/>
-                                </div>
-                                <div>
-                                    <h2>{{arr.goodName}}</h2>
-                                    <p class="details">{{arr.describe}}</p>
-                                    <p class="size"><span>{{arr.size}}</span></p>
-                                    <div class="purchase">
-                                        <p><span v-filter>{{arr.Price}}</span><span v-filter>{{arr.originalPrice}}</span></p>
-                                        <button class="Addbtn" @click.stop="addCar(arr.goodId,$event)" v-if="orderObj.indexOf(arr.goodId)<0">立即购买</button>
-                                            <p class="qty" v-else>
-                                            <span class="compute" @click="compute(arr.goodId,idx,$event)">-</span><span class="num" @click="compute(arr.goodId,idx,$event)">1</span><span class="compute">+</span>
-                                            </p>
-                                    </div>
-
-                                </div>
-                                </li>
-                            </ul>
-                            <div v-else class="dataNull">
-                               <img :src="dataNull" alt="">
+            <div class="list">
+                  <mt-tab-container v-model="active" :swipeable="true">
+                   <mt-tab-container-item v-for="item in typeData" :id="item.categoryName" :key="item.categoryName">
+                        <ul class="datalist">
+                           <li v-for="(obj,idx) in datalist" :key="idx" :gid="obj.goodId" @click.stop="toDetailPage(obj.goodId,$event)">
+                            <div>
+                                <img v-lazy="obj.ImgUrl"/>
                             </div>
-                        </mt-tab-container-item> 
-                </mt-tab-container>
+                            <div>
+                                <h2>{{obj.goodName}}</h2>
+                                <p class="details">{{obj.describe}}</p>
+                                <p class="size"><span>{{obj.size}}</span></p>
+                                <div class="purchase">
+                                    <p><span v-filter>{{obj.Price}}</span><span v-filter>{{obj.originalPrice}}</span></p>
+                                       <button class="Addbtn" @click.stop="addCar(obj.goodId,$event)" v-if="orderObj.indexOf(obj.goodId)<0">立即购买</button>
+                                        <p class="qty" v-else>
+                                        <span class="compute" @click="compute(obj.goodId,idx,$event)">-</span><span class="num" @click="compute(obj.goodId,idx,$event)">1</span><span class="compute">+</span>
+                                        </p>
+                                </div>
 
-            </div> 
-        </main> 
+                            </div>
+                            </li>
+                        </ul>
+
+                    </mt-tab-container-item>
+                </mt-tab-container>
+            </div>
+             <publicMenu></publicMenu>
+        </div>
         <div id="allmap" style="width:0;height:0;"></div>
-        <publicMenu></publicMenu>
+
     </div>
 </template>
 <script>
     import publicMenu from '../publicMenuComponent/publicMenu'
-    import { Nacbar,TabItem,Swipe, SwipeItem, TabContainer, TabContainerItem,MessageBox,Lazyload } from 'mint-ui';
+    import { Swipe, SwipeItem, TabContainer, TabContainerItem,MessageBox,Lazyload } from 'mint-ui';
     import http from '../../utils/reqAjax.js'
     import spinner from "../spinnerComponent/spinner"
     import './home.scss'
@@ -78,26 +79,32 @@
                 userid:this.$store.state.userId,
                 url:'home.php',
                 typeData:[],
-                typeArr:[],
                 active:'水果',
-                datalist:{},
+                datalist:[],
                 showNum:false,
                 orderObj:[],
-                dataNull:"./src/assets/img/loading.jpg",
                 allTypeimg:"./src/assets/img/iconv3/f10.jpg",
                 img:["./src/assets/img/banner/1.png","./src/assets/img/banner/2.png","./src/assets/img/banner/3.png","./src/assets/img/banner/4.png","./src/assets/img/banner/5.png","./src/assets/img/banner/6.png",],
-                typeImg:"./src/assets/img/iconv3/f1.jpg",
-                selected:'data1'
-                
+                typeImg:"./src/assets/img/iconv3/f1.jpg"
             }
         },
-
         methods:{
             kipGet(){
                 this.$router.push({name:"getAddress"});
             },
+            showList(e){
+                $(e.target).css({'color':"#26a2ff","borderBottom":"3px solid #1754fa"}).parent().siblings('li').find('span').css({'color':"#999999","borderBottom":"none"});
+                var tab=e.target.innerText;
+                spinner.loadspinner();
+                 http.get({url:this.url+"?type="+tab}).then(res=>{
+                spinner.closeSpinner();
+                this.datalist=res.data;
+            });
+                this.active=tab;
+            },
             toDetailPage(obj,_event){
                 if(_event.target.tagName !== 'BUTTON'){
+                     this.$store.commit("getDetailsIdState",obj);
                     this.$router.push({ name: 'detailpage',params: {id: obj}});
                 }
             },
@@ -205,7 +212,20 @@
             input.focus(()=>{
                 this.$router.push({name:"search"});
             });
-             
+            http.get({url:this.url+"?type="+this.active}).then(res=>{
+
+                this.datalist=res.data;
+            });
+            // 获取已添加到订单的商品
+            http.get({url:this.url+"?uid="+this.userid}).then(res=>{
+                var arr=[];
+                $.each(res.data,(idx,item)=>{
+                    arr.push(item.goodId);
+                    this.orderObj=[...new Set(arr)];
+                })
+            //   console.log(this.orderObj)
+            });
+             spinner.closeSpinner();
              this.$store.commit('getSite');
 
             // 吸顶导航
@@ -218,11 +238,11 @@
                     $(window).scroll(function() {
                         var w = $("body").scrollTop() || $(document).scrollTop(); //获取滚动值
                             if(w > height) {
-                    $(".mint-navbar").addClass("titleTap");
+                    $(".l_nav").addClass("titleTap");
                             } else if(w <= 0){
-                    $(".mint-navbar").removeClass("titleTap")
+                    $(".l_nav").removeClass("titleTap")
                             }else{
-                    $(".mint-navbar").removeClass("titleTap")
+                    $(".l_nav").removeClass("titleTap")
                             }
                 });
             }

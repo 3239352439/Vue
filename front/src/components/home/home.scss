@@ -50,10 +50,6 @@ $hsize:0.67rem;
             }
         }
     }
-    main{
-        flex:1;
-        flex-direction: column;
-    }
     #banner{
         margin-top:$hsize;
         height:2rem;
@@ -104,35 +100,49 @@ $hsize:0.67rem;
        flex:1;  
        display:flex;
        flex-direction:column;
-       .mint-navbar{
-           width: 100%;
+        .l_nav{
             background: #EFEFF4;
-            min-height:0.53rem;
-            max-height:0.53rem;
-            white-space: nowrap;
-            overflow-x: auto;    
-         .mint-tab-item{
-             display:block;
-             padding:0.2rem 0;
-             height:0.53rem; 
-             line-height: 0.53rem;
-              .mint-tab-item-label{               
-                width:1.0rem;
-                text-align:center;
-                color:#999999;
-                display: block;
-                font-size:0.186667rem;
-                font-weight:bold;
-            
-              }
-         }     
-       }
-         
-        .mint-tab-container{
+            height:0.53rem;              
+            ul{ 
+                overflow-x:auto;
+                height:0.6rem;
+                margin: 0.0rem;
+                white-space: nowrap;
+                width: 100%;
+                li{
+                height:0.51rem; 
+                overflow: hidden;
+                display: inline-block;
+                
+                    span{
+                    text-align:center;
+                    color:#999999;
+                    display: block;
+                    height: 0.48rem;
+                    display:block;             
+                    font-weight:bold;
+                    font-size:0.186667rem;
+                    line-height:0.53rem;
+                    width:1.0rem;
+                    }
+                
+                }
+                li:nth-child(1){
+                    span{
+                     color:$mainColor;
+                     border-bottom:3px solid #1754fa;
+                     }
+                } 
+               
+            } 
+        }
+        .list{
+            margin-bottom:0.67rem;
             flex:1;
              .datalist{
                  height: 100%;
-                 margin-bottom:0.6rem;
+                 overflow:auto;
+                 margin-bottom:0.4rem;
                  li{
                      color:#808080;
                     padding:0.13rem 0.07rem;
@@ -165,7 +175,8 @@ $hsize:0.67rem;
                             font-weight:bold;
                         }
                         .details{
-                            font-size:0.19rem;   
+                            font-size:0.19rem;
+                           
                         }
                         .size{
                             line-height:0.35rem;
@@ -226,14 +237,6 @@ $hsize:0.67rem;
                     }  
                  }
                 
-             }
-             .dataNull{
-                img{
-                    display:block;
-                    width: 50%;;
-                    height:50%;
-                   margin:auto;
-                }
              }
         }
        

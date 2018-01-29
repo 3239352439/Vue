@@ -42,7 +42,7 @@
     </div>
 </template>
 <script>
-    import { Spinner,Search,MessageBox} from 'mint-ui';
+    import { Spinner,Search} from 'mint-ui';
     import http from '../../utils/reqAjax.js'
     import spinner from "../spinnerComponent/spinner"
     import './getAddress.scss';
@@ -57,17 +57,7 @@
         },
         methods:{
             kipAdd(){
-                if(this.userId){
-                  this.$router.push({name:'addAddress'});  
-                }
-                else{
-                    MessageBox.confirm('用户未登录，是否去登录?').then(action => {
-                      if(action == 'confirm'){
-                        this.$router.push({name: 'login'})
-                      }
-                    });
-                }
-                
+                this.$router.push({name:'addAddress'});
             },
             kipAuto(){
                 this.$router.push({name:'autoAddress'});
@@ -88,8 +78,8 @@
                 }
 
             },
-            back(){
-                this.$router.back(-1);
+             back(){
+                this.$router.go(-1);
             }
         },
         mounted(){
