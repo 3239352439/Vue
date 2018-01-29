@@ -15,7 +15,7 @@
             </div>
             <span v-if="type3">两次输入的密码不正确！</span>
             <button @click="getCode" :disabled="disabled1" class="getCode" v-if="!show">获取验证码</button>
-            <p v-if="show"><span class="codeing">{{time + "秒后可重新获取验证码"}}</span><br/><span>短信验证码已发送</span></p>
+            <p v-if="show"><span class="codeing">{{time + "秒后可重新获取验证码"}}</span><span>短信验证码已发送</span></p>
             <div>
                 <label for="code">验证码 :</label>
                 <input type="text" placeholder="请输入验证码" v-model="code" id="code" :disabled="disabled1">
