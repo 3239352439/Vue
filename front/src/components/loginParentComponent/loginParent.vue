@@ -3,6 +3,7 @@
         <div>
             <mt-header title="登录/注册">
                 <mt-button slot="left" icon="back" @click="goback"></mt-button>
+                <mt-button slot="right" class="glyphicon glyphicon-home" @click="$router.push('/')"></mt-button>
             </mt-header>
             <mt-navbar v-model="selected">
                 <mt-tab-item  id="loginP"><span @click="loginP" class="loginP">登录</span></mt-tab-item>

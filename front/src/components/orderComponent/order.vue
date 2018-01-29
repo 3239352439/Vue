@@ -79,7 +79,6 @@
                   spinner.loadspinner();
                 http.get({'url':"order.php?userId=" + this.$store.state.userId + "&state=" + 'get'}).then(res=>{
                     spinner.closeSpinner();
-                    console.log(res)
                     this.data = res.data;
                     $(".mint-tab-item").eq(num).addClass("is-selected");
                     var status;

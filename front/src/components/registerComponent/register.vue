@@ -101,7 +101,11 @@
                                 var now = new Date();
                                 now.setDate(now.getDate()+90);
                                 cookie.set("token",res.data,now,"/");
-                                this.$router.push("/my");
+                                if(this.$store.state.aa){
+                                    this.$router.push({name:this.$store.state.aa});
+                                }else{
+                                    this.$router.push("/my");
+                                }
                             }else{
                                 alert("网络出现故障，请重新注册！")
                             }

@@ -1,6 +1,6 @@
 <?php
     // 订单状态：0，待付款；1，待收货；2，待评价；3，已完成；4，已取消
-
+    header('Access-Control-Allow-Origin:*');
     include 'DBHelper.php';
     $phone = isset($_GET['phone']) ? $_GET['phone'] : "";
     $status = isset($_GET['status']) ? $_GET['status'] : "";
