@@ -7,7 +7,7 @@
         </div>
         <div class="add_main">
             <mt-field label="收货人" placeholder="点击输入姓名" v-model="data.linkMan">
-                <p class="gender sel" @click="getGender"><span v-for="item in allGender" v-if="data.gender==item" class="active" :key="item">{{item}}</span><span v-else>{{item}}</span></p>
+                <p class="gender sel" @click="getGender"><span v-for="item in allGender" v-if="data.gender==item" :key="item" class="active">{{item}}</span><span v-else>{{item}}</span></p>
             </mt-field>
                 <mt-field label="手机号码" placeholder="输入手机号码" type="tel" v-model="data.phone"></mt-field>
                 <mt-field label="小区" class="site" placeholder="请输入小区地址" type="text" v-model="$store.state.site" ></mt-field>
@@ -50,8 +50,9 @@
             },
             getGender(e){
                 var tag=e.target.tagName.toLowerCase();
+              
                 if(tag=="span"){
-                    $(e.target).addClass('active').siblings('span').removeClass('active');
+                    $(e.target).addClass('active').siblings().removeClass();
                     this.data.gender=e.target.innerText;
                 }
             },

@@ -33,7 +33,11 @@
           <h4>小计<span>￥{{sum}}</span></h4>
           <h4>配送费<span>￥10.00</span></h4>
           <h4>合计<span>￥{{totle}}</span></h4>
+<<<<<<< HEAD
+          <h4 style="height:1.33rem;">留言：<input type="text" placeholder="买家留言" v-model="leveword"></h4>
+=======
           <h4 style="height:1.33rem">留言：<input type="text" placeholder="卖家留言"></h4>
+>>>>>>> f579330c428117802559cc52b7a13e5ac6d3c945
         </div>
       </div>
     </div>
