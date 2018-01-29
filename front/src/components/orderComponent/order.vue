@@ -12,10 +12,10 @@
         <div id="orderlist">
             <div v-for="(arr,key) in dataobj" :key="key" @click="btn(key,$event)">
                 <div>
-                    <span>{{arr[0].status == 0 ? "待付款" : arr[0].status == 1 ? "已付款" : arr[0].status == 2 ? "待收货" : arr[0].status == 3 ? "已收货" : arr[0].status == 4 ? "待评价" : arr[0].status == 5 ? "已完成" : "已取消"}}</span>
+                    <span>{{arr[0].status == 0 ? "待付款" : arr[0].status == 1 ? "待收货" :  arr[0].status == 2 ? "待评价" : arr[0].status == 3 ? "已完成" : "已取消"}}</span>
                     <span>{{arr[0].time}}</span>
-                    <i class="iconfont icon-shanchu" v-if="arr[0].status == 5 || arr[0].status == 6"></i>
-                    <i class="iconfont icon-right" v-if="arr[0].status == 0 || arr[0].status == 1 || arr[0].status == 2 || arr[0].status == 3 || arr[0].status == 4"></i>
+                    <i class="iconfont icon-shanchu" v-if="arr[0].status == 2 || arr[0].status == 3 || arr[0].status == 4"></i>
+                    <i class="iconfont icon-right" v-if="arr[0].status == 0 || arr[0].status == 1"></i>
                 </div>
                 <div>
                     <img :src="arr[0].ImgUrl" alt="">
@@ -26,17 +26,18 @@
                         </div>
                     </div>
                 </div>
-                <p>共 {{dataPrice[key].qty}} 份，实付 {{"￥" + dataPrice[key].price}}</p>
-                <button>{{arr[0].status == 0 ? "去支付" : arr[0].status == 1 ? "取消订单" : arr[0].status == 2 ? "查看快递" : arr[0].status == 3 || arr[0].status == 4 ? "去评价" : "再来一单"}}</button>
+                <p>共 {{dataPrice[key].qty}} 份，实付 {{"￥" + dataPrice[key].price.toFixed(2)}}</p>
+                <button>{{arr[0].status == 0 ? "去支付" : arr[0].status == 1 ? "确认收货" : arr[0].status == 2 ? "去评价" :  "再来一单"}}</button>
             </div>
         </div>
-        
+
     </div>
 </template>
 
 <script>
     import { Navbar, TabItem, MessageBox, Cell } from 'mint-ui';
     import http from "../../utils/reqAjax"
+    import spinner from "../spinnerComponent/spinner";
     import "./order.scss"
     export default {
         data(){
@@ -56,7 +57,7 @@
             this.dataPrice = {};
             var num = this.$route.params.num || this.$store.state.orderNum;
             this.refresh(num*1);
-            console.log(num)
+            
         },
         methods:{
             goback(){
@@ -75,7 +76,10 @@
                 this.dataset = [];
                 this.dataPrice = {};
                  // 请求所有数据
-                http.get({'url':"order.php?phone=" + this.$store.state.phoneNum + "&state=" + 'get'}).then(res=>{
+                  spinner.loadspinner();
+                http.get({'url':"order.php?userId=" + this.$store.state.userId + "&state=" + 'get'}).then(res=>{
+                    spinner.closeSpinner();
+                    console.log(res)
                     this.data = res.data;
                     $(".mint-tab-item").eq(num).addClass("is-selected");
                     var status;
@@ -90,12 +94,12 @@
                         this.assignment(0);
                         break;
                     case 1:
-                        status = 2;
-                        this.assignment(2);
+                        status = 1;
+                        this.assignment(1);
                         break;
                     case 2:
-                        status = 4;
-                        this.assignment(4);
+                        status = 2;
+                        this.assignment(2);
                         break;
                     case 3:
                         status = "";
@@ -187,11 +191,11 @@
                     MessageBox.confirm('确定执行此操作?').then(action => {
                         this.data.forEach(function(item,index){
                             if(item.orderId == val){
-                                item.status = 6;
+                                item.status = 4;
                             }
                         }.bind(this))
                         this.checkedClick(3);
-                        http.get({url:"order.php?phone=" + this.$store.state.phoneNum + "&state=update&status=6&orderId=" + val}).then(res=>{
+                        http.get({url:"order.php?phone=" + this.$store.state.phoneNum + "&state=update&status=4&orderId=" + val}).then(res=>{
                             // console.log(res)
                         })
                     })
@@ -208,13 +212,13 @@
                             // console.log(res)
                         })
                     })
-                    
+
                 }else{
                     this.$store.commit('setOrderId',val);
                     this.$router.push({name:"orderdetail"});
                 }
             },
-            
+
         }
     }
 </script>

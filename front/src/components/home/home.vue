@@ -76,7 +76,7 @@
     export default{
         data(){
             return {
-                userid:'',
+                userid:this.$store.state.userId,
                 url:'home.php',
                 typeData:[],
                 active:'水果',
@@ -89,7 +89,6 @@
             }
         },
         methods:{
-
             kipGet(){
                 this.$router.push({name:"getAddress"});
             },
@@ -120,7 +119,6 @@
                     })
                  }
                  else{
-                    //  MessageBox.alert('请先登录！').then(action => {});
                     MessageBox.confirm('用户未登录，是否去登录?').then(action => {
                       if(action == 'confirm'){
                         this.$router.push({name: 'login'})
@@ -186,29 +184,32 @@
             this.userid = ''
           }
             spinner.loadspinner();
-            http.get({url:this.url}).then(res=>{
+            setTimeout(()=>{
+
+                http.get({url:this.url}).then(res=>{
                 // spinner.closeSpinner();
                this.typeData=res.data;
             });
-            this.$store.commit('getSite');
             var input=$('.kipSearch');
             input.focus(()=>{
                 this.$router.push({name:"search"});
             });
             http.get({url:this.url+"?type="+this.active}).then(res=>{
-               spinner.closeSpinner();
+
                 this.datalist=res.data;
             });
             // 获取已添加到订单的商品
             http.get({url:this.url+"?uid="+this.userid}).then(res=>{
                 var arr=[];
-
                 $.each(res.data,(idx,item)=>{
                     arr.push(item.goodId);
                     this.orderObj=[...new Set(arr)];
                 })
             //   console.log(this.orderObj)
             });
+             spinner.closeSpinner();
+            },500)
+             this.$store.commit('getSite');
 
             // 吸顶导航
             nav();

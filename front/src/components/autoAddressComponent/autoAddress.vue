@@ -2,13 +2,11 @@
     <div id="sm_auto">
          <div class="auto_header">
             <mt-header title="选择配送地址">
-              <router-link to="/getAddress" slot="left">
-                <mt-button icon="back">返回</mt-button>
-              </router-link>
+                <mt-button icon="back" slot="left" @click="back">返回</mt-button>
         </mt-header> 
         </div> 
         <div class="auto_main">
-            <div id="r-result">        
+            <div id="r-result">
               <input id="cityName" type="text" placeholder="请输入地址"/>
               <button class="btn"><i class="mintui mintui-search"></i></button>
             </div>
@@ -20,9 +18,9 @@
     </div>
 </template>
 <script type="text/javascript">
- import './autoAddress.scss' 
+ import './autoAddress.scss'
  import spinner from "../spinnerComponent/spinner"
- import {MessageBox} from 'mint-ui';  
+ import {MessageBox} from 'mint-ui';
   export default{
 
     data(){
@@ -30,6 +28,11 @@
           receiveID:this.$route.params.id,
           uid:this.$route.params.userId
         }
+    },
+    methods:{
+       back(){
+                this.$router.go(-1);
+            }
     },
     mounted(){
       spinner.loadspinner();
@@ -39,16 +42,16 @@
       var geocoder= new BMap.Geocoder();
       map.centerAndZoom(point,11);
       // map.addEventListener("tilesloaded",function(){
-      //      spinner.closeSpinner();  
+      //      spinner.closeSpinner();
       // });
-     map.enableScrollWheelZoom();   
+     map.enableScrollWheelZoom();
       //启用滚轮放大缩小，默认禁用
-      map.enableContinuousZoom();   
+      map.enableContinuousZoom();
        //启用地图惯性拖拽，默认禁用
        currentAddress();
        // 当前地址
        // this.$store.commit('getSite');
-      function currentAddress(){ 
+      function currentAddress(){
           var geolocation = new BMap.Geolocation();
            geolocation.getCurrentPosition(function(r){
           if(this.getStatus() == BMAP_STATUS_SUCCESS){
@@ -56,13 +59,13 @@
             map.addOverlay(mk);//
             map.panTo(r.point);
             geocoder.getLocation(r.point,rs=>{
-                spinner.closeSpinner(); 
-                 MessageBox.alert('你当前所在位置:'+rs.address).then(action => {});                           
+                spinner.closeSpinner();
+                 MessageBox.alert('你当前所在位置:'+rs.address).then(action => {});
               });
           }
           else {
             alert('failed'+this.getStatus());
-          }        
+          }
         },{enableHighAccuracy: true})
       }
       $('.local').click(()=>{
@@ -85,10 +88,10 @@
             else{
               this.$router.push({name:"addAddress"})
             }
-             
+
 
         });
         }
     }
-   
+
 </script>

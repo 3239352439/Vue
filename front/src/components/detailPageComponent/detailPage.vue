@@ -29,7 +29,7 @@
             <li v-for="(obj, idx) in randomData"  @click.stop="toDetailPage(obj.goodId,$event)">
                 <img v-bind:src="obj.ImgUrl" alt="">
                 <h2>{{obj.goodName}}</h2>
-                <h4><span>￥{{obj.Price}}</span><span class="glyphicon glyphicon-list-alt"  v-bind:id="idx"></span></h4>
+                <h4><span>￥{{obj.Price}}</span><span class="glyphicon glyphicon-shopping-cart"  v-bind:id="idx"></span></h4>
             </li>
         </ul>
         </div>
@@ -44,7 +44,7 @@
         <div class="carIcom" @click="toCar">
           <i class="glyphicon glyphicon-shopping-cart"></i>
           <span>购物车</span>
-          <span class="carNum">{{this.$store.state.selectTotle || 0}}</span>
+          <span class="carNum" v-if="carNum">{{carNum}}</span>
         </div>
         <div class="prdNum" @click="addCollect"><i class="glyphicon " :class="className"></i><span>收藏</span></div>
         <div class="account"><button @click="addCar(dataItem.goodId)">加入购物车</button></div>
@@ -64,7 +64,8 @@ export default {
       randomData:[],
       userid: '',
       className:'glyphicon-star-empty',
-      id:''
+      id:'',
+      carNum:0
     }
   },
   mounted(){
@@ -94,6 +95,10 @@ export default {
         })
     });
 
+     http.post({"url":'car1.php',parmas:{userId: this.userid,state: 'selectprdCount'}}).then ( res => {
+      this.carNum = res.data[0].totle;
+      // this.prdPrice = res.data[0].Price;
+    })
   },
   methods: {
     back(){
@@ -127,12 +132,12 @@ export default {
       } else {
       spinner.loadspinner();
       MessageBox.alert('成功加入购物车').then(action => {
-        //  console.log(obj);
-        http.post({"url":'car1.php',parmas:{userId: this.userid,goodId: obj,state: 'addProduct'}}).then ( res => {
-          console.log(res.data);
+        http.post({"url":'Car.php',parmas:{userid: this.userid,goodId:obj}}).then ( res => {
+          this.carNum = res.data[0].totle;
           spinner.closeSpinner();
         })
       });
+      
       }
     },
     toCar(){

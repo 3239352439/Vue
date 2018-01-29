@@ -33,7 +33,7 @@
         <ul>
           <li v-for="(obj,idx) in randomData" @click.stop="toDetailPage(obj.goodId,$event)">
             <img v-bind:src="obj.ImgUrl" alt="">
-            <h4><span>￥{{obj.Price}}</span><span class="glyphicon glyphicon-list-alt"  @click.stop="addCar(obj.goodId)"></span></h4>
+            <h4><span>￥{{obj.Price}}</span><span class="glyphicon glyphicon-shopping-cart"  @click.stop="addCar(obj.goodId)"></span></h4>
           </li>
         </ul>
       </div>

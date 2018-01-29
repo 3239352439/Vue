@@ -14,10 +14,10 @@
             </div>
             <div class="order">
                 <ul>
-                    <li id="dd" @click="order($event,'0')"><i class="glyphicon glyphicon-usd"></i><br><span>待付款</span></li>
-                    <li @click="order($event,'1')"><i class="glyphicon glyphicon-gift"></i><br><span>待收货</span></li>
-                    <li @click="order($event,'2')"><i class="glyphicon glyphicon-pencil"></i><br><span>待评价</span></li>
-                    <li @click="order($event,'3')"><i class="glyphicon glyphicon-list-alt"></i><br><span>全部订单</span></li>
+                    <li id="dd" @click="order($event,'0')"><i class="glyphicon glyphicon-usd"></i><br><span>待付款</span><span class="number" v-if="obligation">{{obligation}}</span></li>
+                    <li @click="order($event,'1')"><i class="glyphicon glyphicon-gift"></i><br><span>待收货</span><span class="number" v-if="receipt">{{receipt}}</span></li>
+                    <li @click="order($event,'2')"><i class="glyphicon glyphicon-pencil"></i><br><span>待评价</span><span class="number" v-if="evaluate">{{evaluate}}</span></li>
+                    <li @click="order($event,'3')"><i class="glyphicon glyphicon-list-alt"></i><br><span>全部订单</span><span class="number" v-if="allOrder">{{allOrder}}</span></li>
                 </ul>
             </div>
             <div class="receiving"  @click="collect($event)">
@@ -87,6 +87,10 @@
                 phoneNum:"",
                 popupVisible:false,
                 imgUrl:"../../src/assets/img/my/default.jpg",
+                obligation:0,
+                receipt:0,
+                allOrder:0,
+                evaluate:0,
                 type:false
             }
         },
@@ -104,6 +108,18 @@
                 })
                 this.type = !this.type;
                 this.phoneNum = this.$store.state.phoneNum;
+                http.get({url:"order.php?userId=" + this.$store.state.userId}).then((res)=>{
+                    res.data.forEach(function(item,idx){
+                        if(item.status == 0){
+                            this.obligation ++;
+                        }else if(item.status == 1){
+                            this.receipt ++;
+                        }else if(item.status == 2){
+                            this.evaluate ++;
+                        }
+                        this.allOrder ++;
+                    }.bind(this))
+                })
             }
         },
         methods:{
@@ -131,10 +147,14 @@
             },
             btn(){
                 this.$store.commit('createPhone','');
+                this.$store.commit('setUserId','');
+                this.obligation = 0;
+                this.receipt = 0;
+                this.evaluate = 0;
+                this.allOrder = 0;
                 this.type = !this.type;
             },
             collect(val){
-                console.log(val.target.parentNode.id);
                 if(this.$store.state.phoneNum == ""){
                     this.$router.push("/login");
                 }else if(val.target.parentNode.id == "col"){

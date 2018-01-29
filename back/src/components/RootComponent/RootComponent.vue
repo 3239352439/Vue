@@ -102,7 +102,7 @@
               :total="totalQty">
               </el-pagination>
             </div>
-            
+
         </div>
 
   </div>
@@ -125,7 +125,7 @@ export default {
       totalQty:0,
       currentPage:1,
       data:{},
-      showPage:true,
+      showPage:false,
       uid:this.$store.state.user
 
     }
@@ -161,7 +161,7 @@ export default {
           if(this.$children[6].dataset){
                 // this.data = {};
                 this.dialog = true;
-               
+
                 this.dataset = this.$children[6].dataset[0];
             }
             else{
@@ -195,7 +195,7 @@ export default {
                     }.bind(this)
                 })
             }
-            
+
         },
       quit(){
         window.localStorage.clear();
@@ -209,38 +209,41 @@ export default {
               this.$children[6].changeQty(key);
             }
             else{
-             this.$children[7].changeQty(key); 
+             this.$children[7].changeQty(key);
             }
-          
+
       },
       // 改变页数时触发。
       handleCurrentChange(pageNum){
-        if(this.$children[6].changePage){
-              this.$children[6].changePage(pageNum);
-            }
-            else{
-              this.$children[7].changePage(pageNum);
-            }
-          
+        if(pageNum){
+          console.log(666)
+          if(this.$children[6].changePage){
+            this.$children[6].changePage(pageNum);
+          }
+          else{
+            this.$children[7].changePage(pageNum);
+          }
+        }
+
       }
   },
   mounted(){
     if(!this.uid){
-       
+
         setTimeout(() => {
           this.$alert('请先登录/注册！！！', '提示', {
           confirmButtonText: '确定'
         });
-         this.$router.push({path: '/'}); 
+         this.$router.push({path: '/'});
         }, 800);
-        
+
     }
   }
 
-    
+
 }
 </script>
 <style>
     @import './RootComponent.scss'
-    
+
 </style>
