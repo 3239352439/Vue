@@ -14,13 +14,13 @@
                 <label for="password1">确认密码 :</label><input type="password" placeholder="请再次输入密码" v-model="password1" id="password1" @blur="pw(password1)" :disabled="disabled1">
             </div>
             <span v-if="type3">两次输入的密码不正确！</span>
+            <button @click="getCode" :disabled="disabled1" class="getCode" v-if="!show">获取验证码</button>
+            <p v-if="show"><span class="codeing">{{time + "秒后可重新获取验证码"}}</span><br/><span>短信验证码已发送</span></p>
             <div>
                 <label for="code">验证码 :</label>
-                <div>
-                    <input type="text" placeholder="请输入验证码" v-model="code" id="code" :disabled="disabled1">
-                    <button @click="getCode" :disabled="disabled1">获取验证码</button>
-                </div>
+                <input type="text" placeholder="请输入验证码" v-model="code" id="code" :disabled="disabled1">
             </div>
+            <span v-if="type4">验证码错误！</span>
             <mt-button type="primary" :disabled="disabled" @click="register">注册</mt-button>
         </div>
     </div>
@@ -32,6 +32,7 @@
     import spinner from "../spinnerComponent/spinner"
     import http from "../../utils/reqAjax";
     import cookie from "../../utils/cookie";
+    import baseUrl from '../../utils/baseUrl'
     export default {
         data(){
             return {
@@ -45,7 +46,10 @@
                 type1:false,
                 type2:false,
                 type3:false,
-                password1:""
+                type4:false,
+                show:false,
+                password1:"",
+                time:60
             }
         },
         methods:{
@@ -103,12 +107,14 @@
                             }
                         }.bind(this),1000)
                     })
+                }else{
+                    this.type4 = true;
                 }
             },
             getCode(){
                 var phonenum = this.phone;
                 var codenum = vCode();
-                this.codenum = codenum
+                this.codenum = codenum;
                 function vCode(){
                     var arr_char = '0123456789abcdefghijklmnopqrstuvwxyz'.split('');
                     var res = '';
@@ -123,12 +129,25 @@
 
                 $.ajax({
                     type: 'POST',
-                    url: "http://10.3.136.96:888/smsyzm.php",
+                    url: baseUrl.Url + "smsyzm.php",
                     data: {yzm:codenum,yzmtel:phonenum},
                     success: function(res){
                         res = eval('(' + res + ')');
                         if(res.msg === "OK"){
+                            this.code = '';
+                            this.type4 = false;
                             this.disabled = false;
+                            this.show = true;
+                            // 设置倒计时
+                            var timer = setInterval(function(){
+                                this.time--;
+                                if(this.time == 0){
+                                    clearInterval(timer);
+                                    this.show = false;
+                                    this.codenum = '';
+                                    this.time = 60;
+                                }
+                            }.bind(this),1000);
                         }
                     }.bind(this)
                 })

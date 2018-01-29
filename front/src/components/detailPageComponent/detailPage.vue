@@ -72,7 +72,7 @@ export default {
     this.userid = this.$store.state.userId;
     // this.dataItem = this.$route.params;
     // console.log(this.$route.params.id);
-    this.id = this.$route.params.id;
+    this.id =  this.$store.state.detailsId;
     http.get({"url":'productListSort.php'+'?Sort="random"& state= 1'}).then ( res => {
       this.randomData = res.data;
       // console.log(res.data)
@@ -108,6 +108,7 @@ export default {
       // console.log(id)
       this.id = id;
       if(!_event.target.id){
+         this.$store.commit("getDetailsIdState",id);
         this.$router.push({ name: 'detailpage',params:{id: this.id }});
         this.ajaxProduct()
       } else {

@@ -44,7 +44,6 @@
                 this.type = true;
             },
             save(){
-
                 if(document.querySelector("input[type=file]").files.length){
                     spinner.loadspinner();
                     jQuery('form').ajaxSubmit({
@@ -53,16 +52,16 @@
                         success:function(data){
                             // console.log(data);
                             spinner.closeSpinner();
-                            if(data){
-                              MessageBox('提示', '保存成功');
-                            }
                             data = JSON.parse(data);
                             this.imgUrl = "../" + data.path + "/" + data.fileName;
                             this.userName = jQuery("#nickname").val();
 
                             http.get({url:"user.php?phone=" + this.$store.state.phoneNum + "&userName=" + this.userName + "&headeImg=" + this.imgUrl}).then(res=>{
-                                console.log(res)
-                                this.type = !this.type;
+                                if(data){
+                                     MessageBox.confirm('确定执行此操作?').then(action => {
+                                        this.$router.go(-1);
+                                    });
+                                }
                             })
                         }.bind(this)
                     })
@@ -70,9 +69,10 @@
                     spinner.loadspinner();
                     this.userName = jQuery("#nickname").val();
                     http.get({url:"user.php?phone=" + this.$store.state.phoneNum + "&userName=" + this.userName + "&headeImg=" + this.imgUrl}).then(res=>{
-                        // console.log(res)
                         spinner.closeSpinner();
-                        this.type = !this.type;
+                        MessageBox.confirm('确定执行此操作?').then(action => {
+                            this.$router.go(-1);
+                        });
                     })
                 }
             }

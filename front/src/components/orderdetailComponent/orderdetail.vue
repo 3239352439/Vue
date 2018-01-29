@@ -28,8 +28,8 @@
             <p>下单时间：{{time}}</p>
         </div>
         <div class="pay">
-            <mt-button type="primary" @click="update" class="payBtn">{{status == 0 || status == 1 || status == 2 ? "取消订单" : status == 3 || status == 4 ? "完成" : "删除订单"}}</mt-button>
-            <mt-button type="primary" @click="pay"  class="payMoney" v-if="status == 5 || status == 6 ? false : true">{{status == 0 ? "去支付" : status == 1 || status == 2 ? "确认收货" : "去评价"}}</mt-button>
+            <mt-button type="primary" @click="update" class="payBtn">{{status == 0 || status == 1 ? "取消订单" : "删除订单"}}</mt-button>
+            <mt-button type="primary" @click="pay"  class="payMoney" v-if="status == 3 || status == 4 ? false : true">{{status == 0 ? "去支付" : status == 1 ? "确认收货" : "去评价"}}</mt-button>
         </div>
     </div>
 </template>
@@ -98,10 +98,7 @@
                     var status;
                     if($('.payBtn').text() == '取消订单'){
                         state = 'update';
-                        status = 6;
-                    }else if($('.payBtn').text() == '完成'){
-                        state = 'update';
-                        status = 5;
+                        status = 4;
                     }else if($('.payBtn').text() == '删除订单'){
                         http.get({url:"order.php?phone=" + this.$store.state.phoneNum + "&state=del&orderId=" + this.$store.state.orderId}).then(res=>{
                             if(res.data == 'ok'){
@@ -122,10 +119,13 @@
                 var status;
                 if($('.payMoney').text() == '确认收货'){
                     state = 'update';
-                    status = 3;
+                    status = 2;
                 }else if($('.payMoney').text() == '去支付'){
                     this.$router.push({name:'pay',params:{orderId:this.$store.state.orderId,price:this.price}});
                 }
+                // else if($('.payMoney').text() == '去评价'){
+                //     this.$router.push({name:'pay',params:{orderId:this.$store.state.orderId,price:this.price}});
+                // }
                  http.get({url:"order.php?phone=" + this.$store.state.phoneNum + "&state=" + state + "&status=" + status + "&orderId=" + this.$store.state.orderId}).then(res=>{
                     if(res.data == 'ok'){
                         this.$router.go(-1);

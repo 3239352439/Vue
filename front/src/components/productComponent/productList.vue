@@ -160,6 +160,7 @@ export default {
     toDetailPage(prdId,_event){
       // console.log()
       if(_event.target.tagName !== 'BUTTON'){
+         this.$store.commit("getDetailsIdState",prdId);
         this.$router.push({ name: 'detailpage',params: {id: prdId}});
       }
     },

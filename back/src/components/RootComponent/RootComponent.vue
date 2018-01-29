@@ -215,12 +215,15 @@ export default {
       },
       // 改变页数时触发。
       handleCurrentChange(pageNum){
-        if(this.$children[6].changePage){
-              this.$children[6].changePage(pageNum);
-            }
-            else{
-              this.$children[7].changePage(pageNum);
-            }
+        if(pageNum){
+          console.log(666)
+          if(this.$children[6].changePage){
+            this.$children[6].changePage(pageNum);
+          }
+          else{
+            this.$children[7].changePage(pageNum);
+          }
+        }
 
       }
   },

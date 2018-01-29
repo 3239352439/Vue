@@ -104,6 +104,7 @@
             },
             toDetailPage(obj,_event){
                 if(_event.target.tagName !== 'BUTTON'){
+                     this.$store.commit("getDetailsIdState",obj);
                     this.$router.push({ name: 'detailpage',params: {id: obj}});
                 }
             },
