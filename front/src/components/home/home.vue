@@ -83,7 +83,6 @@
                 datalist:{},
                 showNum:false,
                 orderObj:[],
-                cargoods:[],
                 dataNull:"./src/assets/img/loading.jpg",
                 allTypeimg:"./src/assets/img/iconv3/f10.jpg",
                 img:["./src/assets/img/banner/1.png","./src/assets/img/banner/2.png","./src/assets/img/banner/3.png","./src/assets/img/banner/4.png","./src/assets/img/banner/5.png","./src/assets/img/banner/6.png",],
@@ -185,13 +184,13 @@
                     $.each(res.data,(idx,item)=>{
                         this.typeArr.push(item.categoryName);
                     })
-                    // if(this.userId){
-                        //  http.get({url:this.url+"?uid=28"}).then(res=>{
-                            // this.cargoods=res.data;
-                            // var data=Object.assign(res.data.data2,res.data.data1);
-                            // this.datalist=res.data;
-                            // console.log(res.data).
-                        // });
+                    // if(this.userid){
+                    //      http.get({url:this.url+"?uid=28"}).then(res=>{
+                    //         // var data=Object.assign(res.data.data1,res.data.data2);
+                    //         var data=[...new Set(res.data.data1,res.data.data2)]
+                    //         // this.datalist=res.data;
+                         
+                    //     });
                     // }
                      http.get({url:this.url+"?allType="+this.typeArr}).then(res=>{               
                       this.datalist=res.data;

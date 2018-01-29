@@ -89,7 +89,7 @@
 
             },
             back(){
-                this.$router.back();
+                this.$router.back(-1);
             }
         },
         mounted(){
