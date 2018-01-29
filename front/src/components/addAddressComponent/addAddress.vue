@@ -8,7 +8,6 @@
         <div class="add_main">
             <mt-field label="收货人" placeholder="点击输入姓名" v-model="data.linkMan">
                 <p class="gender sel" @click.stop="getGender"><span v-for="(item,idx) in allGender" v-if="data.gender==item" class="active" :key="idx" >{{item}}</span><span v-else>{{item}}</span></p>
-                <p class="gender sel" @click="getGender"><span v-for="item in allGender" v-if="data.gender==item" class="active" :key="item">{{item}}</span><span v-else>{{item}}</span></p>
             </mt-field>
                 <mt-field label="手机号码" placeholder="输入手机号码" type="tel" v-model="data.phone"></mt-field>
                 <mt-field label="小区" class="site" placeholder="请输入小区地址" type="text" v-model="$store.state.site" ></mt-field>
