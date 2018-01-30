@@ -2,7 +2,7 @@
     <div id="sm_get">
         <div class="get_header">
             <mt-header title="选择配送地址">
-                <mt-button icon="back" slot="left" @click="back">返回</mt-button>
+                <mt-button icon="back" slot="left" @click.stop="back">返回</mt-button>
         </mt-header>
         </div>
         <div class="searchAddr">
@@ -42,7 +42,7 @@
     </div>
 </template>
 <script>
-    import { Spinner,Search} from 'mint-ui';
+    import { Spinner,Search,MessageBox} from 'mint-ui';
     import http from '../../utils/reqAjax.js'
     import spinner from "../spinnerComponent/spinner"
     import './getAddress.scss';
@@ -57,7 +57,17 @@
         },
         methods:{
             kipAdd(){
-                this.$router.push({name:'addAddress'});
+                if(this.userId){
+                    this.$router.push({name:'addAddress'});
+                }
+                else{
+                      MessageBox.confirm('用户未登录，是否去登录?').then(action => {
+                      if(action == 'confirm'){
+                        this.$router.push({name: 'login'})
+                      }
+                    });
+                }
+                
             },
             kipAuto(){
                 this.$router.push({name:'autoAddress'});
@@ -65,7 +75,7 @@
             reBack(e){
                  var tag=e.target.tagName.toLowerCase();
                  if(tag=="button"){
-                     this.$router.back(-1);
+                     this.$router.go(-1);
                  }
             },
             edit(e){

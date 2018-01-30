@@ -29,6 +29,7 @@
              </div>
 
             <div id="list">
+            
             <mt-navbar v-model="selected">
                     <mt-tab-item v-for="(item,idx) in typeData" :key="idx" :id="'data'+(idx*1+1)" >{{item.categoryName}}</mt-tab-item>
             </mt-navbar>
@@ -99,7 +100,6 @@
             },
             toDetailPage(obj,_event){
                 if(_event.target.tagName !== 'BUTTON'){
-                     this.$store.commit("getDetailsIdState",obj);
                     this.$router.push({ name: 'detailpage',params: {id: obj}});
                 }
             },
@@ -193,13 +193,6 @@
                             // this.datalist=res.data;
                             // console.log(res.data).
                         // });
-                    // if(this.userid){
-                    //      http.get({url:this.url+"?uid=28"}).then(res=>{
-                    //         // var data=Object.assign(res.data.data1,res.data.data2);
-                    //         var data=[...new Set(res.data.data1,res.data.data2)]
-                    //         // this.datalist=res.data;
-                         
-                    //     });
                     // }
                      http.get({url:this.url+"?allType="+this.typeArr}).then(res=>{               
                       this.datalist=res.data;
@@ -214,20 +207,7 @@
             input.focus(()=>{
                 this.$router.push({name:"search"});
             });
-            http.get({url:this.url+"?type="+this.active}).then(res=>{
-
-                this.datalist=res.data;
-            });
-            // 获取已添加到订单的商品
-            http.get({url:this.url+"?uid="+this.userid}).then(res=>{
-                var arr=[];
-                $.each(res.data,(idx,item)=>{
-                    arr.push(item.goodId);
-                    this.orderObj=[...new Set(arr)];
-                })
-            //   console.log(this.orderObj)
-            });
-             spinner.closeSpinner();
+             
              this.$store.commit('getSite');
 
             // 吸顶导航

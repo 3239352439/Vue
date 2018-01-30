@@ -2,7 +2,7 @@
     <div id="sm_add">
         <div class="add_header">
             <mt-header title="添加收货人">
-                <mt-button icon="back" slot="left" @click="back">返回</mt-button>
+                <mt-button icon="back" slot="left" @click.stop="back">返回</mt-button>
         </mt-header>
         </div>
         <div class="add_main">
@@ -12,7 +12,7 @@
                 <mt-field label="手机号码" placeholder="输入手机号码" type="tel" v-model="data.phone"></mt-field>
                 <mt-field label="小区" class="site" placeholder="请输入小区地址" type="text" v-model="$store.state.site" ></mt-field>
                 <mt-field label="单元门牌" placeholder="请输入门牌号" type="text" v-model="data.doorplate"></mt-field>
-                <div class="address sel" @click.stop.prevent="getType"><p><label>地址分类</label><span v-for="item in allType" v-if="data.type==item" class="active" :key="item">{{item}}</span><span v-else>{{item}}</span></p></div>
+                <div class="address sel" @click.stop.prevent="getType"><p class="ras"><label>地址分类</label><span v-for="item in allType" v-if="data.type==item" class="active" :key="item">{{item}}</span><span v-else>{{item}}</span></p></div>
 
             <mt-button type="primary" size="large" @click.stop="save">保存</mt-button>
             <mt-button type="primary" size="large" @click.stop="del"  v-if="editID">删除地址</mt-button>
@@ -51,7 +51,8 @@
             getGender(e){
                 var tag=e.target.tagName.toLowerCase();
                 if(tag=="span"){
-                    $(e.target).addClass('active').siblings().removeClass('active');                     
+                    $(e.target).addClass('active').siblings().removeClass('active');   
+                              
                 }
             },
             getType(e){
@@ -62,7 +63,7 @@
             },
             save(){
                     this.data.gender=$('.gender').find('.active').html();
-                    this.data.type=$('.address').find('.active').html();
+                    this.data.type=$('.ras').find('.active').html();
                     this.data.village=$('.site').find('input').val();
                     //判断是否为有效电话
                      var ph=new RegExp(/^1[34578]\d{9}$/).test(this.data.phone);
