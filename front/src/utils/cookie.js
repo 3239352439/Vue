@@ -44,6 +44,6 @@ export default{
         now.setDate(now.getDate() - 100);
 
         // document.cookie = name +'=xxx;expires=' + now.toUTCString();
-        Cookie.set(name, null, now);
+        this.set(name, null, now);
     }
 }

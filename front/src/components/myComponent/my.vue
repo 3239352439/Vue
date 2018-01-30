@@ -153,6 +153,7 @@
                 this.evaluate = 0;
                 this.allOrder = 0;
                 this.type = !this.type;
+                cookie.remove('token');
             },
             collect(val){
                 if(this.$store.state.phoneNum == ""){

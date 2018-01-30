@@ -85,10 +85,10 @@
                 showNum:false,
                 orderObj:[],
                 cargoods:[],
-                dataNull:"./src/assets/img/loading.jpg",
-                allTypeimg:"./src/assets/img/iconv3/f10.jpg",
-                img:["./src/assets/img/banner/1.png","./src/assets/img/banner/2.png","./src/assets/img/banner/3.png","./src/assets/img/banner/4.png","./src/assets/img/banner/5.png","./src/assets/img/banner/6.png",],
-                typeImg:"./src/assets/img/iconv3/f1.jpg",
+                dataNull:"../../src/assets/img/loading.jpg",
+                allTypeimg:"../../src/assets/img/iconv3/f10.jpg",
+                img:["../../src/assets/img/banner/1.png","../../src/assets/img/banner/2.png","../../src/assets/img/banner/3.png","../../src/assets/img/banner/4.png","../../src/assets/img/banner/5.png","../../src/assets/img/banner/6.png",],
+                typeImg:"../../src/assets/img/iconv3/f1.jpg",
                 selected:'data1'
                 
             }
@@ -100,6 +100,7 @@
             },
             toDetailPage(obj,_event){
                 if(_event.target.tagName !== 'BUTTON'){
+                    this.$store.commit("getDetailsIdState",obj);
                     this.$router.push({ name: 'detailpage',params: {id: obj}});
                 }
             },

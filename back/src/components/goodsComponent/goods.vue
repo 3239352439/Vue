@@ -32,14 +32,14 @@
             this.$parent.showPage=true;
         },
         methods:{
-        //     changeQty(key) {
-        //          this.qty=key;
-        //         this.reqData();
-        //     },
-        //    changePage(pageNum) {
-        //         this.pageNo=pageNum;
-        //         this.reqData();
-        //     },
+            changeQty(key) {
+                 this.qty=key;
+                this.reqData();
+            },
+           changePage(pageNum) {
+                this.pageNo=pageNum;
+                this.reqData();
+            },
             search(val){
                 if(val==''){
                     this.reqData();
